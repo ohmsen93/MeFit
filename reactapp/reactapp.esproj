@@ -12,11 +12,11 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="public\Components\" />
-    <Folder Include="public\Images\" />
-    <Folder Include="public\Components\Header\" />
-    <Folder Include="public\Context\" />
-    <Folder Include="public\Hoc\" />
-    <Folder Include="public\Views\" />
+    <Folder Include="src\Components\" />
+    <Folder Include="src\Images\" />
+    <Folder Include="src\Components\Header\" />
+    <Folder Include="src\Context\" />
+    <Folder Include="src\Hoc\" />
+    <Folder Include="src\Views\" />
   </ItemGroup>
 </Project>
