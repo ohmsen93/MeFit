@@ -14,4 +14,6 @@ public partial class Workout
     public int FkSetId { get; set; }
 
     public virtual Set FkSet { get; set; } = null!;
+
+    public ICollection<Trainingprogram> Trainingprograms { get; set; }
 }

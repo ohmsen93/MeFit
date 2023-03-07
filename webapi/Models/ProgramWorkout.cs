@@ -9,7 +9,7 @@ public partial class ProgramWorkout
 
     public int FkWorkoutId { get; set; }
 
-    public virtual Program FkProgram { get; set; } = null!;
+    public virtual Trainingprogram FkProgram { get; set; } = null!;
 
     public virtual Workout FkWorkout { get; set; } = null!;
 }

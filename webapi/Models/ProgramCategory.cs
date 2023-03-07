@@ -11,5 +11,5 @@ public partial class ProgramCategory
 
     public virtual Category FkCategory { get; set; } = null!;
 
-    public virtual Program FkProgram { get; set; } = null!;
+    public virtual Trainingprogram FkProgram { get; set; } = null!;
 }
