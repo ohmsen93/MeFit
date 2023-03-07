@@ -15,4 +15,5 @@ public partial class Trainingprogram
 
     public ICollection<Workout> Workouts { get; set; }
 
+    public ICollection<Category> Categories { get; set; }
 }

@@ -25,8 +25,6 @@ public partial class MeFitContext : DbContext
 
     public virtual DbSet<Exercise> Exercises { get; set; }
 
-    public virtual DbSet<ExerciseMusclegroup> ExerciseMusclegroups { get; set; }
-
     public virtual DbSet<Goal> Goals { get; set; }
 
     public virtual DbSet<Musclegroup> Musclegroups { get; set; }
@@ -34,10 +32,6 @@ public partial class MeFitContext : DbContext
     public virtual DbSet<Profile> Profiles { get; set; }
 
     public virtual DbSet<Trainingprogram> Trainingprograms { get; set; }
-
-    public virtual DbSet<ProgramCategory> ProgramCategories { get; set; }
-
-    public virtual DbSet<ProgramWorkout> ProgramWorkouts { get; set; }
 
     public virtual DbSet<Set> Sets { get; set; }
 
@@ -47,7 +41,6 @@ public partial class MeFitContext : DbContext
 
     public virtual DbSet<Workout> Workouts { get; set; }
 
-    public virtual DbSet<WorkoutGoal> WorkoutGoals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -117,34 +110,10 @@ public partial class MeFitContext : DbContext
                 je =>
                 {
                     je.HasKey("Fk_Exercise_Id", "Fk_Musclegroup_Id");
-                    je.HasData(
-                        new { Fk_Exercise_Id = 1, Fk_Musclegroup_Id = 1 },
-                        new { Fk_Exercise_Id = 1, Fk_Musclegroup_Id = 2 }
-                    );
+                    je.Property<int>("Fk_Exercise_Id").ValueGeneratedNever();
+                    je.Property<int>("Fk_Musclegroup_Id").ValueGeneratedNever();
+
                 });
-
-
-
-        //modelBuilder.Entity<ExerciseMusclegroup>(entity =>
-        //{
-        //    entity
-        //        .HasNoKey()
-        //        .ToTable("Exercise_Musclegroups");
-
-        //    entity.Property(e => e.FkExerciseId).HasColumnName("Fk_exercise_id");
-        //    entity.Property(e => e.FkMusclegroupId).HasColumnName("Fk_musclegroup_id");
-
-        //    entity.HasOne(d => d.FkExercise).WithMany()
-        //        .HasForeignKey(d => d.FkExerciseId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Exercise_Musclegroups_Exercises");
-
-        //    entity.HasOne(d => d.FkMusclegroup).WithMany()
-        //        .HasForeignKey(d => d.FkMusclegroupId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Exercise_Musclegroups_Musclegroup");
-        //});
-
 
         modelBuilder.Entity<Goal>(entity =>
         {
@@ -219,60 +188,37 @@ public partial class MeFitContext : DbContext
 
 
         modelBuilder.Entity<Trainingprogram>()
-            .HasMany(m => m.Musclegroups)
+            .HasMany(m => m.Categories)
             .WithMany(c => c.Trainingprograms)
             .UsingEntity<Dictionary<string, object>>(
-                "Trainingprogram_Musclegroups",
-                r => r.HasOne<Musclegroup>().WithMany().HasForeignKey("Fk_Musclegroup_Id"),
+                "Trainingprogram_Categories",
+                r => r.HasOne<Category>().WithMany().HasForeignKey("Fk_Category_Id"),
                 l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Musclegroup_Id");
-                    je.HasData(
-                        new { Fk_Trainingprogram_Id = 1, Fk_Musclegroup_Id = 1 },
-                        new { Fk_Trainingprogram_Id = 1, Fk_Musclegroup_Id = 2 }
-                    );
+                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Category_Id");
+                    je.Property<int>("Fk_Trainingprogram_Id").ValueGeneratedNever();
+                    je.Property<int>("Fk_Category_Id").ValueGeneratedNever();
+
                 });
 
-        //modelBuilder.Entity<ProgramCategory>(entity =>
-        //{
-        //    entity
-        //        .HasNoKey()
-        //        .ToTable("Program_Categories");
+        // Trainingprogram Workout linking table
 
-        //    entity.Property(e => e.FkCategoryId).HasColumnName("Fk_category_id");
-        //    entity.Property(e => e.FkProgramId).HasColumnName("Fk_program_id");
 
-        //    entity.HasOne(d => d.FkCategory).WithMany()
-        //        .HasForeignKey(d => d.FkCategoryId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Program_Categories_Categories");
+        modelBuilder.Entity<Trainingprogram>()
+            .HasMany(m => m.Workouts)
+            .WithMany(c => c.Trainingprograms)
+            .UsingEntity<Dictionary<string, object>>(
+                "Trainingprogram_Workouts",
+                r => r.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Workout_Id");
+                    je.Property<int>("Fk_Trainingprogram_Id").ValueGeneratedNever();
+                    je.Property<int>("Fk_Workout_Id").ValueGeneratedNever();
 
-        //    entity.HasOne(d => d.FkProgram).WithMany()
-        //        .HasForeignKey(d => d.FkProgramId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Program_Categories_Programs");
-        //});
-
-        //modelBuilder.Entity<ProgramWorkout>(entity =>
-        //{
-        //    entity
-        //        .HasNoKey()
-        //        .ToTable("Program_Workouts");
-
-        //    entity.Property(e => e.FkProgramId).HasColumnName("Fk_program_id");
-        //    entity.Property(e => e.FkWorkoutId).HasColumnName("Fk_workout_id");
-
-        //    entity.HasOne(d => d.FkProgram).WithMany()
-        //        .HasForeignKey(d => d.FkProgramId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Program_Workouts_Programs");
-
-        //    entity.HasOne(d => d.FkWorkout).WithMany()
-        //        .HasForeignKey(d => d.FkWorkoutId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Program_Workouts_Workout1");
-        //});
+                });
 
         modelBuilder.Entity<Set>(entity =>
         {
@@ -320,6 +266,24 @@ public partial class MeFitContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Workout_Sets");
         });
+
+        // Workout Goal linking table
+        modelBuilder.Entity<Workout>()
+            .HasMany(m => m.Goals)
+            .WithMany(c => c.Workouts)
+            .UsingEntity<Dictionary<string, object>>(
+                "Workout_Goals",
+                r => r.HasOne<Goal>().WithMany().HasForeignKey("Fk_Goal_Id"),
+                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
+                    je.HasOne<Status>().WithMany().HasForeignKey("Fk_Status_Id");
+                    je.ToTable("Workout_Goals_Status");
+
+                });
+
+
 
         //modelBuilder.Entity<WorkoutGoal>(entity =>
         //{

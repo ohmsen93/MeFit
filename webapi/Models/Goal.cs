@@ -22,4 +22,7 @@ public partial class Goal
     public virtual Trainingprogram? FkProgram { get; set; }
 
     public virtual Status FkStatus { get; set; } = null!;
+
+    public ICollection<Workout> Workouts { get; set; }
+
 }
