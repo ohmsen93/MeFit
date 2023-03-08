@@ -11,5 +11,5 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
-    public virtual ICollection<Profile> Profiles { get; } = new List<Profile>();
+    public virtual ICollection<UserProfile> Profiles { get; } = new List<UserProfile>();
 }

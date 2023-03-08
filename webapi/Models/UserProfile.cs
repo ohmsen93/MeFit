@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace webapi.Models;
 
-public partial class Profile
+public partial class UserProfile
 {
     public int Id { get; set; }
 

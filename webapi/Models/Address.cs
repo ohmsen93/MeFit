@@ -19,5 +19,5 @@ public partial class Address
 
     public string Country { get; set; } = null!;
 
-    public virtual ICollection<Profile> Profiles { get; } = new List<Profile>();
+    public virtual ICollection<UserProfile> Profiles { get; } = new List<UserProfile>();
 }
