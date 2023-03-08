@@ -1,10 +1,28 @@
-{
-  // This file allows you to configure ESLint according to your project's needs, so that you
-  // can control the strictness of the linter, the plugins to use, and more.
+import keycloak from "../keycloak";
 
-  // For more information about configuring ESLint, visit https://eslint.org/docs/user-guide/configuring/
 
-  "root": true,
-  "extends": "eslint:recommended",
-  "rules": {}
+function Login() {
+  return (
+    <div>
+      <h1>Start Page</h1>
+
+      <section className="actions">
+        {!keycloak.authenticated && (
+          <button onClick={() => keycloak.login()}>Login</button>
+        )}
+        {keycloak.authenticated && (
+          <button onClick={() => keycloak.logout()}>Logout</button>
+        )}
+      </section>
+
+      {keycloak.token && (
+        <div>
+          <h4>Token</h4>
+          <pre>{keycloak.token}</pre>
+        </div>
+      )}
+    </div>
+  );
 }
+
+export default Login;
