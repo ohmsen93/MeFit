@@ -8,4 +8,9 @@ public partial class Musclegroup
     public int Id { get; set; }
 
     public string Musclegroup1 { get; set; } = null!;
+
+    public ICollection<Exercise> Exercises { get; set; }
+
+
+
 }

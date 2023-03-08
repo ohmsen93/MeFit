@@ -11,7 +11,12 @@ public partial class Workout
 
     public string Type { get; set; } = null!;
 
-    public int FkSetId { get; set; }
 
-    public virtual Set FkSet { get; set; } = null!;
+    public ICollection<Trainingprogram> Trainingprograms { get; set; }
+
+    public ICollection<Goal> Goals { get; set; }
+
+    public ICollection<Exercise> Exercises { get; set; }
+
+
 }

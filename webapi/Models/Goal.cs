@@ -11,15 +11,16 @@ public partial class Goal
 
     public DateTime EndDate { get; set; }
 
-    public bool Achived { get; set; }
-
-    public int? FkProgramId { get; set; }
+    public int? FkTrainingprogramId { get; set; }
 
     public int FkStatusId { get; set; }
 
     public virtual Profile FkProfile { get; set; } = null!;
 
-    public virtual Program? FkProgram { get; set; }
+    public virtual Trainingprogram? FkProgram { get; set; }
 
     public virtual Status FkStatus { get; set; } = null!;
+
+    public ICollection<Workout> Workouts { get; set; }
+
 }
