@@ -142,7 +142,7 @@ public partial class MeFitContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Goals_UserProfiles");
 
-            entity.HasOne(d => d.FkProgram).WithMany(p => p.Goals)
+            entity.HasOne(d => d.FkTrainingprogram).WithMany(p => p.Goals)
                 .HasForeignKey(d => d.FkTrainingprogramId)
                 .HasConstraintName("FK_Goals_Trainingprograms");
 
@@ -162,7 +162,7 @@ public partial class MeFitContext : DbContext
                 .HasColumnName("Musclegroup");
         });
 
-        modelBuilder.Entity<UserUserProfile>(entity =>
+        modelBuilder.Entity<UserProfile>(entity =>
         {
             entity.Property(e => e.Disabilities).HasColumnType("text");
             entity.Property(e => e.Email)

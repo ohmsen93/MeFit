@@ -2,7 +2,7 @@
 
 namespace webapi.Services.SetService
 {
-    public interface ISetService:IServices<Set, int>
-    {
-    }
+    //public interface ISetService:IServices<Set, int>
+    //{
+    //}
 }

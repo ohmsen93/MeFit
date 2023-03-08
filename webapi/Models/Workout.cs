@@ -12,10 +12,10 @@ public partial class Workout
 
     public string Type { get; set; } = null!;
 
-    public int? FkProfileId { get; set; }
+    public int? FkUserProfileId { get; set; }
 
-    [ForeignKey("FkProfileId")]
-    public virtual Profile FkProfile { get; set; }
+    [ForeignKey("FkUserProfileId")]
+    public virtual UserProfile FkUserProfile { get; set; }
 
     public ICollection<Trainingprogram> Trainingprograms { get; set; }
 
