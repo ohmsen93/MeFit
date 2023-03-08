@@ -357,6 +357,9 @@ namespace webapi.Migrations
                     b.Property<int>("Reps")
                         .HasColumnType("int");
 
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Sets");

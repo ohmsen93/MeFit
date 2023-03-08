@@ -9,6 +9,8 @@ public partial class Set
 
     public int Reps { get; set; }
 
+    public int Total { get; set; }
+
     public ICollection<Exercise> Exercises { get; set; }
 
 }
