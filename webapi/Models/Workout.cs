@@ -19,5 +19,7 @@ public partial class Workout
 
     public ICollection<Goal> Goals { get; set; }
 
+    public ICollection<Exercise> Exercises { get; set; }
+
 
 }

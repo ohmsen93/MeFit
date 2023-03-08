@@ -37,19 +37,19 @@ namespace webapi.Migrations
                     b.ToTable("Exercise_Musclegroups");
                 });
 
-            modelBuilder.Entity("MusclegroupTrainingprogram", b =>
+            modelBuilder.Entity("Exercise_Sets", b =>
                 {
-                    b.Property<int>("MusclegroupsId")
+                    b.Property<int>("Fk_Exercise_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrainingprogramsId")
+                    b.Property<int>("Fk_Set_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("MusclegroupsId", "TrainingprogramsId");
+                    b.HasKey("Fk_Exercise_Id", "Fk_Set_Id");
 
-                    b.HasIndex("TrainingprogramsId");
+                    b.HasIndex("Fk_Set_Id");
 
-                    b.ToTable("MusclegroupTrainingprogram");
+                    b.ToTable("Exercise_Sets");
                 });
 
             modelBuilder.Entity("Trainingprogram_Categories", b =>
@@ -80,6 +80,21 @@ namespace webapi.Migrations
                     b.HasIndex("Fk_Workout_Id");
 
                     b.ToTable("Trainingprogram_Workouts");
+                });
+
+            modelBuilder.Entity("Workout_Exercises", b =>
+                {
+                    b.Property<int>("Fk_Workout_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Exercise_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
+
+                    b.HasIndex("Fk_Exercise_Id");
+
+                    b.ToTable("Workout_Exercises");
                 });
 
             modelBuilder.Entity("Workout_Goals", b =>
@@ -339,16 +354,10 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FkExerciseId")
-                        .HasColumnType("int")
-                        .HasColumnName("Fk_exercise_id");
-
                     b.Property<int>("Reps")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FkExerciseId");
 
                     b.ToTable("Sets");
                 });
@@ -462,17 +471,17 @@ namespace webapi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MusclegroupTrainingprogram", b =>
+            modelBuilder.Entity("Exercise_Sets", b =>
                 {
-                    b.HasOne("webapi.Models.Musclegroup", null)
+                    b.HasOne("webapi.Models.Exercise", null)
                         .WithMany()
-                        .HasForeignKey("MusclegroupsId")
+                        .HasForeignKey("Fk_Exercise_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("webapi.Models.Trainingprogram", null)
+                    b.HasOne("webapi.Models.Set", null)
                         .WithMany()
-                        .HasForeignKey("TrainingprogramsId")
+                        .HasForeignKey("Fk_Set_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -497,6 +506,21 @@ namespace webapi.Migrations
                     b.HasOne("webapi.Models.Trainingprogram", null)
                         .WithMany()
                         .HasForeignKey("Fk_Trainingprogram_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Models.Workout", null)
+                        .WithMany()
+                        .HasForeignKey("Fk_Workout_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Workout_Exercises", b =>
+                {
+                    b.HasOne("webapi.Models.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("Fk_Exercise_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -582,17 +606,6 @@ namespace webapi.Migrations
                     b.Navigation("FkUser");
                 });
 
-            modelBuilder.Entity("webapi.Models.Set", b =>
-                {
-                    b.HasOne("webapi.Models.Exercise", "FkExercise")
-                        .WithMany("Sets")
-                        .HasForeignKey("FkExerciseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Sets_Exercises");
-
-                    b.Navigation("FkExercise");
-                });
-
             modelBuilder.Entity("webapi.Models.Workout", b =>
                 {
                     b.HasOne("webapi.Models.Set", "FkSet")
@@ -607,11 +620,6 @@ namespace webapi.Migrations
             modelBuilder.Entity("webapi.Models.Address", b =>
                 {
                     b.Navigation("Profiles");
-                });
-
-            modelBuilder.Entity("webapi.Models.Exercise", b =>
-                {
-                    b.Navigation("Sets");
                 });
 
             modelBuilder.Entity("webapi.Models.Profile", b =>

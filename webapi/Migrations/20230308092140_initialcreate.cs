@@ -70,6 +70,19 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reps = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Status",
                 columns: table => new
                 {
@@ -110,25 +123,6 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Reps = table.Column<int>(type: "int", nullable: false),
-                    Fk_exercise_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Sets_Exercises",
-                        column: x => x.Fk_exercise_id,
-                        principalTable: "Exercises",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Exercise_Musclegroups",
                 columns: table => new
                 {
@@ -153,27 +147,47 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MusclegroupTrainingprogram",
+                name: "Exercise_Sets",
                 columns: table => new
                 {
-                    MusclegroupsId = table.Column<int>(type: "int", nullable: false),
-                    TrainingprogramsId = table.Column<int>(type: "int", nullable: false)
+                    Fk_Exercise_Id = table.Column<int>(type: "int", nullable: false),
+                    Fk_Set_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MusclegroupTrainingprogram", x => new { x.MusclegroupsId, x.TrainingprogramsId });
+                    table.PrimaryKey("PK_Exercise_Sets", x => new { x.Fk_Exercise_Id, x.Fk_Set_Id });
                     table.ForeignKey(
-                        name: "FK_MusclegroupTrainingprogram_Musclegroup_MusclegroupsId",
-                        column: x => x.MusclegroupsId,
-                        principalTable: "Musclegroup",
+                        name: "FK_Exercise_Sets_Exercises_Fk_Exercise_Id",
+                        column: x => x.Fk_Exercise_Id,
+                        principalTable: "Exercises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MusclegroupTrainingprogram_Trainingprograms_TrainingprogramsId",
-                        column: x => x.TrainingprogramsId,
-                        principalTable: "Trainingprograms",
+                        name: "FK_Exercise_Sets_Sets_Fk_Set_Id",
+                        column: x => x.Fk_Set_Id,
+                        principalTable: "Sets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workout",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Fk_set_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workout", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Workout_Sets",
+                        column: x => x.Fk_set_id,
+                        principalTable: "Sets",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -234,23 +248,51 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workout",
+                name: "Trainingprogram_Workouts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Fk_set_id = table.Column<int>(type: "int", nullable: false)
+                    Fk_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
+                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workout", x => x.Id);
+                    table.PrimaryKey("PK_Trainingprogram_Workouts", x => new { x.Fk_Trainingprogram_Id, x.Fk_Workout_Id });
                     table.ForeignKey(
-                        name: "FK_Workout_Sets",
-                        column: x => x.Fk_set_id,
-                        principalTable: "Sets",
-                        principalColumn: "Id");
+                        name: "FK_Trainingprogram_Workouts_Trainingprograms_Fk_Trainingprogram_Id",
+                        column: x => x.Fk_Trainingprogram_Id,
+                        principalTable: "Trainingprograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Trainingprogram_Workouts_Workout_Fk_Workout_Id",
+                        column: x => x.Fk_Workout_Id,
+                        principalTable: "Workout",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workout_Exercises",
+                columns: table => new
+                {
+                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false),
+                    Fk_Exercise_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workout_Exercises", x => new { x.Fk_Workout_Id, x.Fk_Exercise_Id });
+                    table.ForeignKey(
+                        name: "FK_Workout_Exercises_Exercises_Fk_Exercise_Id",
+                        column: x => x.Fk_Exercise_Id,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Workout_Exercises_Workout_Fk_Workout_Id",
+                        column: x => x.Fk_Workout_Id,
+                        principalTable: "Workout",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -304,30 +346,6 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trainingprogram_Workouts",
-                columns: table => new
-                {
-                    Fk_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trainingprogram_Workouts", x => new { x.Fk_Trainingprogram_Id, x.Fk_Workout_Id });
-                    table.ForeignKey(
-                        name: "FK_Trainingprogram_Workouts_Trainingprograms_Fk_Trainingprogram_Id",
-                        column: x => x.Fk_Trainingprogram_Id,
-                        principalTable: "Trainingprograms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trainingprogram_Workouts_Workout_Fk_Workout_Id",
-                        column: x => x.Fk_Workout_Id,
-                        principalTable: "Workout",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Workout_Goals_Status",
                 columns: table => new
                 {
@@ -368,6 +386,11 @@ namespace webapi.Migrations
                 column: "Fk_Musclegroup_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Exercise_Sets_Fk_Set_Id",
+                table: "Exercise_Sets",
+                column: "Fk_Set_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Goals_Fk_profile_id",
                 table: "Goals",
                 column: "Fk_profile_id");
@@ -383,11 +406,6 @@ namespace webapi.Migrations
                 column: "Fk_Trainingprogram_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MusclegroupTrainingprogram_TrainingprogramsId",
-                table: "MusclegroupTrainingprogram",
-                column: "TrainingprogramsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Profiles_Fk_address_id",
                 table: "Profiles",
                 column: "Fk_address_id");
@@ -396,11 +414,6 @@ namespace webapi.Migrations
                 name: "IX_Profiles_Fk_user_id",
                 table: "Profiles",
                 column: "Fk_user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sets_Fk_exercise_id",
-                table: "Sets",
-                column: "Fk_exercise_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trainingprogram_Categories_Fk_Category_Id",
@@ -416,6 +429,11 @@ namespace webapi.Migrations
                 name: "IX_Workout_Fk_set_id",
                 table: "Workout",
                 column: "Fk_set_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Workout_Exercises_Fk_Exercise_Id",
+                table: "Workout_Exercises",
+                column: "Fk_Exercise_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workout_Goals_Status_Fk_Goal_Id",
@@ -438,13 +456,16 @@ namespace webapi.Migrations
                 name: "Exercise_Musclegroups");
 
             migrationBuilder.DropTable(
-                name: "MusclegroupTrainingprogram");
+                name: "Exercise_Sets");
 
             migrationBuilder.DropTable(
                 name: "Trainingprogram_Categories");
 
             migrationBuilder.DropTable(
                 name: "Trainingprogram_Workouts");
+
+            migrationBuilder.DropTable(
+                name: "Workout_Exercises");
 
             migrationBuilder.DropTable(
                 name: "Workout_Goals_Status");
@@ -454,6 +475,9 @@ namespace webapi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "Goals");
@@ -478,9 +502,6 @@ namespace webapi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Exercises");
         }
     }
 }

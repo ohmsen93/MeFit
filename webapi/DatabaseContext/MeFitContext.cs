@@ -115,6 +115,21 @@ public partial class MeFitContext : DbContext
 
                 });
 
+        // Exercise-Sets Linking table
+
+        modelBuilder.Entity<Exercise>()
+            .HasMany(m => m.Sets)
+            .WithMany(c => c.Exercises)
+            .UsingEntity<Dictionary<string, object>>(
+                "Exercise_Sets",
+                r => r.HasOne<Set>().WithMany().HasForeignKey("Fk_Set_Id"),
+                l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Exercise_Id", "Fk_Set_Id");
+
+                });
+
         modelBuilder.Entity<Goal>(entity =>
         {
             entity.Property(e => e.EndDate).HasColumnType("date");
@@ -220,15 +235,23 @@ public partial class MeFitContext : DbContext
 
                 });
 
-        modelBuilder.Entity<Set>(entity =>
-        {
-            entity.Property(e => e.FkExerciseId).HasColumnName("Fk_exercise_id");
 
-            entity.HasOne(d => d.FkExercise).WithMany(p => p.Sets)
-                .HasForeignKey(d => d.FkExerciseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Sets_Exercises");
-        });
+        //  Workout Exercises linking table
+
+        modelBuilder.Entity<Workout>()
+            .HasMany(m => m.Exercises)
+            .WithMany(c => c.Workouts)
+            .UsingEntity<Dictionary<string, object>>(
+                "Workout_Exercises",
+                r => r.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
+                    je.Property<int>("Fk_Workout_Id").ValueGeneratedNever();
+                    je.Property<int>("Fk_Exercise_Id").ValueGeneratedNever();
+
+                });
 
         modelBuilder.Entity<Status>(entity =>
         {
@@ -285,31 +308,6 @@ public partial class MeFitContext : DbContext
 
 
 
-        //modelBuilder.Entity<WorkoutGoal>(entity =>
-        //{
-        //    entity
-        //        .HasNoKey()
-        //        .ToTable("Workout_Goals");
-
-        //    entity.Property(e => e.FkGoalId).HasColumnName("Fk_goal_id");
-        //    entity.Property(e => e.FkStatusId).HasColumnName("Fk_status_id");
-        //    entity.Property(e => e.FkWorkoutId).HasColumnName("Fk_workout_id");
-
-        //    entity.HasOne(d => d.FkGoal).WithMany()
-        //        .HasForeignKey(d => d.FkGoalId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Workout_Goals_Goals");
-
-        //    entity.HasOne(d => d.FkStatus).WithMany()
-        //        .HasForeignKey(d => d.FkStatusId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Workout_Goals_Status");
-
-        //    entity.HasOne(d => d.FkWorkout).WithMany()
-        //        .HasForeignKey(d => d.FkWorkoutId)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_Workout_Goals_Workout");
-        //});
 
         OnModelCreatingPartial(modelBuilder);
     }
