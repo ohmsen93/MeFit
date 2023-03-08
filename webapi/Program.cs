@@ -3,7 +3,8 @@ using Microsoft.OpenApi.Models;
 using System.Configuration;
 using System.Reflection;
 using webapi.DatabaseContext;
-
+using webapi.Services;
+using webapi.Services.SetService;
 
 namespace webapi
 {
@@ -14,13 +15,12 @@ namespace webapi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            //builder.Services.AddTransient<ICharacterService, CharacterService>();
+            builder.Services.AddTransient<ISetService, SetService>();
 
 
             // Add controllers and database context to the container
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MeFitContext>();
-
 
             // Add AutoMapper and Swagger to the container
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

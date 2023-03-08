@@ -1,41 +1,63 @@
-﻿//using webapi.DatabaseContext;
-//using webapi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.DatabaseContext;
+using webapi.Exceptions;
+using webapi.Models;
 
-//namespace webapi.Services.SetService
-//{
-//    public class SetService : ISetService
-//    {
-//        //private readonly MeFitContext _context;
+namespace webapi.Services.SetService
+{
+    public class SetService : ISetService
+    {
+        private readonly MeFitContext _context;
 
-//        //public SetService(MeFitContext context)
-//        //{
-//        //    _context = context;
-//        //}
-//        //public async Task<Set> Create(Set entity)
-//        //{
-//        //    _context.Sets.Add(entity);
-//        //    await _context.SaveChangesAsync();
-//        //    return entity;
-//        //}
+        public SetService(MeFitContext context)
+        {
+            _context = context;
+        }
+        public async Task<Set> Create(Set entity)
+        {
+            _context.Sets.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
 
-//        //public void DeleteById(int id)
-//        //{
-//        //    throw new NotImplementedException();
-//        //}
+        public async Task DeleteById(int id)
+        {
+            var set = await _context.Sets.FindAsync(id);
 
-//        //public ICollection<Set> GetAll()
-//        //{
-//        //    throw new NotImplementedException();
-//        //}
+            if (set == null)
+            {
+                throw new EntityNotFoundExeption(id, nameof(Set));
+            }
+            _context.Sets.Remove(set);
+            await _context.SaveChangesAsync();
+        }
 
-//        //public Set GetById(int id)
-//        //{
-//        //    throw new NotImplementedException();
-//        //}
+        public async Task<ICollection<Set>> GetAll()
+        {
+            return await _context.Sets.Include(x => x.Exercises).ToListAsync();
+        }
 
-//        //public void Update(Set entity)
-//        //{
-//        //    throw new NotImplementedException();
-//        //}
-//    }
-//}
+        public async Task<Set> GetById(int id)
+        {
+           var set = await _context.Sets.Include(x=>x.Exercises).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (set == null)
+            {
+                throw new EntityNotFoundExeption(id,nameof(Set));
+            }
+            return set;
+        }
+
+        public async Task<Set> Update(Set entity)
+        {
+            var foundMovie = await _context.Sets.AnyAsync(x => x.Id == entity.Id);
+            if (!foundMovie)
+            {
+                throw new EntityNotFoundExeption(entity.Id, nameof(Set));
+            }
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+    }
+}
