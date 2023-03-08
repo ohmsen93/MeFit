@@ -234,9 +234,6 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Achived")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 

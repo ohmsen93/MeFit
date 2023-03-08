@@ -12,7 +12,7 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230308093931_initial-create")]
+    [Migration("20230308095014_initial-create")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -236,9 +236,6 @@ namespace webapi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Achived")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("date");

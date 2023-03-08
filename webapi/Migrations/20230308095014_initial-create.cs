@@ -316,7 +316,6 @@ namespace webapi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fk_profile_id = table.Column<int>(type: "int", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Achived = table.Column<bool>(type: "bit", nullable: false),
                     Fk_Trainingprogram_id = table.Column<int>(type: "int", nullable: true),
                     Fk_status_id = table.Column<int>(type: "int", nullable: false)
                 },
