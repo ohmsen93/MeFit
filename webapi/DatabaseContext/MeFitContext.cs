@@ -8,13 +8,18 @@ namespace webapi.DatabaseContext;
 
 public partial class MeFitContext : DbContext
 {
-    public MeFitContext()
+    private readonly IConfiguration _config;
+
+
+    public MeFitContext(IConfiguration config)
     {
+        _config = config;
     }
 
-    public MeFitContext(DbContextOptions<MeFitContext> options)
-        : base(options)
+    //Connection string
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
     }
 
     public virtual DbSet<Address> Addresses { get; set; }
@@ -40,11 +45,6 @@ public partial class MeFitContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Workout> Workouts { get; set; }
-
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=MeFit;Encrypt=False;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
