@@ -276,7 +276,6 @@ public partial class MeFitContext : DbContext
         {
             entity.ToTable("Workout");
 
-            entity.Property(e => e.FkSetId).HasColumnName("Fk_set_id");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsFixedLength();
@@ -284,10 +283,6 @@ public partial class MeFitContext : DbContext
                 .HasMaxLength(50)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.FkSet).WithMany(p => p.Workouts)
-                .HasForeignKey(d => d.FkSetId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Workout_Sets");
         });
 
         // Workout Goal linking table

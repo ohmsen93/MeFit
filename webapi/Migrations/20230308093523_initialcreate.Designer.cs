@@ -12,7 +12,7 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230308092140_initialcreate")]
+    [Migration("20230308093523_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -436,10 +436,6 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FkSetId")
-                        .HasColumnType("int")
-                        .HasColumnName("Fk_set_id");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -453,8 +449,6 @@ namespace webapi.Migrations
                         .IsFixedLength();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FkSetId");
 
                     b.ToTable("Workout", (string)null);
                 });
@@ -609,17 +603,6 @@ namespace webapi.Migrations
                     b.Navigation("FkUser");
                 });
 
-            modelBuilder.Entity("webapi.Models.Workout", b =>
-                {
-                    b.HasOne("webapi.Models.Set", "FkSet")
-                        .WithMany("Workouts")
-                        .HasForeignKey("FkSetId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Workout_Sets");
-
-                    b.Navigation("FkSet");
-                });
-
             modelBuilder.Entity("webapi.Models.Address", b =>
                 {
                     b.Navigation("Profiles");
@@ -630,11 +613,6 @@ namespace webapi.Migrations
                     b.Navigation("Contributionrequests");
 
                     b.Navigation("Goals");
-                });
-
-            modelBuilder.Entity("webapi.Models.Set", b =>
-                {
-                    b.Navigation("Workouts");
                 });
 
             modelBuilder.Entity("webapi.Models.Status", b =>
