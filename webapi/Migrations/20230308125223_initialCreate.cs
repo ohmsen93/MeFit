@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -124,38 +124,24 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workout",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Workout", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Exercise_Musclegroups",
                 columns: table => new
                 {
-                    Fk_Exercise_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Musclegroup_Id = table.Column<int>(type: "int", nullable: false)
+                    FK_Exercise_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Musclegroup_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercise_Musclegroups", x => new { x.Fk_Exercise_Id, x.Fk_Musclegroup_Id });
+                    table.PrimaryKey("PK_Exercise_Musclegroups", x => new { x.FK_Exercise_Id, x.FK_Musclegroup_Id });
                     table.ForeignKey(
-                        name: "FK_Exercise_Musclegroups_Exercises_Fk_Exercise_Id",
-                        column: x => x.Fk_Exercise_Id,
+                        name: "FK_Exercise_Musclegroups_Exercises_FK_Exercise_Id",
+                        column: x => x.FK_Exercise_Id,
                         principalTable: "Exercises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Exercise_Musclegroups_Musclegroup_Fk_Musclegroup_Id",
-                        column: x => x.Fk_Musclegroup_Id,
+                        name: "FK_Exercise_Musclegroups_Musclegroup_FK_Musclegroup_Id",
+                        column: x => x.FK_Musclegroup_Id,
                         principalTable: "Musclegroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -165,21 +151,21 @@ namespace webapi.Migrations
                 name: "Exercise_Sets",
                 columns: table => new
                 {
-                    Fk_Exercise_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Set_Id = table.Column<int>(type: "int", nullable: false)
+                    FK_Exercise_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Set_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercise_Sets", x => new { x.Fk_Exercise_Id, x.Fk_Set_Id });
+                    table.PrimaryKey("PK_Exercise_Sets", x => new { x.FK_Exercise_Id, x.FK_Set_Id });
                     table.ForeignKey(
-                        name: "FK_Exercise_Sets_Exercises_Fk_Exercise_Id",
-                        column: x => x.Fk_Exercise_Id,
+                        name: "FK_Exercise_Sets_Exercises_FK_Exercise_Id",
+                        column: x => x.FK_Exercise_Id,
                         principalTable: "Exercises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Exercise_Sets_Sets_Fk_Set_Id",
-                        column: x => x.Fk_Set_Id,
+                        name: "FK_Exercise_Sets_Sets_FK_Set_Id",
+                        column: x => x.FK_Set_Id,
                         principalTable: "Sets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -189,21 +175,21 @@ namespace webapi.Migrations
                 name: "Trainingprogram_Categories",
                 columns: table => new
                 {
-                    Fk_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Category_Id = table.Column<int>(type: "int", nullable: false)
+                    FK_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Category_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trainingprogram_Categories", x => new { x.Fk_Trainingprogram_Id, x.Fk_Category_Id });
+                    table.PrimaryKey("PK_Trainingprogram_Categories", x => new { x.FK_Trainingprogram_Id, x.FK_Category_Id });
                     table.ForeignKey(
-                        name: "FK_Trainingprogram_Categories_Categories_Fk_Category_Id",
-                        column: x => x.Fk_Category_Id,
+                        name: "FK_Trainingprogram_Categories_Categories_FK_Category_Id",
+                        column: x => x.FK_Category_Id,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Trainingprogram_Categories_Trainingprograms_Fk_Trainingprogram_Id",
-                        column: x => x.Fk_Trainingprogram_Id,
+                        name: "FK_Trainingprogram_Categories_Trainingprograms_FK_Trainingprogram_Id",
+                        column: x => x.FK_Trainingprogram_Id,
                         principalTable: "Trainingprograms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -215,8 +201,8 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fk_user_id = table.Column<int>(type: "int", nullable: false),
-                    Fk_address_id = table.Column<int>(type: "int", nullable: false),
+                    FK_User_id = table.Column<int>(type: "int", nullable: false),
+                    FK_Address_id = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
                     MedicalCondition = table.Column<string>(type: "text", nullable: true),
@@ -232,62 +218,14 @@ namespace webapi.Migrations
                     table.PrimaryKey("PK_Profiles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Profiles_Addresses",
-                        column: x => x.Fk_address_id,
+                        column: x => x.FK_Address_id,
                         principalTable: "Addresses",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Profiles_Users",
-                        column: x => x.Fk_user_id,
+                        column: x => x.FK_User_id,
                         principalTable: "Users",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Trainingprogram_Workouts",
-                columns: table => new
-                {
-                    Fk_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trainingprogram_Workouts", x => new { x.Fk_Trainingprogram_Id, x.Fk_Workout_Id });
-                    table.ForeignKey(
-                        name: "FK_Trainingprogram_Workouts_Trainingprograms_Fk_Trainingprogram_Id",
-                        column: x => x.Fk_Trainingprogram_Id,
-                        principalTable: "Trainingprograms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trainingprogram_Workouts_Workout_Fk_Workout_Id",
-                        column: x => x.Fk_Workout_Id,
-                        principalTable: "Workout",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Workout_Exercises",
-                columns: table => new
-                {
-                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Exercise_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Workout_Exercises", x => new { x.Fk_Workout_Id, x.Fk_Exercise_Id });
-                    table.ForeignKey(
-                        name: "FK_Workout_Exercises_Exercises_Fk_Exercise_Id",
-                        column: x => x.Fk_Exercise_Id,
-                        principalTable: "Exercises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Workout_Exercises_Workout_Fk_Workout_Id",
-                        column: x => x.Fk_Workout_Id,
-                        principalTable: "Workout",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,14 +234,14 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fk_profile_id = table.Column<int>(type: "int", nullable: false)
+                    FK_Profile_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contributionrequests_1", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Contributionrequests_Profiles1",
-                        column: x => x.Fk_profile_id,
+                        column: x => x.FK_Profile_id,
                         principalTable: "Profiles",
                         principalColumn: "Id");
                 });
@@ -314,125 +252,199 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fk_profile_id = table.Column<int>(type: "int", nullable: false),
+                    FK_Profile_id = table.Column<int>(type: "int", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Fk_Trainingprogram_id = table.Column<int>(type: "int", nullable: true),
-                    Fk_status_id = table.Column<int>(type: "int", nullable: false)
+                    FK_Trainingprogram_id = table.Column<int>(type: "int", nullable: true),
+                    FK_Status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Goals", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Goals_Profiles",
-                        column: x => x.Fk_profile_id,
+                        column: x => x.FK_Profile_id,
                         principalTable: "Profiles",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Goals_Status",
-                        column: x => x.Fk_status_id,
+                        column: x => x.FK_Status_id,
                         principalTable: "Status",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Goals_Trainingprograms",
-                        column: x => x.Fk_Trainingprogram_id,
+                        column: x => x.FK_Trainingprogram_id,
                         principalTable: "Trainingprograms",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workout",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    FK_Profile_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workout", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Workout_Profiles_FK_Profile_id",
+                        column: x => x.FK_Profile_id,
+                        principalTable: "Profiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Trainingprogram_Workouts",
+                columns: table => new
+                {
+                    FK_Trainingprogram_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Workout_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trainingprogram_Workouts", x => new { x.FK_Trainingprogram_Id, x.FK_Workout_Id });
+                    table.ForeignKey(
+                        name: "FK_Trainingprogram_Workouts_Trainingprograms_FK_Trainingprogram_Id",
+                        column: x => x.FK_Trainingprogram_Id,
+                        principalTable: "Trainingprograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Trainingprogram_Workouts_Workout_FK_Workout_Id",
+                        column: x => x.FK_Workout_Id,
+                        principalTable: "Workout",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workout_Exercises",
+                columns: table => new
+                {
+                    FK_Workout_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Exercise_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workout_Exercises", x => new { x.FK_Workout_Id, x.FK_Exercise_Id });
+                    table.ForeignKey(
+                        name: "FK_Workout_Exercises_Exercises_FK_Exercise_Id",
+                        column: x => x.FK_Exercise_Id,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Workout_Exercises_Workout_FK_Workout_Id",
+                        column: x => x.FK_Workout_Id,
+                        principalTable: "Workout",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Workout_Goals_Status",
                 columns: table => new
                 {
-                    Fk_Workout_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Goal_Id = table.Column<int>(type: "int", nullable: false),
-                    Fk_Status_Id = table.Column<int>(type: "int", nullable: true)
+                    FK_Workout_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Goal_Id = table.Column<int>(type: "int", nullable: false),
+                    FK_Status_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workout_Goals_Status", x => new { x.Fk_Workout_Id, x.Fk_Goal_Id });
+                    table.PrimaryKey("PK_Workout_Goals_Status", x => new { x.FK_Workout_Id, x.FK_Goal_Id });
                     table.ForeignKey(
-                        name: "FK_Workout_Goals_Status_Goals_Fk_Goal_Id",
-                        column: x => x.Fk_Goal_Id,
+                        name: "FK_Workout_Goals_Status_Goals_FK_Goal_Id",
+                        column: x => x.FK_Goal_Id,
                         principalTable: "Goals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Workout_Goals_Status_Status_Fk_Status_Id",
-                        column: x => x.Fk_Status_Id,
+                        name: "FK_Workout_Goals_Status_Status_FK_Status_Id",
+                        column: x => x.FK_Status_Id,
                         principalTable: "Status",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Workout_Goals_Status_Workout_Fk_Workout_Id",
-                        column: x => x.Fk_Workout_Id,
+                        name: "FK_Workout_Goals_Status_Workout_FK_Workout_Id",
+                        column: x => x.FK_Workout_Id,
                         principalTable: "Workout",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contributionrequests_Fk_profile_id",
+                name: "IX_Contributionrequests_FK_Profile_id",
                 table: "Contributionrequests",
-                column: "Fk_profile_id");
+                column: "FK_Profile_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercise_Musclegroups_Fk_Musclegroup_Id",
+                name: "IX_Exercise_Musclegroups_FK_Musclegroup_Id",
                 table: "Exercise_Musclegroups",
-                column: "Fk_Musclegroup_Id");
+                column: "FK_Musclegroup_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercise_Sets_Fk_Set_Id",
+                name: "IX_Exercise_Sets_FK_Set_Id",
                 table: "Exercise_Sets",
-                column: "Fk_Set_Id");
+                column: "FK_Set_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_Fk_profile_id",
+                name: "IX_Goals_FK_Profile_id",
                 table: "Goals",
-                column: "Fk_profile_id");
+                column: "FK_Profile_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_Fk_status_id",
+                name: "IX_Goals_FK_Status_id",
                 table: "Goals",
-                column: "Fk_status_id");
+                column: "FK_Status_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_Fk_Trainingprogram_id",
+                name: "IX_Goals_FK_Trainingprogram_id",
                 table: "Goals",
-                column: "Fk_Trainingprogram_id");
+                column: "FK_Trainingprogram_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profiles_Fk_address_id",
+                name: "IX_Profiles_FK_Address_id",
                 table: "Profiles",
-                column: "Fk_address_id");
+                column: "FK_Address_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profiles_Fk_user_id",
+                name: "IX_Profiles_FK_User_id",
                 table: "Profiles",
-                column: "Fk_user_id");
+                column: "FK_User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trainingprogram_Categories_Fk_Category_Id",
+                name: "IX_Trainingprogram_Categories_FK_Category_Id",
                 table: "Trainingprogram_Categories",
-                column: "Fk_Category_Id");
+                column: "FK_Category_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trainingprogram_Workouts_Fk_Workout_Id",
+                name: "IX_Trainingprogram_Workouts_FK_Workout_Id",
                 table: "Trainingprogram_Workouts",
-                column: "Fk_Workout_Id");
+                column: "FK_Workout_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workout_Exercises_Fk_Exercise_Id",
+                name: "IX_Workout_FK_Profile_id",
+                table: "Workout",
+                column: "FK_Profile_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Workout_Exercises_FK_Exercise_Id",
                 table: "Workout_Exercises",
-                column: "Fk_Exercise_Id");
+                column: "FK_Exercise_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workout_Goals_Status_Fk_Goal_Id",
+                name: "IX_Workout_Goals_Status_FK_Goal_Id",
                 table: "Workout_Goals_Status",
-                column: "Fk_Goal_Id");
+                column: "FK_Goal_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workout_Goals_Status_Fk_Status_Id",
+                name: "IX_Workout_Goals_Status_FK_Status_Id",
                 table: "Workout_Goals_Status",
-                column: "Fk_Status_Id");
+                column: "FK_Status_Id");
         }
 
         /// <inheritdoc />
@@ -478,13 +490,13 @@ namespace webapi.Migrations
                 name: "Workout");
 
             migrationBuilder.DropTable(
-                name: "Profiles");
-
-            migrationBuilder.DropTable(
                 name: "Status");
 
             migrationBuilder.DropTable(
                 name: "Trainingprograms");
+
+            migrationBuilder.DropTable(
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "Addresses");

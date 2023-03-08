@@ -82,7 +82,7 @@ public partial class MeFitContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK_Contributionrequests_1");
 
-            entity.Property(e => e.FkProfileId).HasColumnName("Fk_profile_id");
+            entity.Property(e => e.FkProfileId).HasColumnName("FK_Profile_id");
 
             entity.HasOne(d => d.FkProfile).WithMany(p => p.Contributionrequests)
                 .HasForeignKey(d => d.FkProfileId)
@@ -105,13 +105,13 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Exercises)
             .UsingEntity<Dictionary<string, object>>(
                 "Exercise_Musclegroups",
-                r => r.HasOne<Musclegroup>().WithMany().HasForeignKey("Fk_Musclegroup_Id"),
-                l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                r => r.HasOne<Musclegroup>().WithMany().HasForeignKey("FK_Musclegroup_Id"),
+                l => l.HasOne<Exercise>().WithMany().HasForeignKey("FK_Exercise_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Exercise_Id", "Fk_Musclegroup_Id");
-                    je.Property<int>("Fk_Exercise_Id").ValueGeneratedNever();
-                    je.Property<int>("Fk_Musclegroup_Id").ValueGeneratedNever();
+                    je.HasKey("FK_Exercise_Id", "FK_Musclegroup_Id");
+                    je.Property<int>("FK_Exercise_Id").ValueGeneratedNever();
+                    je.Property<int>("FK_Musclegroup_Id").ValueGeneratedNever();
 
                 });
 
@@ -122,20 +122,20 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Exercises)
             .UsingEntity<Dictionary<string, object>>(
                 "Exercise_Sets",
-                r => r.HasOne<Set>().WithMany().HasForeignKey("Fk_Set_Id"),
-                l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                r => r.HasOne<Set>().WithMany().HasForeignKey("FK_Set_Id"),
+                l => l.HasOne<Exercise>().WithMany().HasForeignKey("FK_Exercise_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Exercise_Id", "Fk_Set_Id");
+                    je.HasKey("FK_Exercise_Id", "FK_Set_Id");
 
                 });
 
         modelBuilder.Entity<Goal>(entity =>
         {
             entity.Property(e => e.EndDate).HasColumnType("date");
-            entity.Property(e => e.FkProfileId).HasColumnName("Fk_profile_id");
-            entity.Property(e => e.FkTrainingprogramId).HasColumnName("Fk_Trainingprogram_id");
-            entity.Property(e => e.FkStatusId).HasColumnName("Fk_status_id");
+            entity.Property(e => e.FkProfileId).HasColumnName("FK_Profile_id");
+            entity.Property(e => e.FkTrainingprogramId).HasColumnName("FK_Trainingprogram_id");
+            entity.Property(e => e.FkStatusId).HasColumnName("FK_Status_id");
 
             entity.HasOne(d => d.FkProfile).WithMany(p => p.Goals)
                 .HasForeignKey(d => d.FkProfileId)
@@ -171,8 +171,8 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Firstname)
                 .HasMaxLength(50)
                 .IsFixedLength();
-            entity.Property(e => e.FkAddressId).HasColumnName("Fk_address_id");
-            entity.Property(e => e.FkUserId).HasColumnName("Fk_user_id");
+            entity.Property(e => e.FkAddressId).HasColumnName("FK_Address_id");
+            entity.Property(e => e.FkUserId).HasColumnName("FK_User_id");
             entity.Property(e => e.Lastname)
                 .HasMaxLength(50)
                 .IsFixedLength();
@@ -207,13 +207,13 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Trainingprograms)
             .UsingEntity<Dictionary<string, object>>(
                 "Trainingprogram_Categories",
-                r => r.HasOne<Category>().WithMany().HasForeignKey("Fk_Category_Id"),
-                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
+                r => r.HasOne<Category>().WithMany().HasForeignKey("FK_Category_Id"),
+                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("FK_Trainingprogram_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Category_Id");
-                    je.Property<int>("Fk_Trainingprogram_Id").ValueGeneratedNever();
-                    je.Property<int>("Fk_Category_Id").ValueGeneratedNever();
+                    je.HasKey("FK_Trainingprogram_Id", "FK_Category_Id");
+                    je.Property<int>("FK_Trainingprogram_Id").ValueGeneratedNever();
+                    je.Property<int>("FK_Category_Id").ValueGeneratedNever();
 
                 });
 
@@ -225,13 +225,13 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Trainingprograms)
             .UsingEntity<Dictionary<string, object>>(
                 "Trainingprogram_Workouts",
-                r => r.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
-                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
+                r => r.HasOne<Workout>().WithMany().HasForeignKey("FK_Workout_Id"),
+                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("FK_Trainingprogram_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Workout_Id");
-                    je.Property<int>("Fk_Trainingprogram_Id").ValueGeneratedNever();
-                    je.Property<int>("Fk_Workout_Id").ValueGeneratedNever();
+                    je.HasKey("FK_Trainingprogram_Id", "FK_Workout_Id");
+                    je.Property<int>("FK_Trainingprogram_Id").ValueGeneratedNever();
+                    je.Property<int>("FK_Workout_Id").ValueGeneratedNever();
 
                 });
 
@@ -243,13 +243,13 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Workouts)
             .UsingEntity<Dictionary<string, object>>(
                 "Workout_Exercises",
-                r => r.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
-                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                r => r.HasOne<Exercise>().WithMany().HasForeignKey("FK_Exercise_Id"),
+                l => l.HasOne<Workout>().WithMany().HasForeignKey("FK_Workout_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
-                    je.Property<int>("Fk_Workout_Id").ValueGeneratedNever();
-                    je.Property<int>("Fk_Exercise_Id").ValueGeneratedNever();
+                    je.HasKey("FK_Workout_Id", "FK_Exercise_Id");
+                    je.Property<int>("FK_Workout_Id").ValueGeneratedNever();
+                    je.Property<int>("FK_Exercise_Id").ValueGeneratedNever();
 
                 });
 
@@ -276,12 +276,22 @@ public partial class MeFitContext : DbContext
         {
             entity.ToTable("Workout");
 
+            entity.Property(e => e.FkProfileId)
+                .HasColumnName("FK_Profile_id")
+                .IsRequired(false);
+
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsFixedLength();
+
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsFixedLength();
+
+            entity.HasOne(w => w.FkProfile)
+                .WithMany(p => p.Workouts)
+                .HasForeignKey(w => w.FkProfileId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         });
 
@@ -291,12 +301,12 @@ public partial class MeFitContext : DbContext
             .WithMany(c => c.Workouts)
             .UsingEntity<Dictionary<string, object>>(
                 "Workout_Goals",
-                r => r.HasOne<Goal>().WithMany().HasForeignKey("Fk_Goal_Id"),
-                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                r => r.HasOne<Goal>().WithMany().HasForeignKey("FK_Goal_Id"),
+                l => l.HasOne<Workout>().WithMany().HasForeignKey("FK_Workout_Id"),
                 je =>
                 {
-                    je.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
-                    je.HasOne<Status>().WithMany().HasForeignKey("Fk_Status_Id");
+                    je.HasKey("FK_Workout_Id", "FK_Goal_Id");
+                    je.HasOne<Status>().WithMany().HasForeignKey("FK_Status_Id");
                     je.ToTable("Workout_Goals_Status");
 
                 });

@@ -36,4 +36,6 @@ public partial class Profile
     public virtual User FkUser { get; set; } = null!;
 
     public virtual ICollection<Goal> Goals { get; } = new List<Goal>();
+
+    public ICollection<Workout> Workouts { get; set; }
 }

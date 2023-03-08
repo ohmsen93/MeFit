@@ -12,8 +12,8 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230308095014_initial-create")]
-    partial class initialcreate
+    [Migration("20230308125223_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,95 +27,95 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("Exercise_Musclegroups", b =>
                 {
-                    b.Property<int>("Fk_Exercise_Id")
+                    b.Property<int>("FK_Exercise_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Musclegroup_Id")
+                    b.Property<int>("FK_Musclegroup_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Exercise_Id", "Fk_Musclegroup_Id");
+                    b.HasKey("FK_Exercise_Id", "FK_Musclegroup_Id");
 
-                    b.HasIndex("Fk_Musclegroup_Id");
+                    b.HasIndex("FK_Musclegroup_Id");
 
                     b.ToTable("Exercise_Musclegroups");
                 });
 
             modelBuilder.Entity("Exercise_Sets", b =>
                 {
-                    b.Property<int>("Fk_Exercise_Id")
+                    b.Property<int>("FK_Exercise_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Set_Id")
+                    b.Property<int>("FK_Set_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Exercise_Id", "Fk_Set_Id");
+                    b.HasKey("FK_Exercise_Id", "FK_Set_Id");
 
-                    b.HasIndex("Fk_Set_Id");
+                    b.HasIndex("FK_Set_Id");
 
                     b.ToTable("Exercise_Sets");
                 });
 
             modelBuilder.Entity("Trainingprogram_Categories", b =>
                 {
-                    b.Property<int>("Fk_Trainingprogram_Id")
+                    b.Property<int>("FK_Trainingprogram_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Category_Id")
+                    b.Property<int>("FK_Category_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Trainingprogram_Id", "Fk_Category_Id");
+                    b.HasKey("FK_Trainingprogram_Id", "FK_Category_Id");
 
-                    b.HasIndex("Fk_Category_Id");
+                    b.HasIndex("FK_Category_Id");
 
                     b.ToTable("Trainingprogram_Categories");
                 });
 
             modelBuilder.Entity("Trainingprogram_Workouts", b =>
                 {
-                    b.Property<int>("Fk_Trainingprogram_Id")
+                    b.Property<int>("FK_Trainingprogram_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Workout_Id")
+                    b.Property<int>("FK_Workout_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Trainingprogram_Id", "Fk_Workout_Id");
+                    b.HasKey("FK_Trainingprogram_Id", "FK_Workout_Id");
 
-                    b.HasIndex("Fk_Workout_Id");
+                    b.HasIndex("FK_Workout_Id");
 
                     b.ToTable("Trainingprogram_Workouts");
                 });
 
             modelBuilder.Entity("Workout_Exercises", b =>
                 {
-                    b.Property<int>("Fk_Workout_Id")
+                    b.Property<int>("FK_Workout_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Exercise_Id")
+                    b.Property<int>("FK_Exercise_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
+                    b.HasKey("FK_Workout_Id", "FK_Exercise_Id");
 
-                    b.HasIndex("Fk_Exercise_Id");
+                    b.HasIndex("FK_Exercise_Id");
 
                     b.ToTable("Workout_Exercises");
                 });
 
             modelBuilder.Entity("Workout_Goals", b =>
                 {
-                    b.Property<int>("Fk_Workout_Id")
+                    b.Property<int>("FK_Workout_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fk_Goal_Id")
+                    b.Property<int>("FK_Goal_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Fk_Status_Id")
+                    b.Property<int?>("FK_Status_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
+                    b.HasKey("FK_Workout_Id", "FK_Goal_Id");
 
-                    b.HasIndex("Fk_Goal_Id");
+                    b.HasIndex("FK_Goal_Id");
 
-                    b.HasIndex("Fk_Status_Id");
+                    b.HasIndex("FK_Status_Id");
 
                     b.ToTable("Workout_Goals_Status", (string)null);
                 });
@@ -197,7 +197,7 @@ namespace webapi.Migrations
 
                     b.Property<int>("FkProfileId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_profile_id");
+                        .HasColumnName("FK_Profile_id");
 
                     b.HasKey("Id")
                         .HasName("PK_Contributionrequests_1");
@@ -242,15 +242,15 @@ namespace webapi.Migrations
 
                     b.Property<int>("FkProfileId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_profile_id");
+                        .HasColumnName("FK_Profile_id");
 
                     b.Property<int>("FkStatusId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_status_id");
+                        .HasColumnName("FK_Status_id");
 
                     b.Property<int?>("FkTrainingprogramId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_Trainingprogram_id");
+                        .HasColumnName("FK_Trainingprogram_id");
 
                     b.HasKey("Id");
 
@@ -308,11 +308,11 @@ namespace webapi.Migrations
 
                     b.Property<int>("FkAddressId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_address_id");
+                        .HasColumnName("FK_Address_id");
 
                     b.Property<int>("FkUserId")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_user_id");
+                        .HasColumnName("FK_User_id");
 
                     b.Property<double>("Height")
                         .HasColumnType("float");
@@ -436,6 +436,10 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("FkProfileId")
+                        .HasColumnType("int")
+                        .HasColumnName("FK_Profile_id");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -450,6 +454,8 @@ namespace webapi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FkProfileId");
+
                     b.ToTable("Workout", (string)null);
                 });
 
@@ -457,13 +463,13 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Exercise", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Exercise_Id")
+                        .HasForeignKey("FK_Exercise_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Musclegroup", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Musclegroup_Id")
+                        .HasForeignKey("FK_Musclegroup_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -472,13 +478,13 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Exercise", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Exercise_Id")
+                        .HasForeignKey("FK_Exercise_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Set", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Set_Id")
+                        .HasForeignKey("FK_Set_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -487,13 +493,13 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Category", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Category_Id")
+                        .HasForeignKey("FK_Category_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Trainingprogram", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Trainingprogram_Id")
+                        .HasForeignKey("FK_Trainingprogram_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -502,13 +508,13 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Trainingprogram", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Trainingprogram_Id")
+                        .HasForeignKey("FK_Trainingprogram_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Workout", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Workout_Id")
+                        .HasForeignKey("FK_Workout_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -517,13 +523,13 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Exercise", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Exercise_Id")
+                        .HasForeignKey("FK_Exercise_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Workout", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Workout_Id")
+                        .HasForeignKey("FK_Workout_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -532,17 +538,17 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.Goal", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Goal_Id")
+                        .HasForeignKey("FK_Goal_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Status", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Status_Id");
+                        .HasForeignKey("FK_Status_Id");
 
                     b.HasOne("webapi.Models.Workout", null)
                         .WithMany()
-                        .HasForeignKey("Fk_Workout_Id")
+                        .HasForeignKey("FK_Workout_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -603,6 +609,17 @@ namespace webapi.Migrations
                     b.Navigation("FkUser");
                 });
 
+            modelBuilder.Entity("webapi.Models.Workout", b =>
+                {
+                    b.HasOne("webapi.Models.Profile", "FkProfile")
+                        .WithMany("Workouts")
+                        .HasForeignKey("FkProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FkProfile");
+                });
+
             modelBuilder.Entity("webapi.Models.Address", b =>
                 {
                     b.Navigation("Profiles");
@@ -613,6 +630,8 @@ namespace webapi.Migrations
                     b.Navigation("Contributionrequests");
 
                     b.Navigation("Goals");
+
+                    b.Navigation("Workouts");
                 });
 
             modelBuilder.Entity("webapi.Models.Status", b =>
