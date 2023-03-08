@@ -17,6 +17,7 @@
     <Folder Include="src\Components\Header\" />
     <Folder Include="src\Context\" />
     <Folder Include="src\Hoc\" />
+    <Folder Include="src\const\" />
     <Folder Include="src\Views\" />
   </ItemGroup>
 </Project>
