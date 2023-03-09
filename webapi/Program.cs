@@ -8,8 +8,7 @@ using webapi.Services.SetService;
 using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
 using webapi.Services.UserProfile;
-
-
+using webapi.Services.UserServices;
 
 namespace webapi
 {
@@ -23,13 +22,17 @@ namespace webapi
             builder.Services.AddTransient<ISetService, SetService>();
             builder.Services.AddTransient<IExerciseService, ExerciseService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            //});
+
+            builder.Services.AddControllers();
+
 
             builder.Services.AddDbContext<MeFitContext>();
 

@@ -1,8 +1,9 @@
-﻿namespace webapi.Models.DTO.UserProfile
+﻿namespace webapi.Models.DTO.UserProfileDto
 {
-    public class UserProfileUpdateDto
-    {
-        public int Id { get; set; }
+    public class UserProfileCreateDto
+    {        
+        public int FkUserId { get; set; }
+
         public int FkAddressId { get; set; }
 
         public double Weight { get; set; }

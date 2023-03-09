@@ -1,9 +1,7 @@
-﻿namespace webapi.Models.DTO.User
+﻿namespace webapi.Models.DTO.UserDto
 {
-    public class UserUpdateDto
-    {
-        public int Id { get; set; }
-
+    public class UserCreateDto
+    {        
         public string Token { get; set; } = null!;
 
         public string Username { get; set; } = null!;

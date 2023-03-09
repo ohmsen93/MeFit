@@ -1,11 +1,9 @@
-﻿namespace webapi.Models.DTO.UserProfile
+﻿namespace webapi.Models.DTO.UserProfileDto
 {
-    public class UserProfileReadDto
+    public class UserProfileUpdateDto
     {
         public int Id { get; set; }
-
         public int FkUserId { get; set; }
-
         public int FkAddressId { get; set; }
 
         public double Weight { get; set; }
@@ -24,10 +22,6 @@
 
         public string? Picture { get; set; }
 
-        public string Email { get; set; } = null!;        
-
-        public List<string> Goals { get; set; }
-
-        public List<string> Workouts { get; set; }
+        public string Email { get; set; } = null!;
     }
 }
