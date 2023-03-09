@@ -61,21 +61,16 @@ namespace webapi.Controllers
         public async Task<IActionResult> PatchWorkout(int id, WorkoutUpdateDto workoutUpdateDto)
         {
 
-            var existingWorkout = await _service.GetById(id);
-
-            if (id != existingWorkout.Id)
+            if (id != workoutUpdateDto.Id)
             {
                 return BadRequest();
             }
 
-            var workoutId = existingWorkout.Id; // Save the ID in a variable
-
-
+     
 
             try
             {
                 var workout = _mapper.Map<Workout>(workoutUpdateDto);
-                workout.Id = workoutId; // Use the saved ID for the new entity
                 await _service.Update(workout);
             }
             catch (EntityNotFoundExeption ex)

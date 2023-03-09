@@ -5,6 +5,8 @@ namespace webapi.Models.DTO.Workout
 
     public class WorkoutUpdateDto
     {
+        public int Id { get; set; }
+
         public string Name { get; set; } = null!;
 
         public string Type { get; set; } = null!;
