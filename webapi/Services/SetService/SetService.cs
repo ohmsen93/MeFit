@@ -50,8 +50,8 @@ namespace webapi.Services.SetService
 
         public async Task<Set> Update(Set entity)
         {
-            var foundMovie = await _context.Sets.AnyAsync(x => x.Id == entity.Id);
-            if (!foundMovie)
+            var foundSet = await _context.Sets.AnyAsync(x => x.Id == entity.Id);
+            if (!foundSet)
             {
                 throw new EntityNotFoundExeption(entity.Id, nameof(Set));
             }

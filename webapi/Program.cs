@@ -5,7 +5,11 @@ using System.Reflection;
 using webapi.DatabaseContext;
 using webapi.Services;
 using webapi.Services.SetService;
+using webapi.Services.ExerciseService;
+using System.Text.Json.Serialization;
 using webapi.Services.UserProfile;
+
+
 
 namespace webapi
 {
@@ -17,11 +21,16 @@ namespace webapi
 
             // Add services to the container.
             builder.Services.AddTransient<ISetService, SetService>();
+            builder.Services.AddTransient<IExerciseService, ExerciseService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
 
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+
             builder.Services.AddDbContext<MeFitContext>();
 
             // Add AutoMapper and Swagger to the container
