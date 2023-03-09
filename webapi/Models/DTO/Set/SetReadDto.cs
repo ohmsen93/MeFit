@@ -1,4 +1,6 @@
-﻿namespace webapi.Models.DTO.Set
+﻿using webapi.Models;
+
+namespace webapi.Models.DTO.Set
 {
     public class SetReadDto
     {
