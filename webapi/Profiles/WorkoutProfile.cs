@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using System.Linq;
 using webapi.Models;
-using webapi.Models.DTO.Workout;
-using webapi.Models.DTO.Exercise;
+using webapi.Models.DTO.WorkoutDTO;
+using webapi.Models.DTO.ExerciseDTO;
 
 namespace webapi.Profiles
 {

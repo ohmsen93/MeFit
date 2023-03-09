@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.Set;
+using webapi.Models.DTO.SetDTO;
 using webapi.Services.SetService;
 
 namespace webapi.Controllers

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using webapi.Models.DTO.Set;
-using webapi.Models.DTO.UserProfile;
+using webapi.Models.DTO.SetDTO;
+using webapi.Models.DTO.UserProfileDTO;
 using webapi.Models;
 
 namespace webapi.Profiles

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using webapi.Models;
-using webapi.Models.DTO.Exercise;
+using webapi.Models.DTO.ExerciseDTO;
 
 namespace webapi.Profiles
 {
