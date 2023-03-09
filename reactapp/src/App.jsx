@@ -22,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<KeycloakRoute role={ ROLES.Regular }> <Dashboard /> </KeycloakRoute>}/>
+            <Route path="/contributor" element={<KeycloakRoute role={ ROLES.Contributor | ROLES.Administrator }> <Dashboard /> </KeycloakRoute>}/>
           </Routes>
         </main>
       </BrowserRouter>
