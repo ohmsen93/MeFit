@@ -15,12 +15,6 @@ function Login() {
         )}
       </section>
 
-      {keycloak.token && (
-        <div>
-          <h4>Token</h4>
-          <pre>{keycloak.token}</pre>
-        </div>
-      )}
     </div>
   );
 }
