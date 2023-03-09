@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import keycloak from "../../keycloak";
-import { initializeAuthentication } from "../Security/Authentication";
 
 
 const LoginForm = () => {
+
+    const isAuthenticated = keycloak.authenticated;
     const navigate = useNavigate();
-    const isAuthorized = initializeAuthentication();
 
     useEffect(() => {
-        if (isAuthorized) {            
+        if (isAuthenticated) {
             navigate("dashboard")
+            console.log("test");
         }
     }, [])
 
@@ -19,7 +20,7 @@ const LoginForm = () => {
             <h1>Start Page</h1>
 
             <section className="actions">
-                {!isAuthorized && (
+                {!isAuthenticated && (
                     <button onClick={() => keycloak.login()}>Login</button>
                 )}
             </section>
