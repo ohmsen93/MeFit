@@ -5,6 +5,7 @@ using System.Reflection;
 using webapi.DatabaseContext;
 using webapi.Services;
 using webapi.Services.SetService;
+using webapi.Services.UserProfile;
 
 namespace webapi
 {
@@ -16,6 +17,7 @@ namespace webapi
 
             // Add services to the container.
             builder.Services.AddTransient<ISetService, SetService>();
+            builder.Services.AddTransient<IUserProfileService, UserProfileService>();
 
 
             // Add controllers and database context to the container
