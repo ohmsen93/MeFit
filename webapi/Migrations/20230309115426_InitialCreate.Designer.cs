@@ -12,8 +12,8 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230308140358_initialCreate")]
-    partial class initialCreate
+    [Migration("20230309115426_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -440,8 +440,8 @@ namespace webapi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("FkUserProfileId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("FkUserProfileId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -616,9 +616,7 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.UserProfile", "FkUserProfile")
                         .WithMany("Workouts")
-                        .HasForeignKey("FkUserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FkUserProfileId");
 
                     b.Navigation("FkUserProfile");
                 });

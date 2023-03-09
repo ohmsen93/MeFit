@@ -282,6 +282,10 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsFixedLength();
+            entity.Property(e => e.FkUserProfileId) // Make it nullable
+                .HasColumnName("FkUserProfileId")
+                .HasColumnType("int")
+                .IsRequired(false); // Add this line to make it nullable
 
         });
 

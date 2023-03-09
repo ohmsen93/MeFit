@@ -7,8 +7,8 @@ using webapi.Services;
 using webapi.Services.SetService;
 using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
+using webapi.Services.WorkoutService;
 using webapi.Services.UserProfile;
-
 
 
 namespace webapi
@@ -22,6 +22,7 @@ namespace webapi
             // Add services to the container.
             builder.Services.AddTransient<ISetService, SetService>();
             builder.Services.AddTransient<IExerciseService, ExerciseService>();
+            builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
 
 
