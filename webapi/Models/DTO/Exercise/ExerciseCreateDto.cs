@@ -7,5 +7,10 @@
 
         public string? Description { get; set; }
 
+        public List<int> SetIds { get; set; }
+
+        public List<int> MusclegroupIds { get; set; }
+
+
     }
 }

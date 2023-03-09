@@ -89,8 +89,14 @@ namespace webapi.Controllers
         {
             var exercise = _mapper.Map<Exercise>(exerciseCreateDto);
             await _service.Create(exercise);
+            var exerciseUpdateSetsDto = new ExerciseUpdateSetsDto { SetIds = exerciseCreateDto.SetIds };
+            var exerciseUpdateMusclegroupsDto = new ExerciseUpdateMusclegroupsDto { MusclegroupIds = exerciseCreateDto.MusclegroupIds };
+            await _service.UpdateExerciseSets(exercise.Id, exerciseUpdateSetsDto.SetIds);
+            await _service.UpdateExerciseMusclegroups(exercise.Id, exerciseUpdateMusclegroupsDto.MusclegroupIds);
+
             return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exercise);
         }
+
 
         //// DELETE: api/Exercises/5
         [HttpDelete("{id}")]

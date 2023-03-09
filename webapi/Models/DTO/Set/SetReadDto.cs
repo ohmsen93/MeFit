@@ -1,4 +1,5 @@
 ﻿using webapi.Models;
+using webapi.Models.DTO.Exercise;
 
 namespace webapi.Models.DTO.Set
 {
@@ -10,6 +11,6 @@ namespace webapi.Models.DTO.Set
 
         public int Total { get; set; }
 
-        public ICollection<Exercise> Exercises { get; set; }
+        public ICollection<ExerciseReadDto> Exercises { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
+using webapi.Models.DTO.Exercise;
 
 namespace webapi.Services.ExerciseService
 {
@@ -53,7 +55,7 @@ namespace webapi.Services.ExerciseService
 
             if (exercise == null)
             {
-                throw new EntityNotFoundExeption(id,nameof(Exercise));
+                throw new EntityNotFoundExeption(id, nameof(Exercise));
             }
 
             return exercise;
@@ -70,5 +72,61 @@ namespace webapi.Services.ExerciseService
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task UpdateExerciseSets(int exerciseId, List<int> setsId)
+        {
+            var foundExercise = await _context.Exercises.AnyAsync(x => x.Id == exerciseId);
+            if (!foundExercise)
+            {
+                throw new EntityNotFoundExeption(exerciseId, nameof(Exercise));
+            }
+            // Finding the Exercise with its Sets
+            var exerciseToUpdateSets = await _context.Exercises
+                .Include(m => m.Sets)
+                .Where(m => m.Id == exerciseId)
+                .FirstAsync();
+            // Loop through Sets, try and assign to Exercise
+            var sets = new List<Set>();
+            foreach (var id in setsId)
+            {
+                var set = await _context.Sets.FindAsync(id);
+                if (set == null)
+                    // Record doesnt exist: https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms229021(v=vs.100)?redirectedfrom=MSDN
+                    throw new KeyNotFoundException($"set with {id} not found");
+                sets.Add(set);
+            }
+            exerciseToUpdateSets.Sets = sets;
+            _context.Entry(exerciseToUpdateSets).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateExerciseMusclegroups(int exerciseId, List<int> musclegroupsId)
+        {
+            var foundExercise = await _context.Exercises.AnyAsync(x => x.Id == exerciseId);
+            if (!foundExercise)
+            {
+                throw new EntityNotFoundExeption(exerciseId, nameof(Exercise));
+            }
+            // Finding the Exercise with its Musclegroups
+            var exerciseToUpdateMusclegroups = await _context.Exercises
+                .Include(m => m.Musclegroups)
+                .Where(m => m.Id == exerciseId)
+                .FirstAsync();
+            // Loop through Musclegroups, try and assign to Exercise
+            var musclegroups = new List<Musclegroup>();
+            foreach (var id in musclegroupsId)
+            {
+                var set = await _context.Musclegroups.FindAsync(id);
+                if (set == null)
+                    // Record doesnt exist: https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms229021(v=vs.100)?redirectedfrom=MSDN
+                    throw new KeyNotFoundException($"set with {id} not found");
+                musclegroups.Add(set);
+            }
+            exerciseToUpdateMusclegroups.Musclegroups = musclegroups;
+            _context.Entry(exerciseToUpdateMusclegroups).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }
