@@ -26,7 +26,7 @@ namespace webapi.Services.SetService
 
             if (set == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Set));
+                throw new EntityNotFoundException(id, nameof(Set));
             }
             _context.Sets.Remove(set);
             await _context.SaveChangesAsync();
@@ -43,7 +43,7 @@ namespace webapi.Services.SetService
 
             if (set == null)
             {
-                throw new EntityNotFoundExeption(id,nameof(Set));
+                throw new EntityNotFoundException(id,nameof(Set));
             }
             return set;
         }
@@ -53,7 +53,7 @@ namespace webapi.Services.SetService
             var foundSet = await _context.Sets.AnyAsync(x => x.Id == entity.Id);
             if (!foundSet)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(Set));
+                throw new EntityNotFoundException(entity.Id, nameof(Set));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

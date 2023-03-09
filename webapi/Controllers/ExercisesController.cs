@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.Exercise;
+using webapi.Models.DTO.ExerciseDTO;
 using webapi.Services.ExerciseService;
 
 namespace webapi.Controllers
@@ -46,7 +46,7 @@ namespace webapi.Controllers
             {
                 return Ok(_mapper.Map<ExerciseReadDto>(await _service.GetById(id)));
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -71,7 +71,7 @@ namespace webapi.Controllers
                 var exercise = _mapper.Map<Exercise>(exerciseUpdateDto);
                 await _service.Update(exercise);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -106,7 +106,7 @@ namespace webapi.Controllers
             {
                 await _service.DeleteById(id);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {

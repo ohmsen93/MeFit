@@ -25,10 +25,15 @@ namespace webapi.Services.UserProfileService
 
             if (userProfile == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(UserProfile));
+                throw new EntityNotFoundException(id, nameof(UserProfile));
             }
             _context.UserProfiles.Remove(userProfile);
             await _context.SaveChangesAsync();
+        }
+
+        public Task ContributorRequest(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ICollection<UserProfile>> GetAll()
@@ -46,7 +51,7 @@ namespace webapi.Services.UserProfileService
 
             if (userProfile == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(UserProfile));
+                throw new EntityNotFoundException(id, nameof(UserProfile));
             }
             return userProfile;
         }
@@ -56,7 +61,7 @@ namespace webapi.Services.UserProfileService
             var foundUserProfile = await _context.UserProfiles.AnyAsync(x => x.Id == entity.Id);
             if (!foundUserProfile)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(UserProfile));
+                throw new EntityNotFoundException(entity.Id, nameof(UserProfile));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

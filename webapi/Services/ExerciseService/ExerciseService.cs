@@ -28,7 +28,7 @@ namespace webapi.Services.ExerciseService
 
             if (exercise == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Exercise));
+                throw new EntityNotFoundException(id, nameof(Exercise));
             }
             _context.Exercises.Remove(exercise);
             await _context.SaveChangesAsync();
@@ -55,7 +55,7 @@ namespace webapi.Services.ExerciseService
 
             if (exercise == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Exercise));
+                throw new EntityNotFoundException(id, nameof(Exercise));
             }
 
             return exercise;
@@ -66,7 +66,7 @@ namespace webapi.Services.ExerciseService
             var foundExercise = await _context.Exercises.AnyAsync(x => x.Id == entity.Id);
             if (!foundExercise)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(Exercise));
+                throw new EntityNotFoundException(entity.Id, nameof(Exercise));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -78,7 +78,7 @@ namespace webapi.Services.ExerciseService
             var foundExercise = await _context.Exercises.AnyAsync(x => x.Id == exerciseId);
             if (!foundExercise)
             {
-                throw new EntityNotFoundExeption(exerciseId, nameof(Exercise));
+                throw new EntityNotFoundException(exerciseId, nameof(Exercise));
             }
             // Finding the Exercise with its Sets
             var exerciseToUpdateSets = await _context.Exercises
@@ -105,7 +105,7 @@ namespace webapi.Services.ExerciseService
             var foundExercise = await _context.Exercises.AnyAsync(x => x.Id == exerciseId);
             if (!foundExercise)
             {
-                throw new EntityNotFoundExeption(exerciseId, nameof(Exercise));
+                throw new EntityNotFoundException(exerciseId, nameof(Exercise));
             }
             // Finding the Exercise with its Musclegroups
             var exerciseToUpdateMusclegroups = await _context.Exercises

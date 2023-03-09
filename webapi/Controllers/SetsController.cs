@@ -46,7 +46,7 @@ namespace webapi.Controllers
             {
                 return Ok(_mapper.Map<SetReadDto>(await _service.GetById(id)));
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -71,7 +71,7 @@ namespace webapi.Controllers
                 var set = _mapper.Map<Set>(setUpdateDto);
                 await _service.Update(set);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -100,7 +100,7 @@ namespace webapi.Controllers
             {
                 await _service.DeleteById(id);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {

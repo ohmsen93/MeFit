@@ -8,7 +8,7 @@ using webapi.Services.SetService;
 using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
 using webapi.Services.WorkoutService;
-using webapi.Services.UserProfile;
+using webapi.Services.UserProfileService;
 
 
 namespace webapi

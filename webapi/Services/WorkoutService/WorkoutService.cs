@@ -28,7 +28,7 @@ namespace webapi.Services.WorkoutService
 
             if (Workout == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Workout));
+                throw new EntityNotFoundException(id, nameof(Workout));
             }
             _context.Workouts.Remove(Workout);
             await _context.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace webapi.Services.WorkoutService
 
             if (Workout == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Workout));
+                throw new EntityNotFoundException(id, nameof(Workout));
             }
 
             return Workout;
@@ -64,7 +64,7 @@ namespace webapi.Services.WorkoutService
             var foundWorkout = await _context.Workouts.AnyAsync(x => x.Id == entity.Id);
             if (!foundWorkout)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(Workout));
+                throw new EntityNotFoundException(entity.Id, nameof(Workout));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -76,7 +76,7 @@ namespace webapi.Services.WorkoutService
             var foundWorkout = await _context.Workouts.AnyAsync(x => x.Id == WorkoutId);
             if (!foundWorkout)
             {
-                throw new EntityNotFoundExeption(WorkoutId, nameof(Workout));
+                throw new EntityNotFoundException(WorkoutId, nameof(Workout));
             }
             // Finding the Workout with its Exercises
             var WorkoutToUpdateExercises = await _context.Workouts
