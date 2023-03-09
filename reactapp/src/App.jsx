@@ -11,6 +11,7 @@ import Dashboard from "./Views/Dashboard"
 import Login from "./Views/Login"
 import Navbar from './Components/navbar/Navbar';
 import keycloak from './keycloak';
+import Contributor from './Views/Contributor';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<KeycloakRoute role={ ROLES.Regular }> <Dashboard /> </KeycloakRoute>}/>
+            <Route path="/contributor" element={<KeycloakRoute role={ ROLES.Contributor}> <Contributor /> </KeycloakRoute>}/>
           </Routes>
         </main>
       </BrowserRouter>
