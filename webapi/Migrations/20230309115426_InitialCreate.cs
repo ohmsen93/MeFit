@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -286,7 +286,7 @@ namespace webapi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    FkUserProfileId = table.Column<int>(type: "int", nullable: false)
+                    FkUserProfileId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -295,8 +295,7 @@ namespace webapi.Migrations
                         name: "FK_Workout_UserProfiles_FkUserProfileId",
                         column: x => x.FkUserProfileId,
                         principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

@@ -437,8 +437,8 @@ namespace webapi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("FkUserProfileId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("FkUserProfileId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -613,9 +613,7 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Models.UserProfile", "FkUserProfile")
                         .WithMany("Workouts")
-                        .HasForeignKey("FkUserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FkUserProfileId");
 
                     b.Navigation("FkUserProfile");
                 });
