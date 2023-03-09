@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using webapi.Models.DTO.Exercise;
+using webapi.Models.DTO.ExerciseDTO;
+using webapi.Models;
 
-namespace webapi.Models.DTO.Workout
+namespace webapi.Models.DTO.WorkoutDTO
 {
 
 

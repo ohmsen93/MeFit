@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Models;
-using webapi.Services.UserProfile;
+using webapi.Services.UserProfileService;
 
 namespace webapi.Controllers
 {

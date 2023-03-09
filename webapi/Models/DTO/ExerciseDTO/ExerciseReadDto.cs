@@ -1,7 +1,7 @@
 ﻿using webapi.Models;
-using webapi.Models.DTO.Set;
+using webapi.Models.DTO.SetDTO;
 
-namespace webapi.Models.DTO.Exercise
+namespace webapi.Models.DTO.ExerciseDTO
 {
     public class ExerciseReadDto
     {

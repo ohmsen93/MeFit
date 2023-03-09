@@ -1,4 +1,4 @@
-﻿namespace webapi.Models.DTO.Workout
+﻿namespace webapi.Models.DTO.WorkoutDTO
 {
 
     public class WorkoutUpdateExercisesDto

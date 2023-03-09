@@ -1,4 +1,4 @@
-﻿namespace webapi.Models.DTO.UserProfile
+﻿namespace webapi.Models.DTO.UserProfileDTO
 {
     public class UserProfileReadDto
     {

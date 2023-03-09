@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.Workout;
+using webapi.Models.DTO.WorkoutDTO;
 
 namespace webapi.Services.WorkoutService
 {

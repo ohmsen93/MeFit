@@ -3,7 +3,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 
-namespace webapi.Services.UserProfile
+namespace webapi.Services.UserProfileService
 {
     public class UserProfileService : IUserProfileService
     {
@@ -12,7 +12,7 @@ namespace webapi.Services.UserProfile
         {
             _context = context;
         }
-        public async Task<Models.UserProfile> Create(Models.UserProfile entity)
+        public async Task<UserProfile> Create(UserProfile entity)
         {
             _context.UserProfiles.Add(entity);
             await _context.SaveChangesAsync();
@@ -25,20 +25,20 @@ namespace webapi.Services.UserProfile
 
             if (userProfile == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Models.UserProfile));
+                throw new EntityNotFoundExeption(id, nameof(UserProfile));
             }
             _context.UserProfiles.Remove(userProfile);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Models.UserProfile>> GetAll()
+        public async Task<ICollection<UserProfile>> GetAll()
         {
             return await _context.UserProfiles
                 .Include(x => x.Workouts)
                 .Include(x => x.Goals).ToListAsync();
         }
 
-        public async Task<Models.UserProfile> GetById(int id)
+        public async Task<UserProfile> GetById(int id)
         {
             var userProfile = await _context.UserProfiles
                 .Include(x => x.Workouts)
@@ -46,17 +46,17 @@ namespace webapi.Services.UserProfile
 
             if (userProfile == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Models.UserProfile));
+                throw new EntityNotFoundExeption(id, nameof(UserProfile));
             }
             return userProfile;
         }
 
-        public async Task<Models.UserProfile> Update(Models.UserProfile entity)
+        public async Task<UserProfile> Update(UserProfile entity)
         {
             var foundUserProfile = await _context.UserProfiles.AnyAsync(x => x.Id == entity.Id);
             if (!foundUserProfile)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(Models.UserProfile));
+                throw new EntityNotFoundExeption(entity.Id, nameof(UserProfile));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

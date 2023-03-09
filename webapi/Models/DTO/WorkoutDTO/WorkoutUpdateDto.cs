@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace webapi.Models.DTO.Workout
+namespace webapi.Models.DTO.WorkoutDTO
 {
 
     public class WorkoutUpdateDto

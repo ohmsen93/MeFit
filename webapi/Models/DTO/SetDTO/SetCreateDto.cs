@@ -1,4 +1,4 @@
-﻿namespace webapi.Models.DTO.Set
+﻿namespace webapi.Models.DTO.SetDTO
 {
     public class SetCreateDto
     {
