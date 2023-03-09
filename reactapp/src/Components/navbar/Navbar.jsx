@@ -1,8 +1,6 @@
 import keycloak from "../../keycloak";
 import { ROLES } from "../../const/roles";
-import { isAuthenticated } from "../Security/Authentication";
 
-const isAuthorized = isAuthenticated();
 const paths = [
   { name: "Dashboard", path: "Dashboard" },
   { name: "Profile", path: "Profile" },
