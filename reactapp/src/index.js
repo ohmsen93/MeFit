@@ -10,6 +10,7 @@ import './index.css';
 import { initialize } from "./keycloak";
 import App from './App';
 import Loading from "./Components/loading/Loading";
+import AppContext from './Components/context/AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -21,7 +22,9 @@ initialize()
   .then(() => { // If No Keycloak Error occurred - Display the App
     root.render(
       <React.StrictMode>
-        <App />
+        <AppContext>
+          <App />
+        </AppContext>
       </React.StrictMode>
     );
   })

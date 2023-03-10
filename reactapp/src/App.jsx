@@ -10,14 +10,17 @@ import { ROLES } from "./const/roles"
 import Dashboard from "./Views/Dashboard"
 import Login from "./Views/Login"
 import Navbar from './Components/navbar/Navbar';
-import keycloak from './keycloak';
 import Contributor from './Views/Contributor';
 import UserProfile from './Views/UserProfile';
+import { useAuth } from './Components/context/AuthenticateContext';
 
 function App() {
+
+  const {auth} = useAuth();
+
     return (
       <BrowserRouter>
-      {keycloak.authenticated && (
+      {auth && (
         <Navbar />
       )}
         <main className="container">
