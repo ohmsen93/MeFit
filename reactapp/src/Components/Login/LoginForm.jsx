@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import keycloak from "../../keycloak";
 import { useAuth } from "../context/AuthenticateContext";
