@@ -9,7 +9,7 @@ using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
 using webapi.Services.WorkoutService;
 using webapi.Services.UserProfileService;
-
+using webapi.Services.GoalServices;
 
 namespace webapi
 {
@@ -24,13 +24,15 @@ namespace webapi
             builder.Services.AddTransient<IExerciseService, ExerciseService>();
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
+            builder.Services.AddTransient<IGoalService, GoalService>();
 
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            builder.Services.AddControllers();
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            //});
 
             builder.Services.AddDbContext<MeFitContext>();
 
@@ -80,7 +82,7 @@ namespace webapi
             var services = scope.ServiceProvider;
             var dbContext = services.GetRequiredService<MeFitContext>();
             //dbContext.Database.EnsureCreated(); 
-            dbContext.Database.Migrate();
+            //dbContext.Database.Migrate();
 
             // Set up HTTPS redirection and authorization
             app.UseHttpsRedirection();
