@@ -1,6 +1,6 @@
-﻿namespace webapi.Models.DTO.UserDTO
+﻿namespace webapi.Models.DTO.UserDto
 {
-    public class UserUpdateDto
+    public class UserUpdateDTO
     {
         public int Id { get; set; }
 
