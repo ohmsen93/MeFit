@@ -5,6 +5,7 @@ using System.Reflection;
 using webapi.DatabaseContext;
 using webapi.Services;
 using System.Text.Json.Serialization;
+using webapi.Services.ContributionrequestServices;
 using webapi.Services.ExerciseServices;
 using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
@@ -25,6 +26,8 @@ namespace webapi
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
+
 
 
             // Add controllers and database context to the container
