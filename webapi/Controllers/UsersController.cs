@@ -10,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.ExerciseDTO;
-using webapi.Services.ExerciseServices;
+using webapi.Models.DTO.SetDTO;
+using webapi.Models.DTO.UserDTO;
+using webapi.Services.SetServices;
+using webapi.Services.UserServices;
 
 namespace webapi.Controllers
 {
@@ -20,31 +22,31 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class ExercisesController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly IExerciseService _service;
+        private readonly IUserService _service;
         private readonly IMapper _mapper;
 
-        public ExercisesController(IExerciseService service, IMapper mapper)
+        public UsersController(IUserService service, IMapper mapper)
         {
-            _service = service;
-            _mapper = mapper;
+            _service= service;
+            _mapper=   mapper;
         }
 
-        // GET: api/Exercises
+        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return Ok(_mapper.Map<ICollection<ExerciseReadDto>>(await _service.GetAll()));
+            return Ok(_mapper.Map<ICollection<UserReadDto>>(await _service.GetAll()));
         }
 
-        // GET: api/Exercises/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exercise>> GetExercise(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             try
             {
-                return Ok(_mapper.Map<ExerciseReadDto>(await _service.GetById(id)));
+                return Ok(_mapper.Map<UserReadDto>(await _service.GetById(id)));
             }
             catch (EntityNotFoundException ex)
             {
@@ -55,12 +57,12 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Exercises/5
+        // PATCH: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutExercise(int id, ExerciseUpdateDto exerciseUpdateDto)
+        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
-            if (id != exerciseUpdateDto.Id)
+            if (id != userUpdateDto.Id)
             {
                 return BadRequest();
             }
@@ -68,8 +70,8 @@ namespace webapi.Controllers
 
             try
             {
-                var exercise = _mapper.Map<Exercise>(exerciseUpdateDto);
-                await _service.Update(exercise);
+                var user = _mapper.Map<User>(userUpdateDto);
+                await _service.Update(user);
             }
             catch (EntityNotFoundException ex)
             {
@@ -82,25 +84,19 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/Exercises
+        // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Exercise>> PostExercise(ExerciseCreateDto exerciseCreateDto)
+        public async Task<ActionResult<User>> PostUser(UserCreateDto userCreateDto)
         {
-            var exercise = _mapper.Map<Exercise>(exerciseCreateDto);
-            await _service.Create(exercise);
-            var exerciseUpdateSetsDto = new ExerciseUpdateSetsDto { SetIds = exerciseCreateDto.SetIds };
-            var exerciseUpdateMusclegroupsDto = new ExerciseUpdateMusclegroupsDto { MusclegroupIds = exerciseCreateDto.MusclegroupIds };
-            await _service.UpdateExerciseSets(exercise.Id, exerciseUpdateSetsDto.SetIds);
-            await _service.UpdateExerciseMusclegroups(exercise.Id, exerciseUpdateMusclegroupsDto.MusclegroupIds);
-
-            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exercise);
+            var user = _mapper.Map<User>(userCreateDto);
+            await _service.Create(user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-
-        //// DELETE: api/Exercises/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteExercise(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             try
             {

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.ExerciseDTO;
 
-namespace webapi.Services.ExerciseService
+namespace webapi.Services.ExerciseServices
 {
     public class ExerciseService : IExerciseService
     {

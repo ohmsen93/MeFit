@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using webapi.Models;
-using webapi.Models.DTO.ExerciseDTO;
+﻿using webapi.Models;
 
-namespace webapi.Services.ExerciseService
+namespace webapi.Services.ExerciseServices
 {
     public interface IExerciseService : IServices<Exercise, int>
     {

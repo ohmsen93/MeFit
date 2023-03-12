@@ -11,7 +11,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.SetDTO;
-using webapi.Services.SetService;
+using webapi.Services.SetServices;
 
 namespace webapi.Controllers
 {
@@ -55,7 +55,7 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Sets/5
+        // PATCH: api/Sets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
         public async Task<IActionResult> PutSet(int id, SetUpdateDto setUpdateDto)

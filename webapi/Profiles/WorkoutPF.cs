@@ -7,9 +7,9 @@ using webapi.Models.DTO.ExerciseDTO;
 namespace webapi.Profiles
 {
 
-    public class WorkoutProfile : Profile
+    public class WorkoutPF : Profile
     {
-        public WorkoutProfile()
+        public WorkoutPF()
         {
             CreateMap<WorkoutCreateDto, Workout>();
             CreateMap<Workout, WorkoutReadDto>()

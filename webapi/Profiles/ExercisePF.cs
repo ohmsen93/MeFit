@@ -4,9 +4,9 @@ using webapi.Models.DTO.ExerciseDTO;
 
 namespace webapi.Profiles
 {
-    public class ExerciseProfile:Profile
+    public class ExercisePF:Profile
     {
-        public ExerciseProfile()
+        public ExercisePF()
         {
             CreateMap<ExerciseCreateDto, Exercise>();
             CreateMap<Exercise, ExerciseReadDto>()

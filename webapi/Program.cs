@@ -4,9 +4,12 @@ using System.Configuration;
 using System.Reflection;
 using webapi.DatabaseContext;
 using webapi.Services;
-using webapi.Services.SetService;
-using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
+using webapi.Services.ExerciseServices;
+using webapi.Services.SetServices;
+using webapi.Services.UserProfileServices;
+using webapi.Services.WorkoutServices;
+using webapi.Services.UserServices;
 using webapi.Services.WorkoutService;
 using webapi.Services.UserProfileService;
 using webapi.Services.GoalServices;
@@ -24,15 +27,18 @@ namespace webapi
             builder.Services.AddTransient<IExerciseService, ExerciseService>();
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
+            builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IGoalService, GoalService>();
 
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers();
             //builder.Services.AddControllers().AddJsonOptions(options =>
             //{
             //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             //});
+
+            builder.Services.AddControllers();
+
 
             builder.Services.AddDbContext<MeFitContext>();
 
