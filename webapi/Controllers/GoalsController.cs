@@ -31,6 +31,7 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
         // GET: api/Goals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoals()
@@ -109,6 +110,18 @@ namespace webapi.Controllers
             }
 
             return NoContent();
+        }
+        #endregion
+
+        /// <summary>
+        /// Gets achieved goals of a specific user by user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("achieved/user/{id}")]
+        public async Task<ActionResult<IEnumerable<Goal>>> GetAchievedGoals(int id)
+        {
+            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAchievedGoals(id)));
         }
 
     }
