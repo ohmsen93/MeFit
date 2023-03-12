@@ -11,6 +11,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.GoalDTO;
+using webapi.Models.DTO.WorkoutDTO;
 using webapi.Services.GoalServices;
 
 namespace webapi.Controllers
@@ -122,6 +123,17 @@ namespace webapi.Controllers
         public async Task<ActionResult<IEnumerable<Goal>>> GetAchievedGoals(int id)
         {
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAchievedGoals(id)));
+        }
+
+        /// <summary>
+        /// Gets workouts of a specific goal by goal id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/workouts")]
+        public async Task<ActionResult<IEnumerable<Workout>>> GetGoalWorkouts(int id)
+        {
+            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalWorkouts(id)));
         }
 
     }
