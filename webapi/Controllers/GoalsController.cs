@@ -136,5 +136,16 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalWorkouts(id)));
         }
 
+        /// <summary>
+        /// Gets completed workouts of a goal by goal id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/completedworkouts")]
+        public async Task<ActionResult<IEnumerable<Workout>>> GetGoalCompletedWorkouts(int id)
+        {
+            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalCompletedWorkouts(id)));
+        }
+
     }
 }
