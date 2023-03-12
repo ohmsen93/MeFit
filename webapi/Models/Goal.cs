@@ -23,5 +23,5 @@ public partial class Goal
 
     public virtual Status FkStatus { get; set; } = null!;
 
-    public ICollection<Workout> Workouts { get; set; }
+    public ICollection<GoalWorkout> GoalWorkouts { get; set; }
 }
