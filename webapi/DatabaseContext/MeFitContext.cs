@@ -161,7 +161,7 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.FkWorkoutId).HasColumnName("Fk_Workout_id");
             entity.Property(e => e.FkStatusId).HasColumnName("Fk_Status_id");
         });
-        modelBuilder.Entity<GoalWorkout>().ToTable("Goal_Workouts");
+        modelBuilder.Entity<GoalWorkout>().ToTable("Goal_Workout");
 
 
         modelBuilder.Entity<Musclegroup>(entity =>
