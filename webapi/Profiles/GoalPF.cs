@@ -5,9 +5,9 @@ using webapi.Models.DTO.GoalDTO;
 
 namespace webapi.Profiles
 {
-    public class GoalProfile:Profile
+    public class GoalPF:Profile
     {
-        public GoalProfile()
+        public GoalPF()
         {
             CreateMap<GoalCreateDto, Goal>();
             CreateMap<Goal, GoalReadDto>()

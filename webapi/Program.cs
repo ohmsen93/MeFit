@@ -10,8 +10,8 @@ using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserServices;
-using webapi.Services.WorkoutService;
-using webapi.Services.UserProfileService;
+using webapi.Services.WorkoutServices;
+using webapi.Services.UserProfileServices;
 using webapi.Services.GoalServices;
 
 namespace webapi
