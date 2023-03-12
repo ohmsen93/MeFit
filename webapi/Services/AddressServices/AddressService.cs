@@ -5,7 +5,7 @@ using webapi.Models;
 
 namespace webapi.Services.AddressServices
 {
-    public class AddressService : ISetService
+    public class AddressService : IAddressService
     {
         private readonly MeFitContext _context;
 
@@ -13,47 +13,47 @@ namespace webapi.Services.AddressServices
         {
             _context = context;
         }
-        public async Task<Set> Create(Set entity)
+        public async Task<Address> Create(Address entity)
         {
-            _context.Sets.Add(entity);
+            _context.Addresses.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
         public async Task DeleteById(int id)
         {
-            var set = await _context.Sets.FindAsync(id);
+            var address = await _context.Addresses.FindAsync(id);
 
-            if (set == null)
+            if (address == null)
             {
-                throw new EntityNotFoundException(id, nameof(Set));
+                throw new EntityNotFoundException(id, nameof(Address));
             }
-            _context.Sets.Remove(set);
+            _context.Addresses.Remove(address);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Set>> GetAll()
+        public async Task<ICollection<Address>> GetAll()
         {
-            return await _context.Sets.Include(x => x.Exercises).ToListAsync();
+            return await _context.Addresses.ToListAsync();
         }
 
-        public async Task<Set> GetById(int id)
+        public async Task<Address> GetById(int id)
         {
-           var set = await _context.Sets.Include(x=>x.Exercises).FirstOrDefaultAsync(x => x.Id == id);
+           var address = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (set == null)
+            if (address == null)
             {
                 throw new EntityNotFoundException(id,nameof(Set));
             }
-            return set;
+            return address;
         }
 
-        public async Task<Set> Update(Set entity)
+        public async Task<Address> Update(Address entity)
         {
-            var foundSet = await _context.Sets.AnyAsync(x => x.Id == entity.Id);
-            if (!foundSet)
+            var foundAddress = await _context.Addresses.AnyAsync(x => x.Id == entity.Id);
+            if (!foundAddress)
             {
-                throw new EntityNotFoundException(entity.Id, nameof(Set));
+                throw new EntityNotFoundException(entity.Id, nameof(Address));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

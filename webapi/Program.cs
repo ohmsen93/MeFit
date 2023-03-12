@@ -10,6 +10,7 @@ using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserServices;
+using webapi.Services.AddressServices;
 
 namespace webapi
 {
@@ -25,6 +26,8 @@ namespace webapi
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IAddressService, AddressService>();
+
 
 
             // Add controllers and database context to the container

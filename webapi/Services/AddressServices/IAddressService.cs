@@ -2,7 +2,7 @@
 
 namespace webapi.Services.AddressServices
 {
-    public interface ISetService : IServices<Set, int>
+    public interface IAddressService : IServices<Address, int>
     {
     }
 }
