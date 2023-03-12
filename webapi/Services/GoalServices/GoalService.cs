@@ -34,28 +34,26 @@ namespace webapi.Services.GoalServices
 
         public async Task<ICollection<Goal>> GetAchievedGoals(int id)
         {
-            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.FkUserId == id);
-            
+            var userProfile = await _context.UserProfiles.Where(u => u.FkUserId == id).FirstOrDefaultAsync();
+
             if (userProfile == null)
             {
                 throw new EntityNotFoundException(id, nameof(UserProfile));
             }
 
-            var achivedGoals =  await _context.Goals.Include(x=>x.Workouts)
-                .Where(x=> x.FkUserProfile== userProfile)
-                .Where(x => x.Achived == true).ToListAsync();
+            var achivedGoals = await _context.Goals.Include(g => g.GoalWorkouts).Where(x => x.Achived == true).ToListAsync();
             
             return achivedGoals;
         }
 
         public async Task<ICollection<Goal>> GetAll()
         {
-            return await _context.Goals.Include(x => x.Workouts).ToListAsync();
+            return await _context.Goals.Include(g => g.GoalWorkouts).ToListAsync();
         }
 
         public async Task<Goal> GetById(int id)
         {
-            var goal = await _context.Goals.Include(x => x.Workouts).FirstOrDefaultAsync(x => x.Id == id);
+            var goal = await _context.Goals.Include(g => g.GoalWorkouts).FirstOrDefaultAsync(x => x.Id == id);
 
             if (goal == null)
             {
@@ -66,27 +64,48 @@ namespace webapi.Services.GoalServices
 
         public async Task<ICollection<Workout>> GetGoalCompletedWorkouts(int id)
         {
-            throw new NotImplementedException();
-            //var goal = await _context.Goals.Include(x => x.Workouts.Where(w=>w.s)).FirstOrDefaultAsync(x => x.Id == id);
-
-            //if (goal == null)
-            //{
-            //    throw new EntityNotFoundException(id, nameof(goal));
-            //}
-
-            //return goal.Workouts; ;
-        }
-
-        public async Task<ICollection<Workout>> GetGoalWorkouts(int id)
-        {
-            var goal = await _context.Goals.Include(x=>x.Workouts).FirstOrDefaultAsync(x => x.Id == id);
+            var goal = await _context.Goals.Include(x => x.GoalWorkouts.Where(x => x.FkStatusId == 2)).FirstOrDefaultAsync(x => x.Id == id);
 
             if (goal == null)
             {
                 throw new EntityNotFoundException(id, nameof(goal));
             }
 
-            return goal.Workouts;
+            var completedWorkouts = new List<Workout>();
+
+            foreach (var item in goal.GoalWorkouts)
+            {
+                var workout = await _context.Workouts.FindAsync(item.FkWorkoutId);
+                if (workout == null)
+                    throw new KeyNotFoundException($"Workout with {id} not found");
+
+                completedWorkouts.Add(workout);
+            }
+
+            return completedWorkouts;
+        }
+
+        public async Task<ICollection<Workout>> GetGoalWorkouts(int id)
+        {
+            var goal = await _context.Goals.Include(x => x.GoalWorkouts).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (goal == null)
+            {
+                throw new EntityNotFoundException(id, nameof(goal));
+            }
+
+            var workouts = new List<Workout>();
+
+            foreach (var item in goal.GoalWorkouts)
+            {
+                var workout = await _context.Workouts.FindAsync(item.FkWorkoutId);
+                if (workout == null)
+                    throw new KeyNotFoundException($"Workout with id {id} not found");
+
+                workouts.Add(workout);
+            }
+
+            return workouts;
         }
 
         public async Task<Goal> Update(Goal entity)
