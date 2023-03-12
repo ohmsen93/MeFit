@@ -19,7 +19,7 @@ namespace webapi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AddressLine_1 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     AddressLine_2 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: true),
-                    AddressLine_3 = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true),
+                    AddressLine_3 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 10, nullable: true),
                     PostalCode = table.Column<int>(type: "int", nullable: false),
                     City = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     Country = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)

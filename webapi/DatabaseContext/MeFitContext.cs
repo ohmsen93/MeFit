@@ -60,7 +60,7 @@ public partial class MeFitContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("AddressLine_2");
             entity.Property(e => e.AddressLine3)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("AddressLine_3");
             entity.Property(e => e.City)
