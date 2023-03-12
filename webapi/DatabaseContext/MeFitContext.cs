@@ -46,6 +46,7 @@ public partial class MeFitContext : DbContext
 
     public virtual DbSet<Workout> Workouts { get; set; }
 
+    public virtual DbSet<GoalWorkout> GoalWorkouts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
@@ -151,6 +152,17 @@ public partial class MeFitContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Goals_Status");
         });
+
+
+        // Added 
+        modelBuilder.Entity<GoalWorkout>(entity =>
+        {
+            entity.Property(e => e.FkGoalId).HasColumnName("Fk_Goal_id");
+            entity.Property(e => e.FkWorkoutId).HasColumnName("Fk_Workout_id");
+            entity.Property(e => e.FkStatusId).HasColumnName("Fk_Status_id");
+        });
+        modelBuilder.Entity<GoalWorkout>().ToTable("Goal_Workouts");
+
 
         modelBuilder.Entity<Musclegroup>(entity =>
         {
@@ -289,21 +301,21 @@ public partial class MeFitContext : DbContext
 
         });
 
-        // Workout Goal linking table
-        modelBuilder.Entity<Workout>()
-            .HasMany(m => m.Goals)
-            .WithMany(c => c.Workouts)
-            .UsingEntity<Dictionary<string, object>>(
-                "Workout_Goals",
-                r => r.HasOne<Goal>().WithMany().HasForeignKey("Fk_Goal_Id"),
-                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
-                je =>
-                {
-                    je.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
-                    je.HasOne<Status>().WithMany().HasForeignKey("Fk_Status_Id");
-                    je.ToTable("Workout_Goals_Status");
+        //// Workout Goal linking table
+        //modelBuilder.Entity<Workout>()
+        //    .HasMany(m => m.Goals)
+        //    .WithMany(c => c.Workouts)
+        //    .UsingEntity<Dictionary<string, object>>(
+        //        "Workout_Goals",
+        //        r => r.HasOne<Goal>().WithMany().HasForeignKey("Fk_Goal_Id"),
+        //        l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+        //        je =>
+        //        {
+        //            je.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
+        //            je.HasOne<Status>().WithMany().HasForeignKey("Fk_Status_Id");
+        //            je.ToTable("Workout_Goals_Status");
 
-                });
+        //        });
 
 
 
