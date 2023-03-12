@@ -25,7 +25,7 @@ namespace webapi.Services.UserServices
 
             if (user == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(Set));
+                throw new EntityNotFoundException(id, nameof(Set));
             }
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
@@ -42,7 +42,7 @@ namespace webapi.Services.UserServices
 
             if (user == null)
             {
-                throw new EntityNotFoundExeption(id, nameof(User));
+                throw new EntityNotFoundException(id, nameof(User));
             }
             return user;
         }
@@ -52,7 +52,7 @@ namespace webapi.Services.UserServices
             var foundUser = await _context.Users.AnyAsync(x => x.Id == entity.Id);
             if (!foundUser)
             {
-                throw new EntityNotFoundExeption(entity.Id, nameof(User));
+                throw new EntityNotFoundException(entity.Id, nameof(User));
             }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

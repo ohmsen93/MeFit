@@ -1,6 +1,4 @@
-﻿using NuGet.Protocol.Core.Types;
-
-namespace webapi.Models.DTO.UserDto
+﻿namespace webapi.Models.DTO.UserDTO
 {
     public class UserReadDto
     {

@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.Set;
-using webapi.Models.DTO.UserDto;
-using webapi.Services.SetService;
+using webapi.Models.DTO.SetDTO;
+using webapi.Models.DTO.UserDTO;
+using webapi.Services.SetServices;
 using webapi.Services.UserServices;
 
 namespace webapi.Controllers
@@ -48,7 +48,7 @@ namespace webapi.Controllers
             {
                 return Ok(_mapper.Map<UserReadDto>(await _service.GetById(id)));
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -73,7 +73,7 @@ namespace webapi.Controllers
                 var user = _mapper.Map<User>(userUpdateDto);
                 await _service.Update(user);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -102,7 +102,7 @@ namespace webapi.Controllers
             {
                 await _service.DeleteById(id);
             }
-            catch (EntityNotFoundExeption ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(new ProblemDetails
                 {

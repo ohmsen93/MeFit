@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using webapi.Models.DTO.Set;
+using webapi.Models.DTO.SetDTO;
 using webapi.Models;
-using webapi.Models.DTO.UserDto;
+using webapi.Models.DTO.UserDTO;
 
 namespace webapi.Profiles
 {
-    public class UserProfile:Profile
+    public class UserPF:Profile
     {
-        public UserProfile()
+        public UserPF()
         {
             CreateMap<UserCreateDto, User>();
             CreateMap<User, UserReadDto>()

@@ -5,9 +5,9 @@ using webapi.Models;
 
 namespace webapi.Profiles
 {
-    public class UserProfileProfile:Profile
+    public class UserProfilePF:Profile
     {
-        public UserProfileProfile()
+        public UserProfilePF()
         {
             CreateMap<UserProfileCreateDto, Models.UserProfile>();
             CreateMap<Models.UserProfile, UserProfileReadDto>()

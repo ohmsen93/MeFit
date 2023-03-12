@@ -9,7 +9,6 @@ using webapi.Services.ExerciseServices;
 using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
-using webapi.Services.UserProfile;
 using webapi.Services.UserServices;
 
 namespace webapi

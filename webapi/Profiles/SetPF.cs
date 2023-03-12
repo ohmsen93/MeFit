@@ -4,9 +4,9 @@ using webapi.Models.DTO.SetDTO;
 
 namespace webapi.Profiles
 {
-    public class SetProfile:Profile
+    public class SetPF:Profile
     {
-        public SetProfile()
+        public SetPF()
         {
             CreateMap<SetCreateDto, Set>();
             CreateMap<Set, SetReadDto>()
