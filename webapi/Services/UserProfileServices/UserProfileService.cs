@@ -3,7 +3,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 
-namespace webapi.Services.UserProfileService
+namespace webapi.Services.UserProfileServices
 {
     public class UserProfileService : IUserProfileService
     {

@@ -11,7 +11,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.WorkoutDTO;
-using webapi.Services.WorkoutService;
+using webapi.Services.WorkoutServices;
 
 namespace webapi.Controllers
 {

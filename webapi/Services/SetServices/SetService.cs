@@ -3,7 +3,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 
-namespace webapi.Services.SetService
+namespace webapi.Services.SetServices
 {
     public class SetService : ISetService
     {

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.WorkoutDTO;
 
-namespace webapi.Services.WorkoutService
+namespace webapi.Services.WorkoutServices
 {
     public class WorkoutService : IWorkoutService
     {

@@ -4,11 +4,11 @@ using System.Configuration;
 using System.Reflection;
 using webapi.DatabaseContext;
 using webapi.Services;
-using webapi.Services.SetService;
-using webapi.Services.ExerciseService;
 using System.Text.Json.Serialization;
-using webapi.Services.WorkoutService;
-using webapi.Services.UserProfileService;
+using webapi.Services.ExerciseServices;
+using webapi.Services.SetServices;
+using webapi.Services.UserProfileServices;
+using webapi.Services.WorkoutServices;
 
 
 namespace webapi

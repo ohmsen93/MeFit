@@ -11,7 +11,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.SetDTO;
-using webapi.Services.SetService;
+using webapi.Services.SetServices;
 
 namespace webapi.Controllers
 {
