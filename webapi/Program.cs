@@ -9,7 +9,8 @@ using webapi.Services.ExerciseServices;
 using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
-
+using webapi.Services.UserProfile;
+using webapi.Services.UserServices;
 
 namespace webapi
 {
@@ -24,13 +25,17 @@ namespace webapi
             builder.Services.AddTransient<IExerciseService, ExerciseService>();
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            //});
+
+            builder.Services.AddControllers();
+
 
             builder.Services.AddDbContext<MeFitContext>();
 

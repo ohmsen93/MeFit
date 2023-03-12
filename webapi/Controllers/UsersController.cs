@@ -10,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
-using webapi.Models.DTO.SetDTO;
-using webapi.Services.SetServices;
+using webapi.Models.DTO.Set;
+using webapi.Models.DTO.UserDto;
+using webapi.Services.SetService;
+using webapi.Services.UserServices;
 
 namespace webapi.Controllers
 {
@@ -20,33 +22,33 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class SetsController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly ISetService _service;
+        private readonly IUserService _service;
         private readonly IMapper _mapper;
 
-        public SetsController(ISetService service, IMapper mapper)
+        public UsersController(IUserService service, IMapper mapper)
         {
-            _service = service;
-            _mapper = mapper;
+            _service= service;
+            _mapper=   mapper;
         }
 
-        // GET: api/Sets
+        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Set>>> GetSets()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return Ok(_mapper.Map<ICollection<SetReadDto>>(await _service.GetAll()));
+            return Ok(_mapper.Map<ICollection<UserReadDto>>(await _service.GetAll()));
         }
 
-        // GET: api/Sets/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Set>> GetSet(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             try
             {
-                return Ok(_mapper.Map<SetReadDto>(await _service.GetById(id)));
+                return Ok(_mapper.Map<UserReadDto>(await _service.GetById(id)));
             }
-            catch (EntityNotFoundException ex)
+            catch (EntityNotFoundExeption ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -55,12 +57,12 @@ namespace webapi.Controllers
             }
         }
 
-        // PATCH: api/Sets/5
+        // PATCH: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutSet(int id, SetUpdateDto setUpdateDto)
+        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
-            if (id != setUpdateDto.Id)
+            if (id != userUpdateDto.Id)
             {
                 return BadRequest();
             }
@@ -68,10 +70,10 @@ namespace webapi.Controllers
 
             try
             {
-                var set = _mapper.Map<Set>(setUpdateDto);
-                await _service.Update(set);
+                var user = _mapper.Map<User>(userUpdateDto);
+                await _service.Update(user);
             }
-            catch (EntityNotFoundException ex)
+            catch (EntityNotFoundExeption ex)
             {
                 return NotFound(new ProblemDetails
                 {
@@ -82,25 +84,25 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/Sets
+        // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Set>> PostSet(SetCreateDto setCreateDto)
+        public async Task<ActionResult<User>> PostUser(UserCreateDto userCreateDto)
         {
-            var set = _mapper.Map<Set>(setCreateDto);
-            await _service.Create(set);
-            return CreatedAtAction(nameof(GetSet), new { id = set.Id }, set);
+            var user = _mapper.Map<User>(userCreateDto);
+            await _service.Create(user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-        //// DELETE: api/Sets/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSet(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             try
             {
                 await _service.DeleteById(id);
             }
-            catch (EntityNotFoundException ex)
+            catch (EntityNotFoundExeption ex)
             {
                 return NotFound(new ProblemDetails
                 {
