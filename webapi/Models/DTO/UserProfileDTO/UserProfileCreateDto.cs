@@ -1,9 +1,5 @@
-<<<<<<<< HEAD:webapi/Models/DTO/UserProfileDTO/UserProfileCreateDto.cs
 ﻿namespace webapi.Models.DTO.UserProfileDTO
-========
-﻿namespace webapi.Models.DTO.UserProfileDto
->>>>>>>> origin/API-03-User:webapi/Models/DTO/UserProfileDto/UserProfileCreateDto.cs
-{
+ {
     public class UserProfileCreateDto
     {        
         public int FkUserId { get; set; }
