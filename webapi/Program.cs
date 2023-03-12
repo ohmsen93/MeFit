@@ -11,6 +11,8 @@ using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserServices;
+using webapi.Models;
+using webapi.Services.TrainingprogramServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.GoalServices;
@@ -29,6 +31,8 @@ namespace webapi
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
+
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
 
             builder.Services.AddTransient<IGoalService, GoalService>();
