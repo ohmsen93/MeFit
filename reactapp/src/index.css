@@ -16,6 +16,30 @@ code {
   background-color: rgb(200, 69, 69);
 }
 
-.w-200 {
-  width: 240px;
+.overflow-y-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.wpx-240 {
+  width: 240px !important;
+}
+.wpx-480 {
+  width: 480px;
+}
+.wpx-720 {
+  width: 720px;
+}
+.wpx-960 {
+  width: 960px;
+}
+.wp-50 {
+  width: 50%;
+}
+.wp-100 {
+  width: 100%;
+}
+
+.hpx-240 {
+  height: 240px !important;
 }
