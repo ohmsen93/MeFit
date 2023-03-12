@@ -1,6 +1,6 @@
 ﻿namespace webapi.Models.DTO.UserDTO
 {
-    public class UserCreateDTO
+    public class UserCreateDto
     {        
         public string Token { get; set; } = null!;
 
