@@ -1,6 +1,6 @@
 import keycloak from "../../keycloak";
-import { ROLES } from "../../const/roles";
 import { useAuth } from "../context/AuthenticateContext";
+import { Roles } from "../enums/Roles";
 
 const logo = require("./../../Images/icons8-user-100.png");
 
@@ -10,10 +10,16 @@ const paths = [
   { name: "Contributor", path: "Contributor" }
 ]
 
+const hasRole = (roleCollection, toMatch) => {
+  for (let index = 0; index < roleCollection.length; index++) {
+    if (roleCollection[index].match(toMatch)) return true;
+    else return false;
+  }
+}
+
 function Navbar() {
 
-  const { auth, setAuth } = useAuth();
-
+  const { auth, role, setAuth } = useAuth();
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <a className="navbar-brand" >MeFit</a>
@@ -23,14 +29,14 @@ function Navbar() {
       <div className="collapse navbar-collapse" id="navbarsExample03">
         <ul className="navbar-nav mr-auto">
           {paths.map((newPath, index) => {
-            if (!keycloak.hasRealmRole(ROLES.Contributor) | !keycloak.hasRealmRole(ROLES.Administrator) && !newPath.name.match("Contributor")) {
+            if ((!hasRole(role,Roles.Contributor) || !hasRole(role,Roles.Admin)) && !newPath.name.match("Contributor")) {
               return (
                 <li key={index} className="nav-item">
                   <a className="nav-link" href={newPath.path}>{newPath.name}</a>
                 </li>
               );
             }
-            else if (keycloak.hasRealmRole(ROLES.Contributor) | keycloak.hasRealmRole(ROLES.Administrator)) {
+            else if (hasRole(role,Roles.Contributor) || hasRole(role,Roles.Admin)) {
               return (
                 <li key={index} className="nav-item">
                   <a className="nav-link" href={newPath.path}>{newPath.name}</a>
