@@ -11,6 +11,7 @@ using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserServices;
+using webapi.Services.GaolWrokutServices;
 using webapi.Services.AddressServices;
 using webapi.Models;
 using webapi.Services.TrainingprogramServices;
@@ -32,8 +33,11 @@ namespace webapi
             builder.Services.AddTransient<IWorkoutService, WorkoutService>();
             builder.Services.AddTransient<IUserProfileService, UserProfileService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IGoalWorkoutService, GoalWorkoutService>();
             builder.Services.AddTransient<IAddressService, AddressService>();
 
+            //Sets the endpoint urls to lowercase
+            builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
 
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
@@ -79,7 +83,10 @@ namespace webapi
                         Url = new Uri("https://opensource.org/license/mit/")
                     }
                 });
-                //options.IncludeXmlComments(xmlPath);
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
 
             // Build the application.
@@ -90,7 +97,7 @@ namespace webapi
             {
                 // Use Swagger UI in development environment
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeFit v1"));
             }
 
             // Set up database migration
