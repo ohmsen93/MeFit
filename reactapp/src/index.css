@@ -43,3 +43,15 @@ code {
 .hpx-240 {
   height: 240px !important;
 }
+.hpx-480 {
+  height: 480px !important;
+}
+.hpx-720 {
+  height: 720px !important;
+}
+.hp-50 {
+  height: 50%;
+}
+.hp-100 {
+  height: 100%;
+}
