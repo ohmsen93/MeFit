@@ -6,15 +6,15 @@ import { useAuth } from "../context/AuthenticateContext";
 
 const LoginForm = () => {
 
-    const {auth, setAuth} = useAuth();
+    const {auth, setAuth,setRole} = useAuth();
     const navigate = useNavigate();
     
     useEffect(() => {
         if (auth) {
+            setRole(keycloak.tokenParsed.roles)
             navigate("dashboard")
-            console.log(auth);
         }
-    }, [auth,navigate])
+    }, )
 
     return (
         <div>

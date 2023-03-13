@@ -3,7 +3,7 @@ import AuthProvider from "./AuthenticateContext";
 const AppContext = ({ children }) => {
     return (
         <AuthProvider>
-            {children}
+                {children}
         </AuthProvider>
     )
 }
