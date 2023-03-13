@@ -1,3 +1,4 @@
+import keycloak from "../keycloak";
 
 function Dashboard (){
   return (

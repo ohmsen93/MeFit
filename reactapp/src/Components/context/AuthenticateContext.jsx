@@ -9,7 +9,8 @@ export const useAuth = () => {
 
 const AuthProvider = ({children}) => {
     const [auth, setAuth] = useState(keycloak?.authenticated || false)
-    const state = {auth, setAuth}
+    const [role, setRole] = useState(keycloak?.tokenParsed?.roles || [])
+    const state = {auth,role, setAuth,setRole}
 
     return (
         <AuthContext.Provider value={state}>
