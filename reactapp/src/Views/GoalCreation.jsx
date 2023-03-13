@@ -5,7 +5,8 @@ const GoalCreation = () => {
     const [state, setState] = useState({
         tab: "program",
         selectedProgram: null,
-        selectedWorkouts: []
+        selectedWorkouts: [],
+        startDate: new Date().toLocaleDateString('fr-ca')
     })
 
     const programSelected = (event, program) => {
@@ -27,21 +28,46 @@ const GoalCreation = () => {
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <h1>New goal</h1>
             <div className="d-flex flex-fill border wp-100">
-                <div className="text-center wp-50 p-2">
+                <div className="d-flex flex-column text-center wp-50 p-2">
+
+                    {/* Goal Form */}
                     <GoalCreationContext.Provider value={state}>
+                        <p>GoalForm</p>
+                        <div className="hp-100 p-2">
                         <GoalCreationContext.Consumer>
                             {state => (
-                                <>
-                                <p>GoalForm</p>
-                                {state.selectedProgram !== null && <div>{state.selectedProgram.name}</div>}
-                                {state.selectedWorkouts.map(w => <div key={w.id}>{w.name}</div>)}
-                                </>
+                                    <>
+                                    {state.selectedProgram !== null && <div>{state.selectedProgram.name}</div>}
+                                    {state.selectedWorkouts.length > 0 &&
+                                        <div className="overflow-y-scroll text-center hp-100">
+                                            {state.selectedWorkouts.map(w => <div key={w.id}>{w.name}</div>)}
+                                        </div>
+                                    }
+                                    </>
                             )}
                         </GoalCreationContext.Consumer>
+                        </div>
+                        <div className="hp-50">
+                            <div>
+                                <label htmlFor="start-date">Start date:</label>
+                                <br/>
+                                <input onChange={e => setState({...state, startDate: e.target.value})} type="date" min={new Date().toLocaleDateString('fr-ca')} id="start-date"/>
+                            </div>
+                            <div>
+                                <label htmlFor="end-date">End date:</label>
+                                <br/>
+                                <input min={state.startDate} type="date" id="start-date"/>
+                            </div>
+                        </div>
+                        <div>
+                            <button className="btn btn-outline-secondary">Save goal</button>
+                        </div>
                     </GoalCreationContext.Provider>
+
                 </div>
                 <div className="d-flex flex-column wp-100">
-
+                    
+                    {/* Tabs */}
                     <div>
                         <input onChange={() => tabSelected("program")} type="radio" name="tab-radio" id="program-tab" className="btn-check" defaultChecked/>
                         <label htmlFor="program-tab" className="btn btn-outline-secondary">Programs</label>
