@@ -1,6 +1,6 @@
 ﻿namespace webapi.Models
 {
-    public class GoalWorkout
+    public class GoalWorkouts
     {
         public int Id { get; set; }
         public int FkGoalId { get; set; }

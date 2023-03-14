@@ -46,7 +46,7 @@ public partial class MeFitContext : DbContext
 
     public virtual DbSet<Workout> Workouts { get; set; }
 
-    public virtual DbSet<GoalWorkout> GoalWorkouts { get; set; }
+    public virtual DbSet<GoalWorkouts> GoalWorkouts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
@@ -155,13 +155,13 @@ public partial class MeFitContext : DbContext
 
 
         // Added 
-        modelBuilder.Entity<GoalWorkout>(entity =>
+        modelBuilder.Entity<GoalWorkouts>(entity =>
         {
             entity.Property(e => e.FkGoalId).HasColumnName("Fk_Goal_id");
             entity.Property(e => e.FkWorkoutId).HasColumnName("Fk_Workout_id");
             entity.Property(e => e.FkStatusId).HasColumnName("Fk_Status_id");
         });
-        modelBuilder.Entity<GoalWorkout>().ToTable("Goal_Workout");
+        modelBuilder.Entity<GoalWorkouts>().ToTable("Goal_Workouts");
 
 
         modelBuilder.Entity<Musclegroup>(entity =>
@@ -328,9 +328,9 @@ public partial class MeFitContext : DbContext
     private void Seeding(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "administrator@gmail.com", Token = "78acbd80-93b7-4821-9fb0-a5ee776318da" });
-        modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com", Token = "4d24f01a-5261-40f6-a7e0-f051e8e6f599" });
-        modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com", Token = "78acbd80-93b7-4821-9fb0-a5ee776318da" });
+        modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "administrator@gmail.com", FirstLogin = false, Token = "78acbd80-93b7-4821-9fb0-a5ee776318da" });
+        modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com", FirstLogin = false, Token = "4d24f01a-5261-40f6-a7e0-f051e8e6f599" });
+        modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com", FirstLogin = true, Token = "78acbd80-93b7-4821-9fb0-a5ee776318da" });
 
         modelBuilder.Entity<Address>().HasData(new Address { Id = 1, AddressLine1 = "Hybenvej 23,st. th.", AddressLine2 = "", AddressLine3 = "", PostalCode = 8700, City = "Horsens", Country = "Denmark" });
         modelBuilder.Entity<Address>().HasData(new Address { Id = 2, AddressLine1 = "Vestergade 2", AddressLine2 = "", AddressLine3 = "", PostalCode = 2000, City = "København", Country = "Denmark" });
@@ -340,20 +340,20 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<UserProfile>().HasData(new UserProfile { Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "", Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = "" });
         modelBuilder.Entity<UserProfile>().HasData(new UserProfile { Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "", Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = "" });
 
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, FkUserProfileId = 1, EndDate = DateTime.Now, Achived = false, FkTrainingprogramId = null, FkStatusId = 2 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, FkUserProfileId = 2, EndDate = DateTime.Now.AddDays(-14), Achived = true, FkTrainingprogramId = 3, FkStatusId = 1 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, FkUserProfileId = 3, EndDate = DateTime.Now.AddDays(-14), Achived = true, FkTrainingprogramId = 3, FkStatusId = 1 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, FkUserProfileId = 3, EndDate = DateTime.Now, Achived = false, FkTrainingprogramId = null, FkStatusId = 2 });
+        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, FkUserProfileId = 1, StartDate = DateTime.Now.AddDays(-14), EndDate = DateTime.Now, FkTrainingprogramId = null, FkStatusId = 2 });
+        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, FkUserProfileId = 2, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14), FkTrainingprogramId = 3, FkStatusId = 1 });
+        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14), FkTrainingprogramId = 3, FkStatusId = 1 });
+        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-14), EndDate = DateTime.Now, FkTrainingprogramId = null, FkStatusId = 2 });
 
 
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 1, FkGoalId = 2, FkWorkoutId = 1, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 2, FkGoalId = 2, FkWorkoutId = 2, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 3, FkGoalId = 2, FkWorkoutId = 7, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 4, FkGoalId = 3, FkWorkoutId = 1, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 5, FkGoalId = 3, FkWorkoutId = 2, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 6, FkGoalId = 3, FkWorkoutId = 7, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout { Id = 7, FkGoalId = 3, FkWorkoutId = 12, FkStatusId = 2 });
-        //modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout {Id=7, FkGoalId=4, FkWorkoutId=7,FkStatusId=2});
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 1, FkGoalId = 2, FkWorkoutId = 1, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 2, FkGoalId = 2, FkWorkoutId = 2, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 3, FkGoalId = 2, FkWorkoutId = 7, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 4, FkGoalId = 3, FkWorkoutId = 1, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 5, FkGoalId = 3, FkWorkoutId = 2, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 6, FkGoalId = 3, FkWorkoutId = 7, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 7, FkGoalId = 3, FkWorkoutId = 12, FkStatusId = 2 });
+        //modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts {Id=7, FkGoalId=4, FkWorkoutId=7,FkStatusId=2});
 
         modelBuilder.Entity<Status>().HasData(new Status { Id = 1, Statustype = "Completed" });
         modelBuilder.Entity<Status>().HasData(new Status { Id = 2, Statustype = "Pending" });

@@ -34,14 +34,14 @@ namespace webapi.Controllers
 
         // GET: api/GoalWorkouts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GoalWorkout>>> GetGoalWorkouts()
+        public async Task<ActionResult<IEnumerable<GoalWorkouts>>> GetGoalWorkouts()
         {
             return Ok(_mapper.Map<ICollection<GoalWorkoutReadDto>>(await _service.GetAll()));
         }
 
         // GET: api/GoalWorkouts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GoalWorkout>> GetGoalWorkout(int id)
+        public async Task<ActionResult<GoalWorkouts>> GetGoalWorkout(int id)
         {
             return Ok(_mapper.Map<GoalWorkoutReadDto>(await _service.GetById(id)));
         }
@@ -58,7 +58,7 @@ namespace webapi.Controllers
 
             try
             {
-                var goalWorkout = _mapper.Map<GoalWorkout>(goalWorkoutUpdateDto);
+                var goalWorkout = _mapper.Map<GoalWorkouts>(goalWorkoutUpdateDto);
                 await _service.Update(goalWorkout);
             }
             catch (EntityNotFoundException ex)
@@ -75,9 +75,9 @@ namespace webapi.Controllers
         // POST: api/GoalWorkouts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<GoalWorkout>> PostGoalWorkout(GoalWorkoutCreateDto goalWorkoutCreateDto)
+        public async Task<ActionResult<GoalWorkouts>> PostGoalWorkout(GoalWorkoutCreateDto goalWorkoutCreateDto)
         {
-            var goalWorkout = _mapper.Map<GoalWorkout>(goalWorkoutCreateDto);
+            var goalWorkout = _mapper.Map<GoalWorkouts>(goalWorkoutCreateDto);
             await _service.Create(goalWorkout);
             return CreatedAtAction(nameof(GetGoalWorkout), new { id = goalWorkout.Id }, goalWorkout);
         }

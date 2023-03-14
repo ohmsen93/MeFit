@@ -12,8 +12,8 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230314070025_Seeding")]
-    partial class Seeding
+    [Migration("20230314101422_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -553,9 +553,6 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Achived")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
@@ -571,6 +568,9 @@ namespace webapi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Fk_UserProfile_id");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FkStatusId");
@@ -585,40 +585,40 @@ namespace webapi.Migrations
                         new
                         {
                             Id = 1,
-                            Achived = false,
-                            EndDate = new DateTime(2023, 3, 14, 8, 0, 25, 490, DateTimeKind.Local).AddTicks(2588),
+                            EndDate = new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1338),
                             FkStatusId = 2,
-                            FkUserProfileId = 1
+                            FkUserProfileId = 1,
+                            StartDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1283)
                         },
                         new
                         {
                             Id = 2,
-                            Achived = true,
-                            EndDate = new DateTime(2023, 2, 28, 8, 0, 25, 490, DateTimeKind.Local).AddTicks(2676),
+                            EndDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1359),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
-                            FkUserProfileId = 2
+                            FkUserProfileId = 2,
+                            StartDate = new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1357)
                         },
                         new
                         {
                             Id = 3,
-                            Achived = true,
-                            EndDate = new DateTime(2023, 2, 28, 8, 0, 25, 490, DateTimeKind.Local).AddTicks(2692),
+                            EndDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1369),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
-                            FkUserProfileId = 3
+                            FkUserProfileId = 3,
+                            StartDate = new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1367)
                         },
                         new
                         {
                             Id = 4,
-                            Achived = false,
-                            EndDate = new DateTime(2023, 3, 14, 8, 0, 25, 490, DateTimeKind.Local).AddTicks(2716),
+                            EndDate = new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1408),
                             FkStatusId = 2,
-                            FkUserProfileId = 3
+                            FkUserProfileId = 3,
+                            StartDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1407)
                         });
                 });
 
-            modelBuilder.Entity("webapi.Models.GoalWorkout", b =>
+            modelBuilder.Entity("webapi.Models.GoalWorkouts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -897,6 +897,9 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("FirstLogin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Token")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -917,18 +920,21 @@ namespace webapi.Migrations
                         new
                         {
                             Id = 1,
+                            FirstLogin = false,
                             Token = "78acbd80-93b7-4821-9fb0-a5ee776318da",
                             Username = "administrator@gmail.com"
                         },
                         new
                         {
                             Id = 2,
+                            FirstLogin = false,
                             Token = "4d24f01a-5261-40f6-a7e0-f051e8e6f599",
                             Username = "contributor@gmail.com"
                         },
                         new
                         {
                             Id = 3,
+                            FirstLogin = true,
                             Token = "78acbd80-93b7-4821-9fb0-a5ee776318da",
                             Username = "regularuser@gmail.com"
                         });
@@ -1292,7 +1298,7 @@ namespace webapi.Migrations
                     b.Navigation("FkUserProfile");
                 });
 
-            modelBuilder.Entity("webapi.Models.GoalWorkout", b =>
+            modelBuilder.Entity("webapi.Models.GoalWorkouts", b =>
                 {
                     b.HasOne("webapi.Models.Goal", "FkGoal")
                         .WithMany()

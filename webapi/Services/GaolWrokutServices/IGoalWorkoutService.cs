@@ -2,7 +2,7 @@
 
 namespace webapi.Services.GaolWrokutServices
 {
-    public interface IGoalWorkoutService:IServices<GoalWorkout,int>
+    public interface IGoalWorkoutService:IServices<GoalWorkouts,int>
     {
     }
 }

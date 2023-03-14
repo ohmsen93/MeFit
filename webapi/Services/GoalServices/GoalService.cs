@@ -43,7 +43,7 @@ namespace webapi.Services.GoalServices
 
             var achivedGoals =  await _context.Goals.Include(x=>x.Workouts)
                 .Where(x=> x.FkUserProfile== userProfile)
-                .Where(x => x.Achived == true).ToListAsync();
+                .Where(x => x.FkStatusId == 1).ToListAsync();
             
             return achivedGoals;
         }
