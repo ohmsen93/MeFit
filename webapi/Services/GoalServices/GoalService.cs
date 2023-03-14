@@ -41,10 +41,8 @@ namespace webapi.Services.GoalServices
                 throw new EntityNotFoundException(id, nameof(UserProfile));
             }
 
-            var achivedGoals =  await _context.Goals.Include(x=>x.Workouts)
-                .Where(x=> x.FkUserProfile== userProfile)
-                .Where(x => x.FkStatusId == 1).ToListAsync();
-            
+            var achivedGoals = await _context.Goals.Include(g => g.GoalWorkouts).Where(x => x.FkStatusId == 1).ToListAsync();
+
             return achivedGoals;
         }
 
