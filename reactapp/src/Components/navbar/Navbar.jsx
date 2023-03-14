@@ -1,6 +1,6 @@
 import keycloak from "../../keycloak";
 import { useAuth } from "../context/AuthenticateContext";
-import { Roles } from "../enums/Roles";
+import { Roles } from "../roles/Roles";
 
 const logo = require("./../../Images/icons8-user-100.png");
 

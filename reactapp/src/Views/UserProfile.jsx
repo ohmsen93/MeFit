@@ -1,9 +1,12 @@
+import UserProfileForm from "../Components/profile/UserProfileForm";
+
 function UserProfile() {
     return (
-    <div>
-        <h1>Profile</h1>
-
-    </div>
+        <div>
+            <>
+                <UserProfileForm />
+            </>
+        </div>
     );
 }
 
