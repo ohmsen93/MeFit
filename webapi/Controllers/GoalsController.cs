@@ -115,14 +115,14 @@ namespace webapi.Controllers
         #endregion
 
         /// <summary>
-        /// Gets achieved goals of a specific user by user id
+        /// Gets completed goals of a specific user by user id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("achieved/user/{id}")]
-        public async Task<ActionResult<IEnumerable<Goal>>> GetAchievedGoals(int id)
+        [HttpGet("completed/user/{id}")]
+        public async Task<ActionResult<IEnumerable<Goal>>> GetCompletedGoals(int id)
         {
-            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAchievedGoals(id)));
+            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetCompletedGoals(id)));
         }
 
         /// <summary>
