@@ -6,7 +6,8 @@ const GoalCreation = () => {
         tab: "program",
         selectedProgram: null,
         selectedWorkouts: [],
-        startDate: new Date().toLocaleDateString('en-US')
+        startDate: new Date().toLocaleDateString('en-US'),
+        endDate: null
     })
 
     const tabSelected = tab => {
@@ -23,6 +24,25 @@ const GoalCreation = () => {
         if (event.target.checked) setState({...state, selectedWorkouts: [...state.selectedWorkouts, workout]})
         else setState({...state, selectedWorkouts: state.selectedWorkouts.filter(w => w.id !== workout.id)})
     }
+    const submitGoal = (event) => {
+        event.preventDefault()
+        const programId = state.selectedProgram?.id || null
+        const workoutIds = state.selectedWorkouts.map(w => w.id)
+        let goal = {
+            userId: 1,
+            startDate: event.target[0].value,
+            endDate: event.target[1].value
+        }
+        if (programId !== null) { // POST GoalByProgram
+            goal = {...goal, programId}
+            console.log(goal)
+        }
+        else if (workoutIds.length > 0) { // POST GoalByWorkouts
+            goal = {...goal, workoutIds}
+            console.log(goal)
+        }
+        else { alert("Required: Select a program or workouts") }
+    }
 
     return (
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
@@ -31,37 +51,37 @@ const GoalCreation = () => {
                 <div className="d-flex flex-column text-center wp-50 p-2">
 
                     {/* Goal Form */}
-                    <GoalCreationContext.Provider value={state}>
+                    <GoalCreationContext.Provider value={{program: state.selectedProgram, workouts: state.selectedWorkouts}}>
                         <p>GoalForm</p>
                         <div className="hp-100 p-2">
                         <GoalCreationContext.Consumer>
-                            {state => (
+                            {({program, workouts}) => (
                                     <>
-                                    {state.selectedProgram !== null && <div>{state.selectedProgram.name}</div>}
-                                    {state.selectedWorkouts.length > 0 &&
+                                    {program !== null && <div>{program.name}</div>}
+                                    {workouts.length > 0 &&
                                         <div className="overflow-y-scroll text-center hp-100">
-                                            {state.selectedWorkouts.map(w => <div key={w.id}>{w.name}</div>)}
+                                            {workouts.map(w => <div key={w.id}>{w.name}</div>)}
                                         </div>
                                     }
                                     </>
                             )}
                         </GoalCreationContext.Consumer>
                         </div>
-                        <div className="hp-50">
+                        <form onSubmit={e => submitGoal(e)} className="d-flex flex-column gap-3 hp-50">
                             <div>
                                 <label htmlFor="start-date">Start date:</label>
                                 <br/>
-                                <input onChange={e => setState({...state, startDate: e.target.value})} type="date" min={new Date().toLocaleDateString('fr-ca')} id="start-date"/>
+                                <input onChange={e => setState({...state, startDate: e.target.value})} type="date" min={new Date().toLocaleDateString('fr-ca')} id="start-date" required/>
                             </div>
                             <div>
                                 <label htmlFor="end-date">End date:</label>
                                 <br/>
-                                <input min={state.startDate} type="date" id="start-date"/>
+                                <input onChange={e => setState({...state, endDate: e.target.value})} type="date" min={state.startDate} id="start-date" required/>
                             </div>
-                        </div>
-                        <div>
-                            <button className="btn btn-outline-secondary">Save goal</button>
-                        </div>
+                            <div>
+                                <button type="submit" className="btn btn-outline-secondary">Save goal</button>
+                            </div>
+                        </form>
                     </GoalCreationContext.Provider>
 
                 </div>
