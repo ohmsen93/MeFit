@@ -11,5 +11,7 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
+    public bool FirstLogin { get; set; }
+
     public virtual ICollection<UserProfile> UserProfiles { get; } = new List<UserProfile>();
 }
