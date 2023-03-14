@@ -131,6 +131,7 @@ public partial class MeFitContext : DbContext
 
         modelBuilder.Entity<Goal>(entity =>
         {
+            entity.Property(e => e.StartDate).HasColumnType("date");
             entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.FkUserProfileId).HasColumnName("Fk_UserProfile_id");
             entity.Property(e => e.FkTrainingprogramId).HasColumnName("Fk_Trainingprogram_id");

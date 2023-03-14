@@ -551,7 +551,7 @@ namespace webapi.Migrations
                         .HasColumnName("Fk_UserProfile_id");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -567,36 +567,36 @@ namespace webapi.Migrations
                         new
                         {
                             Id = 1,
-                            EndDate = new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8748),
+                            EndDate = new DateTime(2023, 3, 14, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5378),
                             FkStatusId = 2,
                             FkUserProfileId = 1,
-                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8654)
+                            StartDate = new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5305)
                         },
                         new
                         {
                             Id = 2,
-                            EndDate = new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8780),
+                            EndDate = new DateTime(2023, 2, 28, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5395),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
                             FkUserProfileId = 2,
-                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8777)
+                            StartDate = new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5393)
                         },
                         new
                         {
                             Id = 3,
-                            EndDate = new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8801),
+                            EndDate = new DateTime(2023, 2, 28, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5405),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
                             FkUserProfileId = 3,
-                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8798)
+                            StartDate = new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5404)
                         },
                         new
                         {
                             Id = 4,
-                            EndDate = new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8820),
+                            EndDate = new DateTime(2023, 3, 14, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5416),
                             FkStatusId = 2,
                             FkUserProfileId = 3,
-                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8817)
+                            StartDate = new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5414)
                         });
                 });
 

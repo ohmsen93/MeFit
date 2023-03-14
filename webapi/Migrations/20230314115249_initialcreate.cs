@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -279,7 +279,7 @@ namespace webapi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fk_UserProfile_id = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
                     Fk_Trainingprogram_id = table.Column<int>(type: "int", nullable: true),
                     Fk_status_id = table.Column<int>(type: "int", nullable: false)
@@ -601,10 +601,10 @@ namespace webapi.Migrations
                 columns: new[] { "Id", "EndDate", "Fk_status_id", "Fk_Trainingprogram_id", "Fk_UserProfile_id", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8748), 2, null, 1, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8654) },
-                    { 2, new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8780), 1, 3, 2, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8777) },
-                    { 3, new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8801), 1, 3, 3, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8798) },
-                    { 4, new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8820), 2, null, 3, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8817) }
+                    { 1, new DateTime(2023, 3, 14, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5378), 2, null, 1, new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5305) },
+                    { 2, new DateTime(2023, 2, 28, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5395), 1, 3, 2, new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5393) },
+                    { 3, new DateTime(2023, 2, 28, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5405), 1, 3, 3, new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5404) },
+                    { 4, new DateTime(2023, 3, 14, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5416), 2, null, 3, new DateTime(2023, 2, 18, 12, 52, 49, 1, DateTimeKind.Local).AddTicks(5414) }
                 });
 
             migrationBuilder.InsertData(
