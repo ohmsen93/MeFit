@@ -32,7 +32,7 @@ namespace webapi.Services.GoalServices
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Goal>> GetAchievedGoals(int id)
+        public async Task<ICollection<Goal>> GetCompletedGoals(int id)
         {
             var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.FkUserId == id);
             
