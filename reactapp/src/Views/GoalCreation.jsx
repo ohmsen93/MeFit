@@ -6,7 +6,7 @@ const GoalCreation = () => {
         tab: "program",
         selectedProgram: null,
         selectedWorkouts: [],
-        startDate: new Date().toLocaleDateString('fr-ca')
+        startDate: new Date().toLocaleDateString('en-US')
     })
 
     const tabSelected = tab => {
