@@ -7,11 +7,11 @@ import { DashboardContext } from "../Context/DashboardContext";
 const Dashboard = () => {
   const [state, setState] = useState({
     goals: [
-      {id: 1, name: "Goal A", endDate: new Date(2023, 2, 15), workouts: [
+      {id: 1, name: "Goal A", endDate: new Date("2023-03-15T12:06:22.011Z"), workouts: [
         {id: 1, name: "Workout A", status: "completed"},
         {id: 2, name: "Workout B", status: "active"}
       ]},
-      {id: 2, name: "Goal B", endDate: new Date(2023, 3, 1), workouts: []}
+      {id: 2, name: "Goal B", endDate: new Date("2023-04-01T12:06:22.011Z"), workouts: []}
     ],
     selectedGoal: null
   })
