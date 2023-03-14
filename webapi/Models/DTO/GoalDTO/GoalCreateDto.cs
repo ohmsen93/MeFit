@@ -6,8 +6,6 @@
 
         public DateTime EndDate { get; set; }
 
-        public bool Achived { get; set; }
-
         public int? FkTrainingprogramId { get; set; }
 
         public int FkStatusId { get; set; }
