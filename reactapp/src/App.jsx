@@ -12,7 +12,7 @@ import Navbar from './Components/navbar/Navbar';
 import Contributor from './Views/Contributor';
 import UserProfile from './Views/UserProfile';
 import { useAuth } from './Components/context/AuthenticateContext';
-import { Roles } from './Components/enums/Roles';
+import { Roles } from './Components/roles/Roles';
 
 function App() {
 
