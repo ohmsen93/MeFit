@@ -12,7 +12,7 @@ namespace webapi.Profiles
             CreateMap<GoalCreateDto, Goal>();
             CreateMap<Goal, GoalReadDto>()
                 .ForMember(dto => dto.Workouts, options =>
-                options.MapFrom(setDomain => setDomain.Workouts.Select(workout => $"api/v1/workputs/{workout.Id}").ToList()));
+                options.MapFrom(goalDomain => goalDomain.GoalWorkouts.Select(gw => $"api/v1/workouts/{gw.Id}").ToList()));
             CreateMap<GoalUpdateDto, Goal>();
         }
     }

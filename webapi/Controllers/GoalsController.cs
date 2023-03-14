@@ -11,6 +11,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.GoalDTO;
+using webapi.Models.DTO.WorkoutDTO;
 using webapi.Services.GoalServices;
 
 namespace webapi.Controllers
@@ -31,6 +32,7 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
         // GET: api/Goals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoals()
@@ -109,6 +111,40 @@ namespace webapi.Controllers
             }
 
             return NoContent();
+        }
+        #endregion
+
+        /// <summary>
+        /// Gets achieved goals of a specific user by user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("achieved/user/{id}")]
+        public async Task<ActionResult<IEnumerable<Goal>>> GetAchievedGoals(int id)
+        {
+            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAchievedGoals(id)));
+        }
+
+        /// <summary>
+        /// Gets workouts of a specific goal by goal id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/workouts")]
+        public async Task<ActionResult<IEnumerable<Workout>>> GetGoalWorkouts(int id)
+        {
+            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalWorkouts(id)));
+        }
+
+        /// <summary>
+        /// Gets completed workouts of a goal by goal id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/completedworkouts")]
+        public async Task<ActionResult<IEnumerable<Workout>>> GetGoalCompletedWorkouts(int id)
+        {
+            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalCompletedWorkouts(id)));
         }
 
     }

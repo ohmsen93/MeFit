@@ -36,7 +36,7 @@ namespace webapi.Services.WorkoutServices
         {
             var Workout = await _context.Workouts
                     .Include(x => x.Exercises)
-                    .Include(x => x.Goals)
+                    //.Include(x => x.Goals)
                     .ToListAsync();
 
             return Workout;
@@ -46,7 +46,7 @@ namespace webapi.Services.WorkoutServices
         {
             var Workout = await _context.Workouts
                     .Include(x => x.Exercises)
-                    .Include(x => x.Goals)
+                    //.Include(x => x.Goals)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
             if (Workout == null)
