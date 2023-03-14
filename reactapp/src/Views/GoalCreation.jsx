@@ -9,6 +9,10 @@ const GoalCreation = () => {
         startDate: new Date().toLocaleDateString('fr-ca')
     })
 
+    const tabSelected = tab => {
+        console.log(tab)
+        setState({...state, tab, selectedProgram: null, selectedWorkouts: []})
+    }
     const programSelected = (event, program) => {
         console.log(program)
         if (event.target.checked) setState({...state, selectedProgram: program})
@@ -18,10 +22,6 @@ const GoalCreation = () => {
         console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkouts: [...state.selectedWorkouts, workout]})
         else setState({...state, selectedWorkouts: state.selectedWorkouts.filter(w => w.id !== workout.id)})
-    }
-    const tabSelected = tab => {
-        console.log(tab)
-        setState({...state, tab, selectedProgram: null, selectedWorkouts: []})
     }
 
     return (
@@ -69,9 +69,9 @@ const GoalCreation = () => {
                     
                     {/* Tabs */}
                     <div>
-                        <input onChange={() => tabSelected("program")} type="radio" name="tab-radio" id="program-tab" className="btn-check" defaultChecked/>
+                        <input onChange={() => tabSelected("program")} type="radio" name="tab-radio" id="program-tab" checked={state.tab === "program"} className="btn-check"/>
                         <label htmlFor="program-tab" className="btn btn-outline-secondary">Programs</label>
-                        <input onChange={() => tabSelected("workout")} type="radio" name="tab-radio" id="workout-tab" className="btn-check"/>
+                        <input onChange={() => tabSelected("workout")} type="radio" name="tab-radio" id="workout-tab" checked={state.tab === "workout"} className="btn-check"/>
                         <label htmlFor="workout-tab" className="btn btn-outline-secondary">Workouts</label>
                         {/* <input onChange={() => setState({...state, tab: "exercise"})} type="radio" name="tab-radio" id="exercise-tab" className="btn-check"/>
                         <label htmlFor="exercise-tab" className="btn btn-outline-secondary">Exercises</label> */}
