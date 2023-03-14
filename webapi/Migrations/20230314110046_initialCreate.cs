@@ -117,7 +117,6 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Token = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     Username = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     FirstLogin = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -359,30 +358,6 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GoalWorkout",
-                columns: table => new
-                {
-                    GoalsId = table.Column<int>(type: "int", nullable: false),
-                    WorkoutsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GoalWorkout", x => new { x.GoalsId, x.WorkoutsId });
-                    table.ForeignKey(
-                        name: "FK_GoalWorkout_Goals_GoalsId",
-                        column: x => x.GoalsId,
-                        principalTable: "Goals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GoalWorkout_Workout_WorkoutsId",
-                        column: x => x.WorkoutsId,
-                        principalTable: "Workout",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Trainingprogram_Workouts",
                 columns: table => new
                 {
@@ -523,12 +498,12 @@ namespace webapi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "FirstLogin", "Token", "Username" },
+                columns: new[] { "Id", "FirstLogin", "Username" },
                 values: new object[,]
                 {
-                    { 1, false, "78acbd80-93b7-4821-9fb0-a5ee776318da", "administrator@gmail.com" },
-                    { 2, false, "4d24f01a-5261-40f6-a7e0-f051e8e6f599", "contributor@gmail.com" },
-                    { 3, true, "78acbd80-93b7-4821-9fb0-a5ee776318da", "regularuser@gmail.com" }
+                    { 1, false, "administrator@gmail.com" },
+                    { 2, false, "contributor@gmail.com" },
+                    { 3, false, "regularuser@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -626,10 +601,10 @@ namespace webapi.Migrations
                 columns: new[] { "Id", "EndDate", "Fk_status_id", "Fk_Trainingprogram_id", "Fk_UserProfile_id", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1338), 2, null, 1, new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1283) },
-                    { 2, new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1359), 1, 3, 2, new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1357) },
-                    { 3, new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1369), 1, 3, 3, new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1367) },
-                    { 4, new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1408), 2, null, 3, new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1407) }
+                    { 1, new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8748), 2, null, 1, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8654) },
+                    { 2, new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8780), 1, 3, 2, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8777) },
+                    { 3, new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8801), 1, 3, 3, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8798) },
+                    { 4, new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8820), 2, null, 3, new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8817) }
                 });
 
             migrationBuilder.InsertData(
@@ -707,11 +682,6 @@ namespace webapi.Migrations
                 column: "Fk_UserProfile_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GoalWorkout_WorkoutsId",
-                table: "GoalWorkout",
-                column: "WorkoutsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Trainingprogram_Categories_Fk_Category_Id",
                 table: "Trainingprogram_Categories",
                 column: "Fk_Category_Id");
@@ -761,9 +731,6 @@ namespace webapi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Goal_Workouts");
-
-            migrationBuilder.DropTable(
-                name: "GoalWorkout");
 
             migrationBuilder.DropTable(
                 name: "Trainingprogram_Categories");

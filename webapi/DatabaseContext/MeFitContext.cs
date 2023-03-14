@@ -48,6 +48,7 @@ public partial class MeFitContext : DbContext
     public virtual DbSet<Workout> Workouts { get; set; }
 
     public virtual DbSet<GoalWorkouts> GoalWorkouts { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
@@ -126,11 +127,7 @@ public partial class MeFitContext : DbContext
                 "Exercise_Sets",
                 r => r.HasOne<Set>().WithMany().HasForeignKey("Fk_Set_Id"),
                 l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
-                je =>
-                {
-                    je.HasKey("Fk_Exercise_Id", "Fk_Set_Id");
-
-                });
+                je => { je.HasKey("Fk_Exercise_Id", "Fk_Set_Id"); });
 
         modelBuilder.Entity<Goal>(entity =>
         {
@@ -277,7 +274,6 @@ public partial class MeFitContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsFixedLength();
@@ -330,27 +326,74 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com" });
         modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com" });
 
-        modelBuilder.Entity<Address>().HasData(new Address { Id = 1, AddressLine1 = "Hybenvej 23,st. th.", AddressLine2 = "", AddressLine3 = "", PostalCode = 8700, City = "Horsens", Country = "Denmark" });
-        modelBuilder.Entity<Address>().HasData(new Address { Id = 2, AddressLine1 = "Vestergade 2", AddressLine2 = "", AddressLine3 = "", PostalCode = 2000, City = "København", Country = "Denmark" });
-        modelBuilder.Entity<Address>().HasData(new Address { Id = 3, AddressLine1 = "Nørregade 14", AddressLine2 = "", AddressLine3 = "", PostalCode = 7100, City = "Vejle", Country = "Denmark" });
+        modelBuilder.Entity<Address>().HasData(new Address
+        {
+            Id = 1, AddressLine1 = "Hybenvej 23,st. th.", AddressLine2 = "", AddressLine3 = "", PostalCode = 8700,
+            City = "Horsens", Country = "Denmark"
+        });
+        modelBuilder.Entity<Address>().HasData(new Address
+        {
+            Id = 2, AddressLine1 = "Vestergade 2", AddressLine2 = "", AddressLine3 = "", PostalCode = 2000,
+            City = "København", Country = "Denmark"
+        });
+        modelBuilder.Entity<Address>().HasData(new Address
+        {
+            Id = 3, AddressLine1 = "Nørregade 14", AddressLine2 = "", AddressLine3 = "", PostalCode = 7100,
+            City = "Vejle", Country = "Denmark"
+        });
 
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile { Id = 1, FkUserId = 1, FkAddressId = 1, Weight = 80, Height = 180, MedicalCondition = "", Disabilities = "", Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = "" });
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile { Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "", Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = "" });
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile { Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "", Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = "" });
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 1, FkUserId = 1, FkAddressId = 1, Weight = 80, Height = 180, MedicalCondition = "", Disabilities = "",
+            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        });
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "",
+            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        });
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "",
+            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        });
 
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, FkUserProfileId = 1, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now, FkTrainingprogramId = null, FkStatusId = 2 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, FkUserProfileId = 2, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14), FkTrainingprogramId = 3, FkStatusId = 1 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14), FkTrainingprogramId = 3, FkStatusId = 1 });
-        modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now, FkTrainingprogramId = null, FkStatusId = 2 });
+        modelBuilder.Entity<Goal>().HasData(new Goal
+        {
+            Id = 1, FkUserProfileId = 1, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now,
+            FkTrainingprogramId = null, FkStatusId = 2
+        });
+        modelBuilder.Entity<Goal>().HasData(new Goal
+        {
+            Id = 2, FkUserProfileId = 2, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14),
+            FkTrainingprogramId = 3, FkStatusId = 1
+        });
+        modelBuilder.Entity<Goal>().HasData(new Goal
+        {
+            Id = 3, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now.AddDays(-14),
+            FkTrainingprogramId = 3, FkStatusId = 1
+        });
+        modelBuilder.Entity<Goal>().HasData(new Goal
+        {
+            Id = 4, FkUserProfileId = 3, StartDate = DateTime.Now.AddDays(-24), EndDate = DateTime.Now,
+            FkTrainingprogramId = null, FkStatusId = 2
+        });
 
 
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 1, FkGoalId = 2, FkWorkoutId = 1, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 2, FkGoalId = 2, FkWorkoutId = 2, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 3, FkGoalId = 2, FkWorkoutId = 7, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 4, FkGoalId = 3, FkWorkoutId = 1, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 5, FkGoalId = 3, FkWorkoutId = 2, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 6, FkGoalId = 3, FkWorkoutId = 7, FkStatusId = 1 });
-        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts { Id = 7, FkGoalId = 3, FkWorkoutId = 12, FkStatusId = 2 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 1, FkGoalId = 2, FkWorkoutId = 1, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 2, FkGoalId = 2, FkWorkoutId = 2, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 3, FkGoalId = 2, FkWorkoutId = 7, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 4, FkGoalId = 3, FkWorkoutId = 1, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 5, FkGoalId = 3, FkWorkoutId = 2, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 6, FkGoalId = 3, FkWorkoutId = 7, FkStatusId = 1 });
+        modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
+            { Id = 7, FkGoalId = 3, FkWorkoutId = 12, FkStatusId = 2 });
         //modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout {Id=7, FkGoalId=4, FkWorkoutId=7,FkStatusId=2});
 
         modelBuilder.Entity<Status>().HasData(new Status { Id = 1, Statustype = "Completed" });
@@ -370,6 +413,7 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<Trainingprogram>().HasData(new Trainingprogram { Id = 7, Name = "Yoga" });
 
         #region M2M seeding Trainingprogram_Categories
+
         //Seed m2m Trainingprogram_Categories.Need to define m2m and access linking table
         modelBuilder.Entity<Trainingprogram>()
             .HasMany(t => t.Categories)
@@ -390,6 +434,7 @@ public partial class MeFitContext : DbContext
                         new { Fk_Traningprogram_Id = 6, Fk_Category_Id = 3 }
                     );
                 });
+
         #endregion
 
         modelBuilder.Entity<Set>().HasData(new Set { Id = 1, Reps = 6, Total = 4 });
@@ -423,6 +468,7 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<Musclegroup>().HasData(new Musclegroup { Id = 7, Musclegroup1 = "Heart" });
 
         #region M2M seeding Excersise_Sets
+
         // Seed m2m Exercise_Sets. Need to define m2m and access linking table
         modelBuilder.Entity<Exercise>()
             .HasMany(e => e.Sets)
@@ -442,28 +488,31 @@ public partial class MeFitContext : DbContext
                         new { Fk_Exercise_Id = 5, Fk_Set_Id = 1 }
                     );
                 });
+
         #endregion
 
         #region M2M seeding Excercise_Musclegroups
+
         // Seed m2m Exercise_Musclegroup. Need to define m2m and access linking table
         modelBuilder.Entity<Exercise>()
-          .HasMany(m => m.Musclegroups)
-          .WithMany(s => s.Exercises)
-          .UsingEntity<Dictionary<string, object>>(
-              "Exercise_Musclegroups",
-              r => r.HasOne<Musclegroup>().WithMany().HasForeignKey("Fk_Musclegroup_Id"),
-              l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
-              je =>
-              {
-                  je.HasKey("Fk_Exercise_Id", "Fk_Musclegroup_Id");
-                  je.HasData(
-                      new { Fk_Exercise_Id = 1, Fk_Musclegroup_Id = 2 },
-                      new { Fk_Exercise_Id = 2, Fk_Musclegroup_Id = 4 },
-                      new { Fk_Exercise_Id = 3, Fk_Musclegroup_Id = 3 },
-                      new { Fk_Exercise_Id = 4, Fk_Musclegroup_Id = 6 },
-                      new { Fk_Exercise_Id = 5, Fk_Musclegroup_Id = 3 }
-                  );
-              });
+            .HasMany(m => m.Musclegroups)
+            .WithMany(s => s.Exercises)
+            .UsingEntity<Dictionary<string, object>>(
+                "Exercise_Musclegroups",
+                r => r.HasOne<Musclegroup>().WithMany().HasForeignKey("Fk_Musclegroup_Id"),
+                l => l.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Exercise_Id", "Fk_Musclegroup_Id");
+                    je.HasData(
+                        new { Fk_Exercise_Id = 1, Fk_Musclegroup_Id = 2 },
+                        new { Fk_Exercise_Id = 2, Fk_Musclegroup_Id = 4 },
+                        new { Fk_Exercise_Id = 3, Fk_Musclegroup_Id = 3 },
+                        new { Fk_Exercise_Id = 4, Fk_Musclegroup_Id = 6 },
+                        new { Fk_Exercise_Id = 5, Fk_Musclegroup_Id = 3 }
+                    );
+                });
+
         #endregion
 
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 1, Name = "Upper", Type = "Strength" });
@@ -477,54 +526,60 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 9, Name = "Shoulder", Type = "Strength" });
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 10, Name = "Cardio", Type = "Endurance" });
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 11, Name = "Fullbody", Type = "Strength" });
-        modelBuilder.Entity<Workout>().HasData(new Workout { Id = 12, Name = "MyWorkout", Type = "Custom", FkUserProfileId = 3 });
+        modelBuilder.Entity<Workout>().HasData(new Workout
+            { Id = 12, Name = "MyWorkout", Type = "Custom", FkUserProfileId = 3 });
 
         #region M2M seeding Workout-Exercises
+
         // Seed m2m Workout-Exercises. Need to define m2m and access linking table
         modelBuilder.Entity<Workout>()
-          .HasMany(w => w.Exercises)
-          .WithMany(e => e.Workouts)
-          .UsingEntity<Dictionary<string, object>>(
-              "Workout_Exercises",
-              r => r.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
-              l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
-              je =>
-              {
-                  je.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
-                  je.HasData(
-                      new { Fk_Workout_Id = 1, Fk_Exercise_Id = 1 },
-                      new { Fk_Workout_Id = 1, Fk_Exercise_Id = 5 },
-                      new { Fk_Workout_Id = 1, Fk_Exercise_Id = 12 },
-                      new { Fk_Workout_Id = 2, Fk_Exercise_Id = 2 },
-                      new { Fk_Workout_Id = 2, Fk_Exercise_Id = 13 },
-                      new { Fk_Workout_Id = 10, Fk_Exercise_Id = 9 },
-                      new { Fk_Workout_Id = 10, Fk_Exercise_Id = 10 },
-                      new { Fk_Workout_Id = 12, Fk_Exercise_Id = 9 },
-                      new { Fk_Workout_Id = 12, Fk_Exercise_Id = 10 },
-                      new { Fk_Workout_Id = 12, Fk_Exercise_Id = 15 }
-                  );
-              });
+            .HasMany(w => w.Exercises)
+            .WithMany(e => e.Workouts)
+            .UsingEntity<Dictionary<string, object>>(
+                "Workout_Exercises",
+                r => r.HasOne<Exercise>().WithMany().HasForeignKey("Fk_Exercise_Id"),
+                l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Workout_Id", "Fk_Exercise_Id");
+                    je.HasData(
+                        new { Fk_Workout_Id = 1, Fk_Exercise_Id = 1 },
+                        new { Fk_Workout_Id = 1, Fk_Exercise_Id = 5 },
+                        new { Fk_Workout_Id = 1, Fk_Exercise_Id = 12 },
+                        new { Fk_Workout_Id = 2, Fk_Exercise_Id = 2 },
+                        new { Fk_Workout_Id = 2, Fk_Exercise_Id = 13 },
+                        new { Fk_Workout_Id = 10, Fk_Exercise_Id = 9 },
+                        new { Fk_Workout_Id = 10, Fk_Exercise_Id = 10 },
+                        new { Fk_Workout_Id = 12, Fk_Exercise_Id = 9 },
+                        new { Fk_Workout_Id = 12, Fk_Exercise_Id = 10 },
+                        new { Fk_Workout_Id = 12, Fk_Exercise_Id = 15 }
+                    );
+                });
+
         #endregion
 
         #region M2M seeding Traningsprogram-Workouts
+
         // Seed m2m Traningsprogram-Workouts. Need to define m2m and access linking table
         modelBuilder.Entity<Trainingprogram>()
-          .HasMany(t => t.Workouts)
-          .WithMany(w => w.Trainingprograms)
-          .UsingEntity<Dictionary<string, object>>(
-              "Trainingprogram_Workouts",
-              r => r.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
-              l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
-              je =>
-              {
-                  je.HasKey("Fk_Trainingprogram_Id", "Fk_Workout_Id");
-                  je.HasData(
-                      new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 1 },
-                      new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 2 },
-                      new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 7 },
-                      new { Fk_Trainingprogram_Id = 6, Fk_Workout_Id = 10 }
+            .HasMany(t => t.Workouts)
+            .WithMany(w => w.Trainingprograms)
+            .UsingEntity<Dictionary<string, object>>(
+                "Trainingprogram_Workouts",
+                r => r.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
+                l => l.HasOne<Trainingprogram>().WithMany().HasForeignKey("Fk_Trainingprogram_Id"),
+                je =>
+                {
+                    je.HasKey("Fk_Trainingprogram_Id", "Fk_Workout_Id");
+                    je.HasData(
+                        new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 1 },
+                        new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 2 },
+                        new { Fk_Trainingprogram_Id = 3, Fk_Workout_Id = 7 },
+                        new { Fk_Trainingprogram_Id = 6, Fk_Workout_Id = 10 }
 
-                  );
-              });
+                    );
+                });
+
         #endregion
     }
+}

@@ -12,7 +12,7 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230314101422_initialCreate")]
+    [Migration("20230314110046_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -107,21 +107,6 @@ namespace webapi.Migrations
                             Fk_Exercise_Id = 5,
                             Fk_Set_Id = 1
                         });
-                });
-
-            modelBuilder.Entity("GoalWorkout", b =>
-                {
-                    b.Property<int>("GoalsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkoutsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GoalsId", "WorkoutsId");
-
-                    b.HasIndex("WorkoutsId");
-
-                    b.ToTable("GoalWorkout");
                 });
 
             modelBuilder.Entity("Trainingprogram_Categories", b =>
@@ -585,36 +570,36 @@ namespace webapi.Migrations
                         new
                         {
                             Id = 1,
-                            EndDate = new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1338),
+                            EndDate = new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8748),
                             FkStatusId = 2,
                             FkUserProfileId = 1,
-                            StartDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1283)
+                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8654)
                         },
                         new
                         {
                             Id = 2,
-                            EndDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1359),
+                            EndDate = new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8780),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
                             FkUserProfileId = 2,
-                            StartDate = new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1357)
+                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8777)
                         },
                         new
                         {
                             Id = 3,
-                            EndDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1369),
+                            EndDate = new DateTime(2023, 2, 28, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8801),
                             FkStatusId = 1,
                             FkTrainingprogramId = 3,
                             FkUserProfileId = 3,
-                            StartDate = new DateTime(2023, 2, 18, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1367)
+                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8798)
                         },
                         new
                         {
                             Id = 4,
-                            EndDate = new DateTime(2023, 3, 14, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1408),
+                            EndDate = new DateTime(2023, 3, 14, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8820),
                             FkStatusId = 2,
                             FkUserProfileId = 3,
-                            StartDate = new DateTime(2023, 2, 28, 11, 14, 22, 47, DateTimeKind.Local).AddTicks(1407)
+                            StartDate = new DateTime(2023, 2, 18, 12, 0, 45, 962, DateTimeKind.Local).AddTicks(8817)
                         });
                 });
 
@@ -900,12 +885,6 @@ namespace webapi.Migrations
                     b.Property<bool>("FirstLogin")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
-                        .IsFixedLength();
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -921,21 +900,18 @@ namespace webapi.Migrations
                         {
                             Id = 1,
                             FirstLogin = false,
-                            Token = "78acbd80-93b7-4821-9fb0-a5ee776318da",
                             Username = "administrator@gmail.com"
                         },
                         new
                         {
                             Id = 2,
                             FirstLogin = false,
-                            Token = "4d24f01a-5261-40f6-a7e0-f051e8e6f599",
                             Username = "contributor@gmail.com"
                         },
                         new
                         {
                             Id = 3,
-                            FirstLogin = true,
-                            Token = "78acbd80-93b7-4821-9fb0-a5ee776318da",
+                            FirstLogin = false,
                             Username = "regularuser@gmail.com"
                         });
                 });
@@ -1186,21 +1162,6 @@ namespace webapi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GoalWorkout", b =>
-                {
-                    b.HasOne("webapi.Models.Goal", null)
-                        .WithMany()
-                        .HasForeignKey("GoalsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("webapi.Models.Workout", null)
-                        .WithMany()
-                        .HasForeignKey("WorkoutsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Trainingprogram_Categories", b =>
                 {
                     b.HasOne("webapi.Models.Category", null)
@@ -1301,7 +1262,7 @@ namespace webapi.Migrations
             modelBuilder.Entity("webapi.Models.GoalWorkouts", b =>
                 {
                     b.HasOne("webapi.Models.Goal", "FkGoal")
-                        .WithMany()
+                        .WithMany("GoalWorkouts")
                         .HasForeignKey("FkGoalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1313,7 +1274,7 @@ namespace webapi.Migrations
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Workout", "FkWorkout")
-                        .WithMany()
+                        .WithMany("GoalWorkouts")
                         .HasForeignKey("FkWorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1358,6 +1319,11 @@ namespace webapi.Migrations
                     b.Navigation("UserProfiles");
                 });
 
+            modelBuilder.Entity("webapi.Models.Goal", b =>
+                {
+                    b.Navigation("GoalWorkouts");
+                });
+
             modelBuilder.Entity("webapi.Models.Status", b =>
                 {
                     b.Navigation("Goals");
@@ -1380,6 +1346,11 @@ namespace webapi.Migrations
                     b.Navigation("Goals");
 
                     b.Navigation("Workouts");
+                });
+
+            modelBuilder.Entity("webapi.Models.Workout", b =>
+                {
+                    b.Navigation("GoalWorkouts");
                 });
 #pragma warning restore 612, 618
         }
