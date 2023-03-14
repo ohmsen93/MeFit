@@ -14,7 +14,7 @@ namespace webapi.Migrations
                 name: "Workout_Goals_Status");
 
             migrationBuilder.CreateTable(
-                name: "Goal_Workout",
+                name: "Goal_Workouts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,21 +25,21 @@ namespace webapi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Goal_Workout", x => x.Id);
+                    table.PrimaryKey("PK_Goal_Workouts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Goal_Workout_Goals_Fk_Goal_id",
+                        name: "FK_Goal_Workouts_Goals_Fk_Goal_id",
                         column: x => x.Fk_Goal_id,
                         principalTable: "Goals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Goal_Workout_Status_Fk_status_id",
+                        name: "FK_Goal_Workouts_Status_Fk_status_id",
                         column: x => x.Fk_status_id,
                         principalTable: "Status",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Goal_Workout_Workout_Fk_Workout_id",
+                        name: "FK_Goal_Workouts_Workout_Fk_Workout_id",
                         column: x => x.Fk_Workout_id,
                         principalTable: "Workout",
                         principalColumn: "Id",
@@ -47,18 +47,18 @@ namespace webapi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goal_Workout_Fk_Goal_id",
-                table: "Goal_Workout",
+                name: "IX_Goal_Workouts_Fk_Goal_id",
+                table: "Goal_Workouts",
                 column: "Fk_Goal_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goal_Workout_Fk_status_id",
-                table: "Goal_Workout",
+                name: "IX_Goal_Workouts_Fk_status_id",
+                table: "Goal_Workouts",
                 column: "Fk_status_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goal_Workout_Fk_Workout_id",
-                table: "Goal_Workout",
+                name: "IX_Goal_Workouts_Fk_Workout_id",
+                table: "Goal_Workouts",
                 column: "Fk_Workout_id");
         }
 
@@ -66,7 +66,7 @@ namespace webapi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-               name: "Goal_Workout");
+               name: "Goal_Workouts");
 
             migrationBuilder.CreateTable(
                 name: "Workout_Goals_Status",
