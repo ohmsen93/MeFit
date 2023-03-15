@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchPrograms } from "../API/ProgramAPI";
 import { postWorkout } from "../API/WorkoutAPI";
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
 import { GoalCreationContext } from "../Context/GoalCreationContext";
@@ -10,13 +11,21 @@ const GoalCreation = () => {
         selectedWorkouts: [],
         selectedExercises: []
     })
+    const [programs, setPrograms] = useState([])
+
+    useEffect(() => {
+        const getPrograms = async () => {
+            setPrograms(await fetchPrograms())
+        }
+        getPrograms()
+    }, [])
 
     const changeTab = tab => {
         console.log(tab)
         setState({...state, tab, selectedProgram: null, selectedWorkouts: []})
     }
     const programSelected = (event, program) => {
-        console.log(state.selectedProgram)
+        console.log(program)
         if (event.target.checked) setState({...state, selectedProgram: program})
         else setState({...state, selectedProgram: null})
     }
@@ -72,17 +81,23 @@ const GoalCreation = () => {
                     </div>
 
                     {state.tab === "program" && 
-                        <GoalCreationContext.Provider value={{programSelected}}>
+                        <GoalCreationContext.Provider value={{programs, programSelected}}>
                         {/* ProgramSelectionList Component */}
                         <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
                             <p>Choose a program:</p>
                             <GoalCreationContext.Consumer>
-                                {({programSelected}) => (
+                                {({programs, programSelected}) => (
                                     <div className="d-flex flex-column text-center flex-fill text-center overflow-y-scroll wp-100">
-                                        <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>
+                                        {programs.map(p => 
+                                            <div className="d-flex flex-column" key={p.id}>
+                                                <input onChange={e => programSelected(e, p)} type="radio" name="program-list-radio" id={`program-radio-${p.id}`} className="btn-check"/>
+                                                <label htmlFor={`program-radio-${p.id}`} className="btn btn-outline-secondary">{p.name}</label>
+                                            </div>
+                                        )}
+                                        {/* <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>
                                         <label htmlFor="program-radio-1" className="btn btn-outline-secondary">Program A</label>
                                         <input onChange={e => programSelected(e, {id: 2, name: "Program B"})} type="radio" name="program-list-radio" id="program-radio-2" className="btn-check"/>
-                                        <label htmlFor="program-radio-2" className="btn btn-outline-secondary">Program B</label>
+                                        <label htmlFor="program-radio-2" className="btn btn-outline-secondary">Program B</label> */}
                                     </div>
                                 )}
                             </GoalCreationContext.Consumer>
