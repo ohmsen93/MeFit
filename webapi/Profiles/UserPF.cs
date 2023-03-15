@@ -12,7 +12,7 @@ namespace webapi.Profiles
             CreateMap<UserCreateDto, User>();
             CreateMap<User, UserReadDto>()
                 .ForMember(dto => dto.UserProfiles, options =>
-                options.MapFrom(userDomain => userDomain.UserProfiles.Select(userProfile => $"api/v1/userProfiles/{userProfile.Id}").ToList()));
+                options.MapFrom(userDomain => userDomain.UserProfiles.Select(userProfile => $"api/userProfiles/{userProfile.Id}").ToList()));
             CreateMap<UserUpdateDto, User>();
         }
     }

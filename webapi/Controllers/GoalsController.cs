@@ -60,7 +60,7 @@ namespace webapi.Controllers
         // PUT: api/Goals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutGoal(int id, GoalUpdateDto goalUpdateDto)
+        public async Task<IActionResult> PatchGoal(int id, GoalUpdateDto goalUpdateDto)
         {
             if (id != goalUpdateDto.Id)
             {
@@ -90,7 +90,7 @@ namespace webapi.Controllers
         public async Task<ActionResult<Goal>> PostGoal(GoalCreateDto goalCreateDto)
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
-            await _service.Create(goal);
+            await _service.Create(goal, goalCreateDto.Workouts);
             return CreatedAtAction(nameof(GetGoal), new { id = goal.Id }, goal);
         }
 

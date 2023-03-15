@@ -20,6 +20,38 @@ namespace webapi.Services.GoalServices
             return entity;
         }
 
+        public async Task<Goal> Create(Goal entity, List<int> workouts)
+        {
+            // Create Goal
+            _context.Goals.Add(entity);
+            await _context.SaveChangesAsync();
+
+            var goal = await _context.Goals.FindAsync(entity.Id);
+
+            if (goal == null)
+            {
+                throw new EntityNotFoundException(entity.Id, nameof(Goal));
+            }
+
+            // Create GoalWorkouts
+            var goalWorkoutList = new  List<GoalWorkouts>();
+
+            foreach (var id in workouts)
+            {
+                var workout = await _context.Workouts.FindAsync(id);
+
+                if (workout == null)
+                    throw new KeyNotFoundException($"Workout with {id} not found");
+
+                goalWorkoutList.Add(new GoalWorkouts { FkGoalId=entity.Id,FkWorkoutId=id,FkStatusId=2});
+            }
+
+            _context.GoalWorkouts.AddRange(goalWorkoutList);
+            await _context.SaveChangesAsync();
+
+            return entity;
+        }
+
         public async Task DeleteById(int id)
         {
             var goal = await _context.Goals.FindAsync(id);

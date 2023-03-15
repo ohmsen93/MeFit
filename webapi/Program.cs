@@ -48,7 +48,7 @@ namespace webapi
             // Add controllers and database context to the container
             //builder.Services.AddControllers().AddJsonOptions(options =>
             //{
-            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;                
             //});
 
             builder.Services.AddControllers();

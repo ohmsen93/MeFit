@@ -11,7 +11,7 @@ namespace webapi.Profiles
             CreateMap<SetCreateDto, Set>();
             CreateMap<Set, SetReadDto>()
                 .ForMember(dto => dto.Exercises, options =>
-                options.MapFrom(setDomain => setDomain.Exercises.Select(excercise => $"api/v1/excercises/{excercise.Id}").ToList()));
+                options.MapFrom(setDomain => setDomain.Exercises.Select(excercise => $"api/excercises/{excercise.Id}").ToList()));
             CreateMap<SetUpdateDto, Set>();
         }
     }

@@ -12,9 +12,9 @@ namespace webapi.Profiles
             CreateMap<UserProfileCreateDto, Models.UserProfile>();
             CreateMap<Models.UserProfile, UserProfileReadDto>()
                 .ForMember(dto => dto.Goals, options =>
-                options.MapFrom(userProfileDomain => userProfileDomain.Goals.Select(goal => $"api/v1/goals/{goal.Id}").ToList()))
+                options.MapFrom(userProfileDomain => userProfileDomain.Goals.Select(goal => $"api/goals/{goal.Id}").ToList()))
                 .ForMember(dto => dto.Workouts, options =>
-                options.MapFrom(userProfileDomain => userProfileDomain.Workouts.Select(workout => $"api/v1/workouts/{workout.Id}").ToList()));
+                options.MapFrom(userProfileDomain => userProfileDomain.Workouts.Select(workout => $"api/workouts/{workout.Id}").ToList()));
             CreateMap<UserProfileUpdateDto, Models.UserProfile>();
         }
     }
