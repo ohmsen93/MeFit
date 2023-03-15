@@ -91,7 +91,9 @@ namespace webapi.Controllers
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
             await _service.Create(goal, goalCreateDto.Workouts);
-            return CreatedAtAction(nameof(GetGoal), new { id = goal.Id }, goal);
+            
+            var goalReadDto = _mapper.Map<GoalReadDto>(goal);
+            return CreatedAtAction(nameof(GetGoal), new { id = goal.Id }, goalReadDto);
         }
 
         //// DELETE: api/Goals/5
