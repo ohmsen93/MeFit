@@ -22,6 +22,10 @@ namespace webapi.Services.GoalServices
 
         public async Task<Goal> Create(Goal entity, List<int> workouts)
         {
+            // Set default values for the goal
+            entity.FkStatusId = 2;// Pending
+            entity.FkUserProfileId = 3;
+
             // Create Goal
             _context.Goals.Add(entity);
             await _context.SaveChangesAsync();
@@ -33,19 +37,36 @@ namespace webapi.Services.GoalServices
                 throw new EntityNotFoundException(entity.Id, nameof(Goal));
             }
 
-            // Create GoalWorkouts
-            var goalWorkoutList = new  List<GoalWorkouts>();
+            var goalWorkoutList = new List<GoalWorkouts>();
 
-            foreach (var id in workouts)
+            if (goal.FkTrainingprogramId != null)
             {
-                var workout = await _context.Workouts.FindAsync(id);
+                var foundTrainingprogram = await _context.Trainingprograms.Include(tp => tp.Workouts).FirstOrDefaultAsync(tp => tp.Id == goal.FkTrainingprogramId);
 
-                if (workout == null)
-                    throw new KeyNotFoundException($"Workout with {id} not found");
+                if (foundTrainingprogram == null)
+                {
+                    throw new EntityNotFoundException(foundTrainingprogram.Id, nameof(Trainingprogram));
+                }
 
-                goalWorkoutList.Add(new GoalWorkouts { FkGoalId=entity.Id,FkWorkoutId=id,FkStatusId=2});
+                foreach (var workout in foundTrainingprogram.Workouts)
+                {
+
+                    goalWorkoutList.Add(new GoalWorkouts { FkGoalId = entity.Id, FkWorkoutId = workout.Id, FkStatusId = 2 });
+                }
             }
+            else {
+                // Create GoalWorkouts           
+                foreach (var id in workouts)
+                {                    
+                    var workout = await _context.Workouts.FindAsync(id);
 
+                    if (workout == null)
+                        throw new KeyNotFoundException($"Workout with {id} not found");
+
+                    goalWorkoutList.Add(new GoalWorkouts { FkGoalId = entity.Id, FkWorkoutId = id, FkStatusId = 2 });
+                }
+            }
+            
             _context.GoalWorkouts.AddRange(goalWorkoutList);
             await _context.SaveChangesAsync();
 
