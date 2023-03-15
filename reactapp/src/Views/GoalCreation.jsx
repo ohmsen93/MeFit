@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { postGoal } from "../API/GoalAPI";
 import { GoalCreationContext } from "../Context/GoalCreationContext";
 
 const GoalCreation = () => {
@@ -29,16 +30,19 @@ const GoalCreation = () => {
         const programId = state.selectedProgram?.id || null
         const workoutIds = state.selectedWorkouts.map(w => w.id)
         let goal = {
-            userId: 1,
             startDate: event.target[0].value,
-            endDate: event.target[1].value
+            endDate: event.target[1].value,
+            fkTrainingprogramId: null,
+            workouts: []
         }
         if (programId !== null) { // POST GoalByProgram
-            goal = {...goal, programId}
+            goal = {...goal, fkTrainingprogramId: programId}
+            postGoal(goal)
             console.log(goal)
         }
         else if (workoutIds.length > 0) { // POST GoalByWorkouts
-            goal = {...goal, workoutIds}
+            goal = {...goal, workouts: workoutIds}
+            postGoal(goal)
             console.log(goal)
         }
         else { alert("Required: Select a program or workouts") }
@@ -93,17 +97,17 @@ const GoalCreation = () => {
                         <label htmlFor="program-tab" className="btn btn-outline-secondary">Programs</label>
                         <input onChange={() => tabSelected("workout")} type="radio" name="tab-radio" id="workout-tab" checked={state.tab === "workout"} className="btn-check"/>
                         <label htmlFor="workout-tab" className="btn btn-outline-secondary">Workouts</label>
-                        {/* <input onChange={() => setState({...state, tab: "exercise"})} type="radio" name="tab-radio" id="exercise-tab" className="btn-check"/>
-                        <label htmlFor="exercise-tab" className="btn btn-outline-secondary">Exercises</label> */}
+                        <input onChange={() => tabSelected("exercise")} type="radio" name="tab-radio" id="exercise-tab" checked={state.tab === "exercise"} className="btn-check"/>
+                        <label htmlFor="exercise-tab" className="btn btn-outline-secondary">Create Workout</label>
                     </div>
 
                     {state.tab === "program" && 
-                        <GoalCreationContext.Provider value={programSelected}>
+                        <GoalCreationContext.Provider value={{programSelected}}>
                         {/* ProgramList Component */}
                         <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
                             <p>Choose a program:</p>
                             <GoalCreationContext.Consumer>
-                                {programSelected => (
+                                {({programSelected}) => (
                                     <div className="d-flex flex-column text-center flex-fill text-center overflow-y-scroll wp-100">
                                         <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>
                                         <label htmlFor="program-radio-1" className="btn btn-outline-secondary">Program A</label>
