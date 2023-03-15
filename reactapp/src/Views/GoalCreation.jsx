@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { postGoal } from "../API/GoalAPI";
+import { postWorkout } from "../API/WorkoutAPI";
 import { GoalCreationContext } from "../Context/GoalCreationContext";
 
 const GoalCreation = () => {
@@ -8,7 +9,8 @@ const GoalCreation = () => {
         selectedProgram: null,
         selectedWorkouts: [],
         startDate: new Date().toLocaleDateString('en-US'),
-        endDate: null
+        endDate: null,
+        selectedExercises: []
     })
 
     const tabSelected = tab => {
@@ -24,6 +26,11 @@ const GoalCreation = () => {
         console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkouts: [...state.selectedWorkouts, workout]})
         else setState({...state, selectedWorkouts: state.selectedWorkouts.filter(w => w.id !== workout.id)})
+    }
+    const exerciseSelected = (event, exercise) => {
+        console.log(exercise)
+        if (event.target.checked) setState({...state, selectedExercises: [...state.selectedExercises, exercise]})
+        else setState({...state, selectedExercises: state.selectedExercises.filter(e => e.id !== exercise.id)})
     }
     const submitGoal = (event) => {
         event.preventDefault()
@@ -46,6 +53,21 @@ const GoalCreation = () => {
             console.log(goal)
         }
         else { alert("Required: Select a program or workouts") }
+    }
+    const submitWorkout = (event) => {
+        event.preventDefault()
+        const exerciseIds = state.selectedExercises.map(e => e.id)
+        if (exerciseIds.length > 0) { // POST
+            let workout = {
+                name: "TESTNAME",
+                type: "TESTTYPE",
+                fkUserProfileId: 1,
+                exerciseIds
+            }
+            postWorkout(workout)
+            console.log(workout)
+        }
+        else { alert("Required: Select at least one exercise") }
     }
 
     return (
@@ -71,7 +93,7 @@ const GoalCreation = () => {
                             )}
                         </GoalCreationContext.Consumer>
                         </div>
-                        <form onSubmit={e => submitGoal(e)} className="d-flex flex-column gap-3 hp-50">
+                        <form onSubmit={submitGoal} className="d-flex flex-column gap-3 hp-50">
                             <div>
                                 <label htmlFor="start-date">Start date:</label>
                                 <br/>
@@ -144,12 +166,12 @@ const GoalCreation = () => {
                         <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
                             <p>Choose exercises:</p>
                             <div className="d-flex flex-column text-center flex-fill overflow-y-scroll wp-100">
-                                <input type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-1" className="btn-check"/>
+                                <input onChange={e => exerciseSelected(e, {id: 1, name: "Exercise A"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-1" className="btn-check"/>
                                 <label htmlFor="exercise-checkbox-1" className="btn btn-outline-secondary">Exercise A</label>
-                                <input type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-2" className="btn-check"/>
+                                <input onChange={e => exerciseSelected(e, {id: 2, name: "Exercise B"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-2" className="btn-check"/>
                                 <label htmlFor="exercise-checkbox-2" className="btn btn-outline-secondary">Exercise B</label>
                             </div>
-                            <button className="btn btn-outline-secondary">Save workout</button>
+                            <button onClick={submitWorkout} className="btn btn-outline-secondary">Save workout</button>
                         </div>
                     }
                 
