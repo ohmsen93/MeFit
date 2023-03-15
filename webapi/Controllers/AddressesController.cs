@@ -35,6 +35,7 @@ namespace webapi.Controllers
 
         // GET: api/Addresses
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
         {
             return Ok(_mapper.Map<ICollection<AddressReadDto>>(await _service.GetAll()));

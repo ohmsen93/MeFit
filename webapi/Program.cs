@@ -19,6 +19,8 @@ using webapi.Services.WorkoutServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.GoalServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace webapi
 {
@@ -92,10 +94,25 @@ namespace webapi
 
             // Configure authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                .AddJwtBearer(opt =>
                 {
-                    options.Authority = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp";
-                    options.Audience = "mefit";
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = "mefit",
+                        ValidIssuer = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp",
+                        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                        {
+                            var client = new HttpClient();
+                            var keyuri = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp/protocol/openid-connect/certs";
+                            //Retrieves the keys from keycloak instance to verify token
+                            var response = client.GetAsync(keyuri).Result;
+                            var responseString = response.Content.ReadAsStringAsync().Result;
+                            var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
+                            return keys.Keys;
+                        }
+                    };
                 });
 
             // Build the application.
