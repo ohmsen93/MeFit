@@ -1,8 +1,8 @@
 // FETCH
-export const fetchGoal = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/goals/1")
+export const fetchGoals = async () => {
+    console.log(process.env.REACT_APP_API_URL + "/goals")
     try {
-        const request = await fetch(process.env.REACT_APP_API_URL + "/goals/1", {
+        const request = await fetch(process.env.REACT_APP_API_URL + "/goals", {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }
