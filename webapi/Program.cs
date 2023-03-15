@@ -18,6 +18,7 @@ using webapi.Services.TrainingprogramServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.GoalServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace webapi
 {
@@ -89,6 +90,14 @@ namespace webapi
                 options.IncludeXmlComments(xmlPath);
             });
 
+            // Configure authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp";
+                    options.Audience = "mefit";
+                });
+
             // Build the application.
             var app = builder.Build();
 
@@ -107,8 +116,9 @@ namespace webapi
             //dbContext.Database.EnsureCreated(); 
             //dbContext.Database.Migrate();
 
-            // Set up HTTPS redirection and authorization
+            // Set up HTTPS redirection, authentication and authorization
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Map the controllers to HTTP endpoints
