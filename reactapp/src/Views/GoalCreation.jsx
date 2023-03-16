@@ -16,13 +16,9 @@ const GoalCreation = () => {
     const [programs, setPrograms] = useState([])
     const [workouts, setWorkouts] = useState([])
     const [exercises, setExercises] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
-    useEffect((() => {
-        console.log(keycloak.token)
-    }), [])
     useEffect(() => {
-        setLoading(true)
         const getPrograms = async () => {
             const ps = await fetchPrograms()
                 .finally(setLoading(false))
@@ -32,9 +28,9 @@ const GoalCreation = () => {
         getPrograms()
     }, [])
     useEffect(() => {
-        setLoading(true)
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
+                .then(r => r.reverse())
                 .finally(setLoading(false))
             console.log(ws)
             setWorkouts(ws)
@@ -42,7 +38,6 @@ const GoalCreation = () => {
         getWorkouts()
     }, [])
     useEffect(() => {
-        setLoading(true)
         const getExercises = async () => {
             const es = await fetchExercises()
                 .finally(setLoading(false))
@@ -81,7 +76,7 @@ const GoalCreation = () => {
                 exerciseIds
             }
             const w = await postWorkout(workout)
-            setWorkouts([...workouts, w])
+            setWorkouts([w, ...workouts])
             console.log(w)
             
             // console.log(workout)
