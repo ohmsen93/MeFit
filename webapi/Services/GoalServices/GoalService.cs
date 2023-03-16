@@ -85,7 +85,7 @@ namespace webapi.Services.GoalServices
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Goal>> GetCompletedGoals(int id)
+        public async Task<ICollection<Goal>> GetCompletedGoals(string id)
         {
             var userProfile = await _context.UserProfiles.Where(u => u.FkUserId == id).FirstOrDefaultAsync();
 

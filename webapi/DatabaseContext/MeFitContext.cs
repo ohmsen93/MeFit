@@ -313,7 +313,7 @@ public partial class MeFitContext : DbContext
 
         //        });
 
-        Seeding(modelBuilder);
+        //Seeding(modelBuilder);
 
         OnModelCreatingPartial(modelBuilder);
     }
@@ -323,9 +323,9 @@ public partial class MeFitContext : DbContext
     private void Seeding(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "administrator@gmail.com" });
-        modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com" });
-        modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com" });
+        //modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "administrator@gmail.com" });
+        //modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com" });
+        //modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com" });
 
         modelBuilder.Entity<Address>().HasData(new Address
         {
@@ -343,21 +343,21 @@ public partial class MeFitContext : DbContext
             City = "Vejle", Country = "Denmark"
         });
 
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        {
-            Id = 1, FkUserId = 1, FkAddressId = 1, Weight = 80, Height = 180, MedicalCondition = "", Disabilities = "",
-            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        });
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        {
-            Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "",
-            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        });
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        {
-            Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "",
-            Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        });
+        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        //{
+        //    Id = 1, FkUserId = 1, FkAddressId = 1, Weight = 80, Height = 180, MedicalCondition = "", Disabilities = "",
+        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        //});
+        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        //{
+        //    Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "",
+        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        //});
+        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        //{
+        //    Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "",
+        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
+        //});
 
         modelBuilder.Entity<Goal>().HasData(new Goal
         {

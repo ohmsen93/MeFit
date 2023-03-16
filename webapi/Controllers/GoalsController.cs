@@ -122,7 +122,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("completed/user/{id}")]
-        public async Task<ActionResult<IEnumerable<Goal>>> GetCompletedGoals(int id)
+        public async Task<ActionResult<IEnumerable<Goal>>> GetCompletedGoals(string id)
         {
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetCompletedGoals(id)));
         }

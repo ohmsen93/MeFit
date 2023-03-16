@@ -2,7 +2,8 @@
 
 namespace webapi.Services.UserServices
 {
-    public interface IUserService:IServices<User,int>
+    public interface IUserService:IServices<User, string>
     {
+
     }
 }

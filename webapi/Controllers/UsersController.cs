@@ -42,7 +42,7 @@ namespace webapi.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(string id)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace webapi.Controllers
         // PATCH: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
+        public async Task<IActionResult> PutUser(string id, UserUpdateDto userUpdateDto)
         {
             if (id != userUpdateDto.Id)
             {
@@ -96,7 +96,7 @@ namespace webapi.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             try
             {

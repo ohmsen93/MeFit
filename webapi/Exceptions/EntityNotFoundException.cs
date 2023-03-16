@@ -3,5 +3,7 @@
     public class EntityNotFoundException:Exception
     {
         public EntityNotFoundException(int id, string entityName) : base($" {entityName} with id {id} was not found") { }
+
+        public EntityNotFoundException(string id, string entityName) : base($" {entityName} with id {id} was not found") { }
     }
 }

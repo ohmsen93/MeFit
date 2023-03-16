@@ -5,7 +5,7 @@
     {
         public int Id { get; set; }
 
-        public int FkUserId { get; set; }
+        public string FkUserId { get; set; }
 
         public int FkAddressId { get; set; }
 

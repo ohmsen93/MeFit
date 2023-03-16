@@ -19,7 +19,7 @@ namespace webapi.Services.UserServices
             return entity;
         }
 
-        public async Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -36,7 +36,7 @@ namespace webapi.Services.UserServices
             return await _context.Users.Include(x => x.UserProfiles).ToListAsync();
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User> GetById(string id)
         {
             var user = await _context.Users.Include(x => x.UserProfiles).FirstOrDefaultAsync(x => x.Id == id);
 
