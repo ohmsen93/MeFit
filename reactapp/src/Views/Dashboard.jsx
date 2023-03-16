@@ -3,6 +3,7 @@ import { Calendar } from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import { Link } from "react-router-dom";
 import { DashboardContext } from "../Context/DashboardContext";
+import keycloak from "../keycloak";
 
 const Dashboard = () => {
   const [state, setState] = useState({
