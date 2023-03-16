@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchExercises } from "../API/ExerciseAPI";
 import { fetchPrograms } from "../API/ProgramAPI";
 import { fetchWorkouts, postWorkout } from "../API/WorkoutAPI";
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
@@ -14,6 +15,7 @@ const GoalCreation = () => {
     })
     const [programs, setPrograms] = useState([])
     const [workouts, setWorkouts] = useState([])
+    const [exercises, setExercises] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect((() => {
@@ -38,6 +40,16 @@ const GoalCreation = () => {
             setWorkouts(ws)
         }
         getWorkouts()
+    }, [])
+    useEffect(() => {
+        setLoading(true)
+        const getExercises = async () => {
+            const es = await fetchExercises()
+                .finally(setLoading(false))
+            console.log(es)
+            setExercises(es)
+        }
+        getExercises()
     }, [])
 
     const changeTab = tab => {
@@ -111,10 +123,10 @@ const GoalCreation = () => {
                                 {({programs, programSelected}) => (
                                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
                                         {loading && <div className="spinner-border align-self-center" role="status"/>}
-                                        {programs.map(p => 
-                                            <div className="d-flex flex-column" key={p.id}>
-                                                <input onChange={e => programSelected(e, p)} type="radio" name="program-list-radio" id={`program-radio-${p.id}`} className="btn-check"/>
-                                                <label htmlFor={`program-radio-${p.id}`} className="btn btn-outline-secondary">{p.name}</label>
+                                        {programs.map(program => 
+                                            <div className="d-flex flex-column" key={program.id}>
+                                                <input onChange={e => programSelected(e, program)} type="radio" name="program-list-radio" id={`program-radio-${program.id}`} className="btn-check"/>
+                                                <label htmlFor={`program-radio-${program.id}`} className="btn btn-outline-secondary">{program.name}</label>
                                             </div>
                                         )}
                                         {/* <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>
@@ -137,10 +149,10 @@ const GoalCreation = () => {
                                     {({workouts, workoutSelected}) => (
                                         <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
                                             {loading && <div className="spinner-border align-self-center" role="status"/>}
-                                            {workouts.map(w => 
-                                            <div className="d-flex flex-column" key={w.id}>
-                                                <input onChange={e => workoutSelected(e, w)} type="checkbox" name="workout-list-checkbox" id={`workout-checkbox-${w.id}`} className="btn-check"/>
-                                                <label htmlFor={`workout-checkbox-${w.id}`} className="btn btn-outline-secondary">{w.name}</label>
+                                            {workouts.map(workout => 
+                                            <div className="d-flex flex-column" key={workout.id}>
+                                                <input onChange={e => workoutSelected(e, workout)} type="checkbox" name="workout-list-checkbox" id={`workout-checkbox-${workout.id}`} className="btn-check"/>
+                                                <label htmlFor={`workout-checkbox-${workout.id}`} className="btn btn-outline-secondary">{workout.name}</label>
                                             </div>
                                             )}
                                             {/* <input onChange={e => workoutSelected(e, {id: 1, name: "Workout A"})} type="checkbox" name="workout-list-checkbox" id="workout-checkbox-1" className="btn-check"/>
@@ -160,10 +172,16 @@ const GoalCreation = () => {
                             <p>Choose exercises:</p>
                             <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
                                 {loading && <div className="spinner-border align-self-center" role="status"/>}
-                                <input onChange={e => exerciseSelected(e, {id: 1, name: "Exercise A"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-1" className="btn-check"/>
+                                {exercises.map(exercise => 
+                                    <div className="d-flex flex-column" key={exercise.id}>
+                                        <input onChange={e => exerciseSelected(e, exercise)} type="checkbox" name="exercise-list-checkbox" id={`exercise-checkbox-${exercise.id}`} className="btn-check"/>
+                                        <label htmlFor={`exercise-checkbox-${exercise.id}`} className="btn btn-outline-secondary">{exercise.name}</label>
+                                    </div>
+                                    )}
+                                {/* <input onChange={e => exerciseSelected(e, {id: 1, name: "Exercise A"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-1" className="btn-check"/>
                                 <label htmlFor="exercise-checkbox-1" className="btn btn-outline-secondary">Exercise A</label>
                                 <input onChange={e => exerciseSelected(e, {id: 2, name: "Exercise B"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-2" className="btn-check"/>
-                                <label htmlFor="exercise-checkbox-2" className="btn btn-outline-secondary">Exercise B</label>
+                                <label htmlFor="exercise-checkbox-2" className="btn btn-outline-secondary">Exercise B</label> */}
                             </div>
                             <form onSubmit={submitWorkout}>
                                 <input type="text" placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
