@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchPrograms } from "../API/ProgramAPI";
-import { postWorkout } from "../API/WorkoutAPI";
+import { fetchWorkouts, postWorkout } from "../API/WorkoutAPI";
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
 import { GoalCreationContext } from "../Context/GoalCreationContext";
 
@@ -12,12 +12,28 @@ const GoalCreation = () => {
         selectedExercises: []
     })
     const [programs, setPrograms] = useState([])
+    const [workouts, setWorkouts] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         const getPrograms = async () => {
-            setPrograms(await fetchPrograms())
+            const ps = await fetchPrograms()
+                .finally(setLoading(false))
+            console.log(ps)
+            setPrograms(ps)
         }
         getPrograms()
+    }, [])
+    useEffect(() => {
+        setLoading(true)
+        const getWorkouts = async () => {
+            const ws = await fetchWorkouts()
+                .finally(setLoading(false))
+            console.log(ws)
+            setWorkouts(ws)
+        }
+        getWorkouts()
     }, [])
 
     const changeTab = tab => {
@@ -39,18 +55,20 @@ const GoalCreation = () => {
         if (event.target.checked) setState({...state, selectedExercises: [...state.selectedExercises, exercise]})
         else setState({...state, selectedExercises: state.selectedExercises.filter(e => e.id !== exercise.id)})
     }
-    const submitWorkout = (event) => {
+    const submitWorkout = async (event) => {
         event.preventDefault()
         const exerciseIds = state.selectedExercises.map(e => e.id)
         if (exerciseIds.length > 0) { // POST
             let workout = {
                 name: event.target[0].value,
                 type: "Custom",
-                fkUserProfileId: 1,
                 exerciseIds
             }
-            postWorkout(workout)
-            console.log(workout)
+            const w = await postWorkout(workout)
+            setWorkouts([...workouts, w])
+            console.log(w)
+            
+            // console.log(workout)
             changeTab("workout")
         }
         else { alert("Required: Select at least one exercise") }
@@ -59,7 +77,7 @@ const GoalCreation = () => {
     return (
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <h1>New goal</h1>
-            <div className="d-flex flex-fill border wp-100">
+            <div className="d-flex flex-fill border wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-50 p-2">
 
                     {/* GoalCreationForm */}
@@ -83,11 +101,12 @@ const GoalCreation = () => {
                     {state.tab === "program" && 
                         <GoalCreationContext.Provider value={{programs, programSelected}}>
                         {/* ProgramSelectionList Component */}
-                        <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
+                        <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
                             <p>Choose a program:</p>
                             <GoalCreationContext.Consumer>
                                 {({programs, programSelected}) => (
-                                    <div className="d-flex flex-column text-center flex-fill text-center overflow-y-scroll wp-100">
+                                    <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
+                                        {loading && <div className="spinner-border align-self-center" role="status"/>}
                                         {programs.map(p => 
                                             <div className="d-flex flex-column" key={p.id}>
                                                 <input onChange={e => programSelected(e, p)} type="radio" name="program-list-radio" id={`program-radio-${p.id}`} className="btn-check"/>
@@ -106,17 +125,24 @@ const GoalCreation = () => {
                     }
 
                     {state.tab === "workout" && 
-                        <GoalCreationContext.Provider value={workoutSelected}>
+                        <GoalCreationContext.Provider value={({workouts, workoutSelected})}>
                             {/* WorkoutSelectionList Component */}
-                            <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
+                            <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
                                 <p>Choose workouts:</p>
                                 <GoalCreationContext.Consumer>
-                                    {workoutSelected => (
-                                        <div className="d-flex flex-column text-center flex-fill overflow-y-scroll wp-100">
-                                            <input onChange={e => workoutSelected(e, {id: 1, name: "Workout A"})} type="checkbox" name="workout-list-checkbox" id="workout-checkbox-1" className="btn-check"/>
+                                    {({workouts, workoutSelected}) => (
+                                        <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
+                                            {loading && <div className="spinner-border align-self-center" role="status"/>}
+                                            {workouts.map(w => 
+                                            <div className="d-flex flex-column" key={w.id}>
+                                                <input onChange={e => workoutSelected(e, w)} type="checkbox" name="workout-list-checkbox" id={`workout-checkbox-${w.id}`} className="btn-check"/>
+                                                <label htmlFor={`workout-checkbox-${w.id}`} className="btn btn-outline-secondary">{w.name}</label>
+                                            </div>
+                                            )}
+                                            {/* <input onChange={e => workoutSelected(e, {id: 1, name: "Workout A"})} type="checkbox" name="workout-list-checkbox" id="workout-checkbox-1" className="btn-check"/>
                                             <label htmlFor="workout-checkbox-1" className="btn btn-outline-secondary">Workout A</label>
                                             <input onChange={e => workoutSelected(e, {id: 2, name: "Workout B"})} type="checkbox" name="workout-list-checkbox" id="workout-checkbox-2" className="btn-check"/>
-                                            <label htmlFor="workout-checkbox-2" className="btn btn-outline-secondary">Workout B</label>
+                                            <label htmlFor="workout-checkbox-2" className="btn btn-outline-secondary">Workout B</label> */}
                                         </div>
                                     )}
                                 </GoalCreationContext.Consumer>
@@ -126,9 +152,10 @@ const GoalCreation = () => {
 
                     {state.tab === "exercise" && 
                         /* ExerciseSelectionList Component */
-                        <div className="d-flex flex-column flex-fill align-items-center border wp-100 p-2">
+                        <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
                             <p>Choose exercises:</p>
-                            <div className="d-flex flex-column text-center flex-fill overflow-y-scroll wp-100">
+                            <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
+                                {loading && <div className="spinner-border align-self-center" role="status"/>}
                                 <input onChange={e => exerciseSelected(e, {id: 1, name: "Exercise A"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-1" className="btn-check"/>
                                 <label htmlFor="exercise-checkbox-1" className="btn btn-outline-secondary">Exercise A</label>
                                 <input onChange={e => exerciseSelected(e, {id: 2, name: "Exercise B"})} type="checkbox" name="exercise-list-checkbox" id="exercise-checkbox-2" className="btn-check"/>

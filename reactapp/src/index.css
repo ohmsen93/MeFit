@@ -21,6 +21,10 @@ code {
   overflow-x: hidden;
 }
 
+.min-h-0 {
+  min-height: 0;
+}
+
 .wpx-240 {
   width: 240px !important;
 }
