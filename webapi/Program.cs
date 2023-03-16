@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
 using System.Reflection;
+using System.Text;
 using webapi.DatabaseContext;
 using webapi.Services;
 using System.Text.Json.Serialization;
@@ -18,6 +19,11 @@ using webapi.Services.TrainingprogramServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.GoalServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
+
 
 namespace webapi
 {
@@ -89,6 +95,29 @@ namespace webapi
                 options.IncludeXmlComments(xmlPath);
             });
 
+            // Configure authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = "account",
+                        ValidIssuer = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp",
+                        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                        {
+                            var client = new HttpClient();
+                            var keyuri = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp/protocol/openid-connect/certs";
+                            //Retrieves the keys from keycloak instance to verify token
+                            var response = client.GetAsync(keyuri).Result;
+                            var responseString = response.Content.ReadAsStringAsync().Result;
+                            var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
+                            return keys.Keys;
+                        }
+                    };
+                });
+
             // Build the application.
             var app = builder.Build();
 
@@ -107,8 +136,9 @@ namespace webapi
             //dbContext.Database.EnsureCreated(); 
             //dbContext.Database.Migrate();
 
-            // Set up HTTPS redirection and authorization
+            // Set up HTTPS redirection, authentication and authorization
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Map the controllers to HTTP endpoints

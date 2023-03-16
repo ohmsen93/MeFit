@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class AddressesController : ControllerBase
     {
         private readonly IAddressService _service;
@@ -33,6 +35,7 @@ namespace webapi.Controllers
 
         // GET: api/Addresses
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
         {
             return Ok(_mapper.Map<ICollection<AddressReadDto>>(await _service.GetAll()));
