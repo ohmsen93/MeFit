@@ -103,7 +103,7 @@ namespace webapi
             //        {
             //            ValidateIssuer = true,
             //            ValidateAudience = true,
-            //            ValidAudience = "mefit",
+            //            ValidAudience = "account",
             //            ValidIssuer = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp",
             //            IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
             //            {
@@ -126,7 +126,7 @@ namespace webapi
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp";
-                    options.Audience = "mefit";
+                    options.Audience = "account";
                     options.Events = new JwtBearerEvents
                     {
                         OnTokenValidated = async context =>
