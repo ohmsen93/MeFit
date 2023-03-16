@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
+using webapi.Models.DTO.GoalDTO;
 using webapi.Models.DTO.WorkoutDTO;
 using webapi.Services.WorkoutServices;
 
@@ -91,11 +92,13 @@ namespace webapi.Controllers
         public async Task<ActionResult<Workout>> PostWorkout(WorkoutCreateDto workoutCreateDto)
         {
             var workout = _mapper.Map<Workout>(workoutCreateDto);
-            await _service.Create(workout);
-            var workoutUpdateExercisesDto = new WorkoutUpdateExercisesDto { ExerciseIds = workoutCreateDto.ExerciseIds };
-            await _service.UpdateWorkoutExercises(workout.Id, workoutUpdateExercisesDto.ExerciseIds);
+            await _service.Create(workout,workoutCreateDto.ExerciseIds);
 
-            return CreatedAtAction(nameof(GetWorkout), new { id = workout.Id }, workout);
+            //var workoutUpdateExercisesDto = new WorkoutUpdateExercisesDto { ExerciseIds = workoutCreateDto.ExerciseIds };
+            //await _service.UpdateWorkoutExercises(workout.Id, workoutUpdateExercisesDto.ExerciseIds);
+            
+            var WorkoutReadDto = _mapper.Map<WorkoutReadDto>(workout);
+            return CreatedAtAction(nameof(GetWorkout), new { id = workout.Id }, WorkoutReadDto);
         }
 
 

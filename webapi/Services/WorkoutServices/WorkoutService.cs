@@ -2,6 +2,7 @@
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
+using webapi.Profiles;
 
 namespace webapi.Services.WorkoutServices
 {
@@ -20,6 +21,47 @@ namespace webapi.Services.WorkoutServices
             return entity;
         }
 
+        public async Task<Workout> Create(Workout entity,List<int> exercises)
+        {
+            if (entity.Type.ToLower() == "custom")
+            {
+                //find profile id then assign to the workout
+                entity.FkUserProfileId = 3;
+            }
+            else
+            {
+                entity.FkUserProfileId = null;
+            }
+
+            _context.Workouts.Add(entity);
+            await _context.SaveChangesAsync();
+
+            // Finding the Workout with its Exercises
+            var WorkoutToUpdateExercises = await _context.Workouts.FirstOrDefaultAsync(w => w.Id == entity.Id);
+
+
+            if (WorkoutToUpdateExercises == null)
+            {
+                throw new EntityNotFoundException(entity.Id, nameof(Workout));
+            }
+            
+            var exerciseList = new List<Exercise>();
+
+            foreach (var id in exercises)
+            {
+                var exercise = await _context.Exercises.FindAsync(id);
+                if (exercise == null)
+                    // Record doesnt exist: https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms229021(v=vs.100)?redirectedfrom=MSDN
+                    throw new KeyNotFoundException($"Exercise with {id} not found");
+                exerciseList.Add(exercise);
+            }
+
+            WorkoutToUpdateExercises.Exercises = exerciseList;
+            _context.Entry(WorkoutToUpdateExercises).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return entity;
+        }
         public async Task DeleteById(int id)
         {
             var Workout = await _context.Workouts.FindAsync(id);
@@ -72,6 +114,7 @@ namespace webapi.Services.WorkoutServices
         public async Task UpdateWorkoutExercises(int WorkoutId, List<int> exercisesId)
         {
             var foundWorkout = await _context.Workouts.AnyAsync(x => x.Id == WorkoutId);
+           
             if (!foundWorkout)
             {
                 throw new EntityNotFoundException(WorkoutId, nameof(Workout));
