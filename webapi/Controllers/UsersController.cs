@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -89,7 +90,10 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(UserCreateDto userCreateDto)
         {
+            var subjectFoo = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var user = _mapper.Map<User>(userCreateDto);
+            user.Id = subjectFoo;
             await _service.Create(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }

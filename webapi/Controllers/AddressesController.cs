@@ -42,12 +42,6 @@ namespace webapi.Controllers
             //Method 1
             var subjectFoo = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //Method 2
-            var accessToken = HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var decodedToken = handler.ReadJwtToken(accessToken);
-            var sub = decodedToken.Subject;
-
             return Ok(_mapper.Map<ICollection<AddressReadDto>>(await _service.GetAll()));
         }
 

@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import UserAddressModal from '../Modals/UserAddressModal';
 import UserFitnessModal from '../Modals/UserFitnessModal';
 import UserInformationModal from '../Modals/UserInformation';
-
+import keycloak from '../../keycloak';
 
 const UserProfileForm = () => {
 
@@ -63,6 +63,7 @@ const UserProfileForm = () => {
     return (
         <>
             {currentmodal}
+            {console.log(keycloak.token)}
         </>
     );
 }

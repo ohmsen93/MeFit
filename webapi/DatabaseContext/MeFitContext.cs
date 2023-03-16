@@ -275,6 +275,9 @@ public partial class MeFitContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever();
+
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsFixedLength();

@@ -12,7 +12,7 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230316125922_InitialCreate")]
+    [Migration("20230316133117_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
