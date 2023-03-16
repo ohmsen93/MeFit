@@ -11,8 +11,8 @@ namespace webapi.Models.DTO.ExerciseDTO
 
         public string? Description { get; set; }
 
-        public ICollection<SetReadDto> Sets { get; set; }
+        public List<string> Sets { get; set; }
 
-        public ICollection<Musclegroup> Musclegroups { get; set; }
+        public List<string> Musclegroups { get; set; }
     }
 }
