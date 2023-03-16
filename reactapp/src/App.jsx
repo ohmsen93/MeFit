@@ -14,6 +14,7 @@ import Contributor from './Views/Contributor';
 import UserProfile from './Views/UserProfile';
 import { useAuth } from './Components/context/AuthenticateContext';
 import { Roles } from './Components/roles/Roles';
+import GoalsOverview from './Views/GoalsOverview';
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
             <Route path="/dashboard" element={<KeycloakRoute role={ Roles.Regular }> <Dashboard /> </KeycloakRoute>}/>
             <Route path="/contributor" element={<KeycloakRoute role={ Roles.Contributor}> <Contributor /> </KeycloakRoute>}/>
             <Route path="/profile" element={<KeycloakRoute role={ Roles.Regular }> <UserProfile /> </KeycloakRoute>}/>
-            <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /></KeycloakRoute>}/>
+            <Route path="/goals" element={<KeycloakRoute role={ Roles.Regular }> <GoalsOverview /> </KeycloakRoute>}/>
+            <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /> </KeycloakRoute>}/>
           </Routes>
         </main>
       </BrowserRouter>

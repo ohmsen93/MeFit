@@ -4,7 +4,6 @@ import { fetchPrograms } from "../API/ProgramAPI";
 import { fetchWorkouts, postWorkout } from "../API/WorkoutAPI";
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
 import { GoalCreationContext } from "../Context/GoalCreationContext";
-import keycloak from "../keycloak";
 
 const GoalCreation = () => {
     const [state, setState] = useState({
