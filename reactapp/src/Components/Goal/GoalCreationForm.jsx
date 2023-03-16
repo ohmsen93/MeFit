@@ -1,19 +1,28 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { postGoal } from "../../API/GoalAPI"
-import { GoalCreationContext } from "../../Context/GoalCreationContext"
 
 const GoalCreationForm = props => {
     const [state, setState] = useState({
         startDate: new Date().toLocaleDateString('en-US'),
         endDate: null,
     })
-
-    const context = useContext(GoalCreationContext)
     
+    const selectionNotice = () => {
+        if (props.program !== null)
+            return <div>{props.program.name}</div>
+        else if (props.workouts.length > 0)
+            return (
+                <div className="overflow-y-scroll text-center hp-100">
+                {props.workouts.map(w => <div key={w.id}>{w.name}</div>)}
+                </div>
+            )
+        else
+            return <p>No program or workouts selected...</p>
+    }
     const submitGoal = (event) => {
         event.preventDefault()
-        const programId = context.program?.id || null
-        const workoutIds = context.workouts.map(w => w.id)
+        const programId = props.program?.id || null
+        const workoutIds = props.workouts.map(w => w.id)
         let goal = {
             startDate: event.target[0].value,
             endDate: event.target[1].value,
@@ -35,20 +44,21 @@ const GoalCreationForm = props => {
 
     return (
         <>
-        <p>GoalForm</p>
+        <h3>Create new goal</h3>
         <div className="hp-100 p-2">
-            <GoalCreationContext.Consumer>
-            {({program, workouts}) => (
+            {/* <GoalCreationContext.Consumer>
+            {({program, workouts}) => ( */}
                     <>
-                    {program !== null && <div>{program.name}</div>}
-                    {workouts.length > 0 &&
+                    {selectionNotice()}
+                    {/* {props.program !== null && <div>{props.program.name}</div>}
+                    {props.workouts.length > 0 &&
                         <div className="overflow-y-scroll text-center hp-100">
-                            {workouts.map(w => <div key={w.id}>{w.name}</div>)}
+                            {props.workouts.map(w => <div key={w.id}>{w.name}</div>)}
                         </div>
-                    }
+                    } */}
                     </>
-            )}
-            </GoalCreationContext.Consumer>
+            {/* )}
+            </GoalCreationContext.Consumer> */}
         </div>
         <form onSubmit={submitGoal} className="d-flex flex-column gap-3 hp-50">
             <div>
