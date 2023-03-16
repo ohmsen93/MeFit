@@ -96,55 +96,27 @@ namespace webapi
             });
 
             // Configure authentication
-            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(opt =>
-            //    {
-            //        opt.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = "account",
-            //            ValidIssuer = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp",
-            //            IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
-            //            {
-            //                var client = new HttpClient();
-            //                var keyuri = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp/protocol/openid-connect/certs";
-            //                //Retrieves the keys from keycloak instance to verify token
-            //                var response = client.GetAsync(keyuri).Result;
-            //                var responseString = response.Content.ReadAsStringAsync().Result;
-            //                var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
-            //                return keys.Keys;
-            //            }
-            //        };
-            //    });
-
-            builder.Services.AddAuthentication(options =>
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
                 {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp";
-                    options.Audience = "account";
-                    options.Events = new JwtBearerEvents
+                    opt.TokenValidationParameters = new TokenValidationParameters
                     {
-                        OnTokenValidated = async context =>
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = "account",
+                        ValidIssuer = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp",
+                        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                         {
-                            var userIdClaim = context.Principal.FindFirst("sub");
-                            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
-                            {
-                                // Add the user ID to the HttpContext so it's available to controllers
-                                context.HttpContext.Items["UserId"] = userId;
-                            }
-                            else
-                            {
-                                context.Fail("Unable to extract user ID from token");
-                            }
+                            var client = new HttpClient();
+                            var keyuri = "https://lemur-3.cloud-iam.com/auth/realms/mefitexp/protocol/openid-connect/certs";
+                            //Retrieves the keys from keycloak instance to verify token
+                            var response = client.GetAsync(keyuri).Result;
+                            var responseString = response.Content.ReadAsStringAsync().Result;
+                            var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
+                            return keys.Keys;
                         }
                     };
                 });
-
 
             // Build the application.
             var app = builder.Build();
