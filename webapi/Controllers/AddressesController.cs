@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -35,9 +37,17 @@ namespace webapi.Controllers
 
         // GET: api/Addresses
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
         {
+            //Method 1
+            var subjectFoo = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //Method 2
+            var accessToken = HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var decodedToken = handler.ReadJwtToken(accessToken);
+            var sub = decodedToken.Subject;
+
             return Ok(_mapper.Map<ICollection<AddressReadDto>>(await _service.GetAll()));
         }
 
