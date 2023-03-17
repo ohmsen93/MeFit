@@ -5,7 +5,9 @@ using webapi.Services;
 using webapi.Services.UserServices;
 using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 using webapi.Models.DTO.SetDTO;
+using Microsoft.AspNetCore.Http;
 
 namespace webapi.Middleware;
 
@@ -25,38 +27,35 @@ public class UserVerificationMiddleware : IMiddleware
     {
         var accessToken = context.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
 
-
-
-        if (accessToken != null)
+        if (context.Session.TryGetValue("User", out var userBytes))
+        {
+            // Deserialize user object from session
+            var user = JsonSerializer.Deserialize<User>(userBytes);
+            context.Items["User"] = user;
+        }
+        else if (accessToken != null)
         {
             try
             {
-
                 var handler = new JwtSecurityTokenHandler();
                 var decodedToken = handler.ReadJwtToken(accessToken);
                 var userId = decodedToken.Subject;
-                
-
+                var userEmail = decodedToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
 
                 // Check if user exists in the database
-                var user = _mapper.Map<UserReadDto>(await _userService.GetById(userId, false));
-
+                var user = await _userService.GetById(userId, false);
 
                 if (user == null)
                 {
-                    var userCreateDto = new UserCreateDto();
-
-                    var newUser = _mapper.Map<User>(userCreateDto);
-
-                    newUser.Id = userId;
-                    newUser.Username = decodedToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
-
-                    await _userService.Create(newUser);
-                    return;
+                    user = await _userService.Create(new User { Id = userId, Username = userEmail });
                 }
 
                 // Attach user to context for use in controllers
                 context.Items["User"] = user;
+
+                // Save user object to session
+                userBytes = JsonSerializer.SerializeToUtf8Bytes(user);
+                context.Session.Set("User", userBytes);
             }
             catch (Exception ex)
             {
@@ -68,6 +67,8 @@ public class UserVerificationMiddleware : IMiddleware
 
         await next(context);
     }
+
+
 
 
 }

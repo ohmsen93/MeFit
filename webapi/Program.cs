@@ -42,15 +42,27 @@ namespace webapi
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IGoalWorkoutService, GoalWorkoutService>();
             builder.Services.AddTransient<IAddressService, AddressService>();
+            builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
+            builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
+            builder.Services.AddTransient<IGoalService, GoalService>();
+
+            // Add middleware
+            builder.Services.AddTransient<UserVerificationMiddleware>();
 
             //Sets the endpoint urls to lowercase
             builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-            builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
 
-            builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
+            // Add session
+            builder.Services.AddDistributedMemoryCache();
 
-            builder.Services.AddTransient<IGoalService, GoalService>();
-            builder.Services.AddTransient<UserVerificationMiddleware>();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            builder.Services.AddHttpContextAccessor();
 
 
 
@@ -140,6 +152,9 @@ namespace webapi
             var dbContext = services.GetRequiredService<MeFitContext>();
             //dbContext.Database.EnsureCreated(); 
             //dbContext.Database.Migrate();
+
+            // Set up session
+            app.UseSession();
 
             // Set up HTTPS redirection, authentication and authorization
             app.UseHttpsRedirection();
