@@ -50,6 +50,8 @@ namespace webapi
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
 
             builder.Services.AddTransient<IGoalService, GoalService>();
+            builder.Services.AddTransient<UserVerificationMiddleware>();
+
 
 
 
@@ -143,6 +145,8 @@ namespace webapi
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+
+
             app.UseMiddleware<UserVerificationMiddleware>();
 
             // Map the controllers to HTTP endpoints

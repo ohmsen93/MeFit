@@ -4,42 +4,70 @@ using webapi.Models;
 using webapi.Services;
 using webapi.Services.UserServices;
 using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
+using webapi.Models.DTO.SetDTO;
 
 namespace webapi.Middleware;
 
-public class UserVerificationMiddleware
+public class UserVerificationMiddleware : IMiddleware
 {
-    private readonly RequestDelegate _next;
-    private readonly IUserService _service;
+    private readonly IUserService _userService;
     private readonly IMapper _mapper;
 
-    public UserVerificationMiddleware(RequestDelegate next, IUserService service, IMapper mapper)
+    public UserVerificationMiddleware(IUserService userService, IMapper mapper)
     {
-        _next = next;
-        _service = service;
+        _userService = userService;
         _mapper = mapper;
+
     }
 
-
-    public async Task InvokeAsync(HttpContext context, IUserService userService, UserCreateDto userCreateDto)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        // Extract user ID from JWT token
-        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var accessToken = context.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
 
-        // Check if user exists in database
-        var user = await userService.GetById(userId);
 
-        if (user == null)
+
+        if (accessToken != null)
         {
-            user = _mapper.Map<User>(userCreateDto);
-            await _service.Create(user);
+            try
+            {
+
+                var handler = new JwtSecurityTokenHandler();
+                var decodedToken = handler.ReadJwtToken(accessToken);
+                var userId = decodedToken.Subject;
+                
 
 
-            // Create new user in database
-            await userService.Create(user);
+                // Check if user exists in the database
+                var user = _mapper.Map<UserReadDto>(await _userService.GetById(userId, false));
+
+
+                if (user == null)
+                {
+                    var userCreateDto = new UserCreateDto();
+
+                    var newUser = _mapper.Map<User>(userCreateDto);
+
+                    newUser.Id = userId;
+                    newUser.Username = decodedToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+                    await _userService.Create(newUser);
+                    return;
+                }
+
+                // Attach user to context for use in controllers
+                context.Items["User"] = user;
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = 401; // Unauthorized
+                await context.Response.WriteAsync("Invalid token");
+                return;
+            }
         }
 
-        // Call the next middleware in the pipeline
-        await _next(context);
+        await next(context);
     }
+
+
 }
