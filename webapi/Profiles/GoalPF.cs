@@ -13,6 +13,9 @@ namespace webapi.Profiles
             CreateMap<Goal, GoalReadDto>()
                 .ForMember(dto => dto.Workouts, options =>
                 options.MapFrom(goalDomain => goalDomain.GoalWorkouts.Select(gw => $"api/workouts/{gw.FkWorkoutId}").ToList()));
+            CreateMap<Goal, GoalReadDto>()
+                .ForMember(dto => dto.ProgramNavn, options =>
+                options.MapFrom(goalDomain => goalDomain.FkTrainingprogram.Name));
             CreateMap<GoalUpdateDto, Goal>();
         }
     }

@@ -12,8 +12,8 @@
 
         public int? FkTrainingprogramId { get; set; }
 
+        public string ProgramNavn { get; set; }
         public int FkStatusId { get; set; }       
-
         public List<string> Workouts { get; set; }
     }
 }

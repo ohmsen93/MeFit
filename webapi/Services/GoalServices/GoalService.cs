@@ -94,19 +94,28 @@ namespace webapi.Services.GoalServices
                 throw new EntityNotFoundException(id, nameof(UserProfile));
             }
 
-            var achivedGoals = await _context.Goals.Include(g => g.GoalWorkouts).Where(x => x.FkStatusId == 1).ToListAsync();
+            var achivedGoals = await _context.Goals
+                .Include(g => g.GoalWorkouts)
+                .Include(g => g.FkTrainingprogram)
+                .Where(x => x.FkStatusId == 1).ToListAsync();
 
             return achivedGoals;
         }
 
         public async Task<ICollection<Goal>> GetAll()
         {
-            return await _context.Goals.Include(g => g.GoalWorkouts).ToListAsync();
+            return await _context.Goals
+                .Include(g => g.GoalWorkouts)
+                .Include(g=>g.FkTrainingprogram)
+                .ToListAsync();
         }
 
         public async Task<Goal> GetById(int id)
         {
-            var goal = await _context.Goals.Include(g => g.GoalWorkouts).FirstOrDefaultAsync(x => x.Id == id);
+            var goal = await _context.Goals
+                .Include(g => g.GoalWorkouts)
+                .Include(g => g.FkTrainingprogram)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (goal == null)
             {
