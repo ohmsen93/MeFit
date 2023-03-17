@@ -23,7 +23,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
-using webapi.Middleware;
 
 
 namespace webapi
@@ -47,25 +46,9 @@ namespace webapi
             builder.Services.AddTransient<IGoalService, GoalService>();
 
             // Add middleware
-            builder.Services.AddTransient<UserVerificationMiddleware>();
 
             //Sets the endpoint urls to lowercase
             builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-
-            // Add session
-            builder.Services.AddDistributedMemoryCache();
-
-            builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-
-            builder.Services.AddHttpContextAccessor();
-
-
-
 
             // Add controllers and database context to the container
             //builder.Services.AddControllers().AddJsonOptions(options =>
@@ -153,16 +136,13 @@ namespace webapi
             //dbContext.Database.EnsureCreated(); 
             //dbContext.Database.Migrate();
 
-            // Set up session
-            app.UseSession();
+ 
 
             // Set up HTTPS redirection, authentication and authorization
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
 
-
-            app.UseMiddleware<UserVerificationMiddleware>();
 
             // Map the controllers to HTTP endpoints
             app.MapControllers();

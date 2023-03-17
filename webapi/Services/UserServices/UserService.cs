@@ -47,17 +47,6 @@ namespace webapi.Services.UserServices
             return user;
         }
 
-        public async Task<User> GetById(string id, bool throwIfNotFound)
-        {
-            var user = await _context.Users.Include(x => x.UserProfiles).FirstOrDefaultAsync(x => x.Id == id);
-
-            if (user == null && throwIfNotFound)
-            {
-                throw new EntityNotFoundException(id, nameof(User));
-            }
-
-            return user;
-        }
 
         public async Task<User> Update(User entity)
         {
