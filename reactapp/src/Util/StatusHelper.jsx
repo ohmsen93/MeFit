@@ -8,3 +8,14 @@ export const getStatus = id => {
             return "Error"
     }
 }
+
+export const getStatusId = type => {
+    switch(type) {
+        case "Completed":
+            return 1
+        case "Pending":
+            return 2
+        default:
+            return null
+    }
+}
