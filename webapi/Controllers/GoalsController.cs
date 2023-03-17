@@ -46,7 +46,8 @@ namespace webapi.Controllers
         {
             try
             {
-                return Ok(_mapper.Map<GoalReadDto>(await _service.GetById(id)));
+                var goal = await _service.GetById(id);
+                return Ok(_mapper.Map<GoalReadDto>(goal));
             }
             catch (EntityNotFoundException ex)
             {
