@@ -1,17 +1,17 @@
 
-const ProgramSelectionList = props => {
+const GoalSelectionList = props => {
 
     return (
         <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
-            <p>Choose a program:</p>
+            <p>Goals:</p>
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
-                        {props.programs === "loading" ? <div className="spinner-border align-self-center" role="status"/> :
-                        props.programs.map(program => 
-                            <div className="d-flex flex-column" key={program.id}>
-                                <input onChange={e => props.programSelected(e, program)} type={props.type} name="program-list-radio" id={`program-${program.id}`} className="btn-check"/>
-                                <label htmlFor={`program-${program.id}`} className="btn btn-outline-secondary">{program.name}</label>
+                        {props.goals === "loading" ? <div className="spinner-border align-self-center" role="status"/> :
+                        props.goals.map(goal => 
+                            <div className="d-flex flex-column" key={goal.id}>
+                                <input onChange={e => props.goalSelected(e, goal)} type={props.type} name="goal-list" id={`goal-${goal.id}`} className="btn-check"/>
+                                <label htmlFor={`goal-${goal.id}`} className="btn btn-outline-secondary">Goal {goal.id}</label>
                             </div>
                         )}
                         {/* <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>
@@ -25,4 +25,4 @@ const ProgramSelectionList = props => {
     )
 }
 
-export default ProgramSelectionList
+export default GoalSelectionList

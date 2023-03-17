@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { postWorkout } from "../API/WorkoutAPI";
+import { useEffect, useState } from "react";
+import { fetchPrograms } from "../API/ProgramAPI";
+import { fetchWorkouts, postWorkout } from "../API/WorkoutAPI";
+import { fetchExercises } from "../API/ExerciseAPI";
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList";
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList";
@@ -12,6 +14,34 @@ const GoalCreation = () => {
         selectedWorkouts: [],
         selectedExercises: []
     })
+    const [programs, setPrograms] = useState("loading")
+    const [workouts, setWorkouts] = useState("loading")
+    const [exercises, setExercises] = useState("loading")
+
+    useEffect(() => {
+        const getPrograms = async () => {
+            const ps = await fetchPrograms()
+            console.log(ps)
+            setPrograms(ps)
+        }
+        getPrograms()
+    }, [])
+    useEffect(() => {
+        const getWorkouts = async () => {
+            const ws = await fetchWorkouts()
+            console.log(ws)
+            setWorkouts(ws.reverse())
+        }
+        getWorkouts()
+    }, [])
+    useEffect(() => {
+        const getExercises = async () => {
+            const es = await fetchExercises()
+            console.log(es)
+            setExercises(es)
+        }
+        getExercises()
+    }, [])
 
     const changeTab = tab => {
         console.log(tab)
@@ -42,7 +72,7 @@ const GoalCreation = () => {
                 exerciseIds
             }
             const w = await postWorkout(workout)
-            // setState({...state, addedWorkouts: [w, ...state.addedWorkouts]})
+            setWorkouts([w, ...workouts])
             console.log(w)
             
             changeTab("workout")
@@ -75,20 +105,20 @@ const GoalCreation = () => {
 
                     {state.tab === "program" && 
                         // <GoalCreationContext.Provider value={programSelected}>
-                            <ProgramSelectionList type="radio" programSelected={programSelected}/>
+                            <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                         // </GoalCreationContext.Provider>
                     }
 
                     {state.tab === "workout" && 
                         // <GoalCreationContext.Provider value={workoutSelected}>
-                            <WorkoutSelectionList type="checkbox" workoutSelected={workoutSelected}/>
+                            <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected}/>
                         // </GoalCreationContext.Provider>
                     }
 
                     {state.tab === "exercise" && 
                         <>
                         {/* <GoalCreationContext.Provider value={{workoutSelected, changeTab}}> */}
-                            <ExerciseSelectionList type="checkbox" exerciseSelected={exerciseSelected}/>
+                            <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected}/>
                         {/* </GoalCreationContext.Provider> */}
                         
                         <form onSubmit={submitWorkout} className="text-center">
