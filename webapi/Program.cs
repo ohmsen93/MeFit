@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
+using webapi.Middleware;
 
 
 namespace webapi
@@ -49,6 +50,7 @@ namespace webapi
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
 
             builder.Services.AddTransient<IGoalService, GoalService>();
+
 
 
             // Add controllers and database context to the container
@@ -129,6 +131,7 @@ namespace webapi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeFit v1"));
             }
 
+
             // Set up database migration
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
@@ -140,6 +143,7 @@ namespace webapi
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<UserVerificationMiddleware>();
 
             // Map the controllers to HTTP endpoints
             app.MapControllers();

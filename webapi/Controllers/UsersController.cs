@@ -93,7 +93,6 @@ namespace webapi.Controllers
             var subjectFoo = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var user = _mapper.Map<User>(userCreateDto);
-            user.Id = subjectFoo;
             await _service.Create(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
