@@ -1,26 +1,13 @@
 import { useEffect, useState } from "react"
 import { fetchExercises } from "../API/ExerciseAPI"
-import { fetchWorkouts } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
-import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 
-const WorkoutsOverview = () => {
+const ExercisesOverview = () => {
     const [state, setState] = useState({
-        selectedWorkout: null,
         selectedExercise: null
     })
-    const [workouts, setWorkouts] = useState("loading")
     const [exercises, setExercises] = useState("loading")
 
-    useEffect(() => {
-        setWorkouts("loading")
-        const getWorkouts = async () => {
-            const ws = await fetchWorkouts()
-            console.log(ws)
-            setWorkouts(ws.reverse())
-        }
-        getWorkouts()
-    }, [])
     useEffect(() => {
         setExercises("loading")
         const getExercises = async () => {
@@ -31,11 +18,6 @@ const WorkoutsOverview = () => {
         getExercises()
     }, [])
 
-    const workoutSelected = (event, workout) => {
-        console.log(workout)
-        if (event.target.checked) setState({...state, selectedWorkout: workout})
-        else setState({...state, selectedWorkout: null})
-    }
     const exerciseSelected = (event, exercise) => {
         console.log(exercise)
         if (event.target.checked) setState({...state, selectedExercise: exercise})
@@ -47,21 +29,10 @@ const WorkoutsOverview = () => {
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <div className="d-flex flex-fill border wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
-                </div>
-                <div className="d-flex flex-column text-center wp-100">
                     <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
-                    <div className="d-flex flex-column justify-content-center hp-100">
-                        {state.selectedWorkout !== null &&
-                        <>
-                            <p>Workout: {state.selectedWorkout.name}</p>
-                            <p>Type: {state.selectedWorkout.type}</p>
-                        </>
-                        }
-                    </div>
                     <div className="d-flex flex-column justify-content-center hp-100">
                         {state.selectedExercise !== null &&
                         <>
@@ -76,4 +47,4 @@ const WorkoutsOverview = () => {
     )
 }
 
-export default WorkoutsOverview
+export default ExercisesOverview

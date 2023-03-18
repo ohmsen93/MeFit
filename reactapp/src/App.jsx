@@ -17,6 +17,7 @@ import { Roles } from './Components/roles/Roles';
 import GoalsOverview from './Views/GoalsOverview';
 import ProgramsOverview from './Views/ProgramsOverview';
 import WorkoutsOverview from './Views/WorkoutsOverview';
+import ExercisesOverview from './Views/ExercisesOverview';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /> </KeycloakRoute>}/>
             <Route path="/programs" element={<KeycloakRoute role={ Roles.Regular }><ProgramsOverview /> </KeycloakRoute>}/>
             <Route path="/workouts" element={<KeycloakRoute role={ Roles.Regular }><WorkoutsOverview /> </KeycloakRoute>}/>
+            <Route path="/exercises" element={<KeycloakRoute role={ Roles.Regular }><ExercisesOverview /> </KeycloakRoute>}/>
           </Routes>
         </main>
       </BrowserRouter>
