@@ -3,7 +3,7 @@ const ProgramSelectionList = props => {
 
     return (
         <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
-            <p>Choose a program:</p>
+            <p>Programs:</p>
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">

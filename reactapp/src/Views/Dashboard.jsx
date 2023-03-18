@@ -4,7 +4,6 @@ import 'react-calendar/dist/Calendar.css';
 import { Link } from "react-router-dom";
 import { fetchGoals } from "../API/GoalAPI";
 import GoalSelectionList from "../Components/Goal/GoalSelectionList";
-import { DashboardContext } from "../Context/DashboardContext";
 import { getStatusId } from "../Util/StatusHelper";
 
 const Dashboard = () => {

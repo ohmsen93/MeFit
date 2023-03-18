@@ -15,6 +15,7 @@ import UserProfile from './Views/UserProfile';
 import { useAuth } from './Components/context/AuthenticateContext';
 import { Roles } from './Components/roles/Roles';
 import GoalsOverview from './Views/GoalsOverview';
+import ProgramsOverview from './Views/ProgramsOverview';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/profile" element={<KeycloakRoute role={ Roles.Regular }> <UserProfile /> </KeycloakRoute>}/>
             <Route path="/goals" element={<KeycloakRoute role={ Roles.Regular }> <GoalsOverview /> </KeycloakRoute>}/>
             <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /> </KeycloakRoute>}/>
+            <Route path="/programs" element={<KeycloakRoute role={ Roles.Regular }><ProgramsOverview /> </KeycloakRoute>}/>
           </Routes>
         </main>
       </BrowserRouter>
