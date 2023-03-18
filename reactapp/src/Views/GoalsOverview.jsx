@@ -23,6 +23,7 @@ const GoalsOverview = () => {
         getGoals()
     }, [])
     useEffect(() => {
+        setWorkouts("loading")
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
             console.log(ws)
