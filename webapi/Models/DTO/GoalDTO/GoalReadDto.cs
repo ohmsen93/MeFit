@@ -1,4 +1,6 @@
-﻿namespace webapi.Models.DTO.GoalDTO
+﻿using webapi.Models.Entities;
+
+namespace webapi.Models.DTO.GoalDTO
 {
     public class GoalReadDto
     {
@@ -16,6 +18,6 @@
 
         public int FkStatusId { get; set; }       
 
-        public List<string> Workouts { get; set; }
+        public List<WorkoutRc> Workouts { get; set; }
     }
 }

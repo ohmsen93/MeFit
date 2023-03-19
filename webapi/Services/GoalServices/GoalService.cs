@@ -105,15 +105,19 @@ namespace webapi.Services.GoalServices
         public async Task<ICollection<Goal>> GetAll()
         {
             return await _context.Goals
-                .Include(g => g.GoalWorkouts)
-                .Include(g=>g.FkTrainingprogram)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw=>  gw.FkWorkout)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkStatus)
+                .Include(g => g.FkStatus)
+                .Include(g => g.FkTrainingprogram)
                 .ToListAsync();
         }
 
         public async Task<Goal> GetById(int id)
         {
             var goal = await _context.Goals
-                .Include(g => g.GoalWorkouts)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkWorkout)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkStatus)
+                .Include(g => g.FkStatus)
                 .Include(g => g.FkTrainingprogram)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
