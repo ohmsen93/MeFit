@@ -4,6 +4,8 @@ export const getStatus = id => {
             return "Completed"
         case 2:
             return "Pending"
+        case 3:
+            return "Failed"
         default:
             return "Error"
     }
@@ -15,6 +17,8 @@ export const getStatusId = type => {
             return 1
         case "Pending":
             return 2
+        case "Failed":
+            return 3
         default:
             return null
     }

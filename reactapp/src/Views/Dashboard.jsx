@@ -4,7 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { Link } from "react-router-dom";
 import { fetchGoals } from "../API/GoalAPI";
 import GoalSelectionList from "../Components/Goal/GoalSelectionList";
-import { getStatusId } from "../Util/StatusHelper";
+import { getStatus, getStatusId } from "../Util/StatusHelper";
 
 const Dashboard = () => {
   const [state, setState] = useState({
@@ -16,6 +16,7 @@ const Dashboard = () => {
     setGoals("loading")
     const getGoals = async () => {
         const gs = await fetchGoals()
+          .then(x => x.filter(y => getStatus(y.fkStatusId) === "Pending"))
         console.log(gs)
         setGoals(gs.reverse())
     }
@@ -77,7 +78,7 @@ const Dashboard = () => {
                   <>
                   <p>Goal {state.selectedGoal.id}</p>
                   <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
-                  <p>You have completed {state.selectedGoal.workouts.filter(w => w.fkStatusId === getStatusId("Completed")).length} out of {state.selectedGoal.workouts.length} workouts!</p>
+                  <p>You have completed {state.selectedGoal.workouts.filter(w => w.workoutStatus === "Completed                                         ").length} out of {state.selectedGoal.workouts.length} workouts!</p>
                   <Link to="/goals">View more details</Link>
                   </>
                 : "No goal selected.."}

@@ -5,9 +5,9 @@ import { Roles } from "../roles/Roles";
 const logo = require("./../../Images/icons8-user-100.png");
 
 const paths = [
-  { name: "Dashboard", path: "Dashboard" },
-  { name: "Profile", path: "Profile" },
-  { name: "Contributor", path: "Contributor" }
+  { name: "Dashboard", path: "/Dashboard" },
+  { name: "Profile", path: "/Profile" },
+  { name: "Contributor", path: "/Contributor" }
 ]
 
 const hasRole = (roleCollection, toMatch) => {

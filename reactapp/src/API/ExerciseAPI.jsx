@@ -7,6 +7,7 @@ export const fetchExercises = async () => {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises", {
             headers: {
                 'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + keycloak.token
             }
         })
