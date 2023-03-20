@@ -13,5 +13,7 @@ namespace webapi.Models.DTO.TrainingprogramDTO
         public List<string> Workouts { get; set; }
 
         public List<string> Categories { get; set; }
+
+
     }
 }

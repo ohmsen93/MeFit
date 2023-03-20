@@ -20,6 +20,9 @@ namespace webapi.Models.DTO.WorkoutDTO
         public virtual UserProfile FkUserProfile { get; set; }
 
         public ICollection<ExerciseReadDto> Exercises { get; set; }
+
+        public ICollection<Trainingprogram> Trainingprograms { get; set; }
+
     }
 
 }

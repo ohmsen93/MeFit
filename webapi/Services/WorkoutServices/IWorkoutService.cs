@@ -7,5 +7,9 @@ namespace webapi.Services.WorkoutServices
         Task<Workout> Create(Workout entity, List<int> exercises);
         public Task UpdateWorkoutExercises(int WorkoutId, List<int> exercisesId);
 
+        public Task<ICollection<Workout>> GetAllNoCustom();
+
+        public Task<ICollection<Workout>> GetWorkoutsByTrainingprogramId(int id);
+
     }
 }

@@ -39,6 +39,21 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll()));
         }
 
+        // GET: api/Workouts/NoCustom
+        [HttpGet("NoCustom")]
+        public async Task<ActionResult<List<Workout>>> GetAllNoCustom()
+        {
+            var workouts = _mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAllNoCustom());
+
+            if (workouts == null || workouts.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(workouts);
+        }
+
+
         // GET: api/Workouts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Workout>> GetWorkout(int id)
@@ -46,6 +61,24 @@ namespace webapi.Controllers
             try
             {
                 return Ok(_mapper.Map<WorkoutReadDto>(await _service.GetById(id)));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+        }
+
+        // GET: api/Workouts/ByTrainingProgramId/5
+        [HttpGet("ByTrainingProgramId/{id}")]
+        public async Task<ActionResult<IEnumerable<Workout>>> GetWorkoutsByTrainingprogramId(int id)
+        {
+            try
+            {
+                var workouts = await _service.GetWorkoutsByTrainingprogramId(id);
+                return Ok(_mapper.Map<IEnumerable<WorkoutReadDto>>(workouts));
             }
             catch (EntityNotFoundException ex)
             {

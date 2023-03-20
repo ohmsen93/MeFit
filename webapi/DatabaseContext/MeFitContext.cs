@@ -560,8 +560,7 @@ public partial class MeFitContext : DbContext
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 9, Name = "Shoulder", Type = "Strength" });
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 10, Name = "Cardio", Type = "Endurance" });
         modelBuilder.Entity<Workout>().HasData(new Workout { Id = 11, Name = "Fullbody", Type = "Strength" });
-        modelBuilder.Entity<Workout>().HasData(new Workout
-            { Id = 12, Name = "MyWorkout", Type = "Custom", FkUserProfileId = 3 });
+        modelBuilder.Entity<Workout>().HasData(new Workout { Id = 12, Name = "MyWorkout", Type = "Custom", FkUserProfileId = 3 });
 
         #region M2M seeding Workout-Exercises
 

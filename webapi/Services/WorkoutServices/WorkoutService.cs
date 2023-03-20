@@ -64,13 +64,13 @@ namespace webapi.Services.WorkoutServices
         }
         public async Task DeleteById(int id)
         {
-            var Workout = await _context.Workouts.FindAsync(id);
+            var workout = await _context.Workouts.FindAsync(id);
 
-            if (Workout == null)
+            if (workout == null)
             {
                 throw new EntityNotFoundException(id, nameof(Workout));
             }
-            _context.Workouts.Remove(Workout);
+            _context.Workouts.Remove(workout);
             await _context.SaveChangesAsync();
         }
 
@@ -84,12 +84,41 @@ namespace webapi.Services.WorkoutServices
             return Workout;
         }
 
+        public async Task<ICollection<Workout>> GetAllNoCustom()
+        {
+            var workouts = await _context.Workouts
+                .Include(x => x.Exercises)
+                .Where(x => x.FkUserProfileId == null)
+                .ToListAsync();
+
+            return workouts;
+        }
+
+
+
+
         public async Task<Workout> GetById(int id)
         {
             var Workout = await _context.Workouts
                     .Include(x => x.Exercises)
                     //.Include(x => x.Goals)
                     .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (Workout == null)
+            {
+                throw new EntityNotFoundException(id, nameof(Workout));
+            }
+
+            return Workout;
+        }
+
+        public async Task<ICollection<Workout>> GetWorkoutsByTrainingprogramId(int id)
+        {
+            var Workout = await _context.Workouts
+                .Include(x => x.Exercises)
+                .Include(x => x.Trainingprograms)
+                .Where(x => x.Trainingprograms.Any(tp => tp.Id == id))
+                .ToListAsync();
 
             if (Workout == null)
             {
@@ -138,5 +167,7 @@ namespace webapi.Services.WorkoutServices
             _context.Entry(WorkoutToUpdateExercises).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+
     }
 }
