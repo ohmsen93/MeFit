@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-// import { fetchExercises } from "../API/ExerciseAPI"
+import { fetchExercises } from "../API/ExerciseAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
@@ -10,7 +10,7 @@ const WorkoutsOverview = () => {
         selectedExercise: null
     })
     const [workouts, setWorkouts] = useState(null)
-    // const [exercises, setExercises] = useState(null)
+    const [exercises, setExercises] = useState(null)
 
     useEffect(() => {
         // setWorkouts("loading")
@@ -21,15 +21,15 @@ const WorkoutsOverview = () => {
         }
         getWorkouts()
     }, [])
-    // useEffect(() => {
-    //     // setExercises("loading")
-    //     const getExercises = async () => {
-    //         const es = await fetchExercises()
-    //         console.log(es)
-    //         setExercises(es.reverse())
-    //     }
-    //     getExercises()
-    // }, [])
+    useEffect(() => {
+        // setExercises("loading")
+        const getExercises = async () => {
+            const es = await fetchExercises()
+            console.log(es)
+            setExercises(es.reverse())
+        }
+        getExercises()
+    }, [])
 
     const workoutSelected = (event, workout) => {
         console.log(workout)
@@ -50,7 +50,7 @@ const WorkoutsOverview = () => {
                     <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <ExerciseSelectionList type="radio" exercises={state.selectedWorkout?.exercises.$values || []} exerciseSelected={exerciseSelected}/>
+                    <ExerciseSelectionList type="radio" exercises={exercises?.filter(e => state.selectedWorkout?.exercises.$values.includes(e.id)) || []} exerciseSelected={exerciseSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>

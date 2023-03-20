@@ -50,7 +50,7 @@ const ProgramsOverview = () => {
                     <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.$values.includes("api/workouts/" + w.id)) || []} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.$values.includes(w.id)) || []} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
