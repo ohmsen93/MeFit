@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@react-keycloak/web": "^3.4.0",
+    "bootstrap": "^5.2.3",
+    "keycloak-js": "^21.0.1",
+    "react-bootstrap": "^2.7.2"
+  }
+}
