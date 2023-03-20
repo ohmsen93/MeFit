@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace webapi.Models;
 
-public partial class Profile
+public partial class UserProfile
 {
     public int Id { get; set; }
 
-    public int FkUserId { get; set; }
+    public string FkUserId { get; set; }
 
     public int FkAddressId { get; set; }
 
