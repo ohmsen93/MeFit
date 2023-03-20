@@ -4,16 +4,34 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import keycloak from '../../keycloak';
 
+
 function UserInformationModal(props) {
 
-    const [modalData, setModalData] = useState({
-        key: UserInformationModal.name,
-        firstName: keycloak.tokenParsed?.firstName || "",
-        lastName: keycloak.tokenParsed?.lastName || "",
-        email: keycloak.tokenParsed?.email || "",
-        phoneNumber: "",
-        profilePicture: ""
-    })
+    function defaultDataHandler ()  {
+        // if it's the first time user is prompted to enter information available keycloak data will be used
+        let modalData;
+        if (props.onFirstLogin) {
+            modalData = {
+                key: UserInformationModal.name,
+                card: "UserProfileCard",
+                firstName: keycloak.tokenParsed?.firstName || "",
+                lastName: keycloak.tokenParsed?.lastName || "",
+                email: keycloak.tokenParsed?.email || "",
+                phoneNumber: "",
+                profilePicture: ""
+            }
+            return modalData;
+        }
+        else{
+            // check database for data to populate the modal
+        }
+    }
+
+    const [show, setShow] = useState(props.requestOpen)
+
+    const [modalData, setModalData] = useState(defaultDataHandler())
+
+    
 
     function handleChange(event) {
         const key = event.target.name;
@@ -21,16 +39,22 @@ function UserInformationModal(props) {
         setModalData({ ...modalData, [key]: value })
     }
 
-    function handleClose(event) {
-        props.onModalClose(event, modalData);
+    function handleClose() {
+        setShow(false)
+        props.onModalClose();
     }
 
     function handleNext(event) {
         props.onHandleNext(event, modalData, modalData.key);
     }
 
+    function handleSave(event) {
+        props.onSave(event, modalData);
+        handleClose();
+    }
+
     return (
-        <Modal show={props.isModalOpen} aria-labelledby="contained-modal-title-vcenter">
+        <Modal show={show} aria-labelledby="contained-modal-title-vcenter">
             <Modal.Header closeButton>
                 <Modal.Title>Personal Information</Modal.Title>
             </Modal.Header>
@@ -41,7 +65,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="firstName"
                             required
-                            defaultValue={keycloak.tokenParsed?.firstName || ""}
+                            defaultValue={modalData.firstName || ""}
                             type="text"
                             onChange={handleChange}
                             placeholder="first name">
@@ -52,7 +76,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="lastName"
                             required
-                            defaultValue={keycloak.tokenParsed?.lastName || ""}
+                            defaultValue={modalData.lastName || ""}
                             type="text"
                             onChange={handleChange}
                             placeholder="last name">
@@ -63,7 +87,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="email"
                             required
-                            defaultValue={keycloak.tokenParsed?.email || ""}
+                            defaultValue={modalData.email || ""}
                             type="email"
                             onChange={handleChange}
                             placeholder="example@gmail.com">
@@ -75,6 +99,7 @@ function UserInformationModal(props) {
                             name="phoneNumber"
                             required
                             type="tel"
+                            defaultValue={modalData.phoneNumber || ""}
                             onChange={handleChange}
                             placeholder="45+11111111">
                         </Form.Control>
@@ -84,6 +109,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="profilePicture"
                             required
+                            defaultValue={modalData.profilePicture || ""}
                             onChange={handleChange}
                             type="file">
                         </Form.Control>
@@ -93,7 +119,11 @@ function UserInformationModal(props) {
             <Modal.Footer>
                 {props.onFirstLogin
                     ? <Button variant="primary" onClick={e => handleNext(e)}> Next </Button>
-                    : <Button variant="primary" onClick={props.onModalClose}> Close </Button>
+                    : <>
+                        <Button variant="primary" onClick={(e => handleClose())}> Close </Button>
+                        <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
+                    </>
+
                 }
             </Modal.Footer>
         </Modal>
