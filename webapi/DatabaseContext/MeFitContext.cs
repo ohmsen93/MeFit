@@ -56,21 +56,26 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.AddressLine1)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .HasColumnName("AddressLine_1");
+                .HasColumnName("AddressLine_1")
+                .HasColumnType("nvarchar");
             entity.Property(e => e.AddressLine2)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .HasColumnName("AddressLine_2");
+                .HasColumnName("AddressLine_2")
+                .HasColumnType("nvarchar");
             entity.Property(e => e.AddressLine3)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .HasColumnName("AddressLine_3");
+                .HasColumnName("AddressLine_3")
+                .HasColumnType("nvarchar");
             entity.Property(e => e.City)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.Country)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -78,7 +83,8 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Category1)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .HasColumnName("Category");
+                .HasColumnName("Category")
+                .HasColumnType("nvarchar");
         });
 
         modelBuilder.Entity<Contributionrequest>(entity =>
@@ -98,7 +104,8 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
         });
 
         // Excercise-Musclegroup Linking table
@@ -170,7 +177,8 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Musclegroup1)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .HasColumnName("Musclegroup");
+                .HasColumnName("Musclegroup")
+                .HasColumnType("nvarchar");
         });
 
         modelBuilder.Entity<UserProfile>(entity =>
@@ -178,19 +186,23 @@ public partial class MeFitContext : DbContext
             entity.Property(e => e.Disabilities).HasColumnType("text");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.Firstname)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.FkAddressId).HasColumnName("Fk_address_id");
             entity.Property(e => e.FkUserId).HasColumnName("Fk_user_id");
             entity.Property(e => e.Lastname)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.MedicalCondition).HasColumnType("text");
             entity.Property(e => e.Picture)
                 .HasMaxLength(250)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
 
             entity.HasOne(d => d.FkAddress).WithMany(p => p.UserProfiles)
                 .HasForeignKey(d => d.FkAddressId)
@@ -207,7 +219,8 @@ public partial class MeFitContext : DbContext
         {
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
         });
 
         // Program Category linking table
@@ -270,7 +283,8 @@ public partial class MeFitContext : DbContext
 
             entity.Property(e => e.Statustype)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -280,7 +294,8 @@ public partial class MeFitContext : DbContext
 
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
         });
 
         modelBuilder.Entity<Workout>(entity =>
@@ -289,32 +304,18 @@ public partial class MeFitContext : DbContext
 
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnType("nvarchar");
             entity.Property(e => e.FkUserProfileId) // Make it nullable
                 .HasColumnName("FkUserProfileId")
                 .HasColumnType("int")
                 .IsRequired(false); // Add this line to make it nullable
 
         });
-
-        //// Workout Goal linking table
-        //modelBuilder.Entity<Workout>()
-        //    .HasMany(m => m.Goals)
-        //    .WithMany(c => c.Workouts)
-        //    .UsingEntity<Dictionary<string, object>>(
-        //        "Workout_Goals",
-        //        r => r.HasOne<Goal>().WithMany().HasForeignKey("Fk_Goal_Id"),
-        //        l => l.HasOne<Workout>().WithMany().HasForeignKey("Fk_Workout_Id"),
-        //        je =>
-        //        {
-        //            je.HasKey("Fk_Workout_Id", "Fk_Goal_Id");
-        //            je.HasOne<Status>().WithMany().HasForeignKey("Fk_Status_Id");
-        //            je.ToTable("Workout_Goals_Status");
-
-        //        });
 
         //Seeding(modelBuilder);
 
@@ -326,9 +327,9 @@ public partial class MeFitContext : DbContext
     private void Seeding(ModelBuilder modelBuilder)
     {
 
-        //modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "administrator@gmail.com" });
-        //modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "contributor@gmail.com" });
-        //modelBuilder.Entity<User>().HasData(new User { Id = 3, Username = "regularuser@gmail.com" });
+        modelBuilder.Entity<User>().HasData(new User { Id = "78acbd80-93b7-4821-9fb0-a5ee776318da", Username = "administrator@gmail.com" });
+        modelBuilder.Entity<User>().HasData(new User { Id = "2c191644-1bac-4e9a-bc8e-1c7054118615", Username = "contributor@gmail.com" });
+        modelBuilder.Entity<User>().HasData(new User { Id = "4d24f01a-5261-40f6-a7e0-f051e8e6f599", Username = "regularuser@gmail.com" });
 
         modelBuilder.Entity<Address>().HasData(new Address
         {
@@ -346,21 +347,51 @@ public partial class MeFitContext : DbContext
             City = "Vejle", Country = "Denmark"
         });
 
-        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        //{
-        //    Id = 1, FkUserId = 1, FkAddressId = 1, Weight = 80, Height = 180, MedicalCondition = "", Disabilities = "",
-        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        //});
-        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        //{
-        //    Id = 2, FkUserId = 1, FkAddressId = 1, Weight = 70, Height = 170, MedicalCondition = "", Disabilities = "",
-        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        //});
-        //modelBuilder.Entity<UserProfile>().HasData(new UserProfile
-        //{
-        //    Id = 3, FkUserId = 1, FkAddressId = 1, Weight = 65, Height = 165, MedicalCondition = "", Disabilities = "",
-        //    Firstname = "Admin", Lastname = "Admin", Email = "administrator@gmail.com", Phone = 12345, Picture = ""
-        //});
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 1,
+            FkUserId = "78acbd80-93b7-4821-9fb0-a5ee776318da",
+            FkAddressId = 1,
+            Weight = 80,
+            Height = 180,
+            MedicalCondition = "",
+            Disabilities = "",
+            Firstname = "Admin",
+            Lastname = "Admin",
+            Email = "administrator@gmail.com",
+            Phone = 12345,
+            Picture = ""
+        });
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 2,
+            FkUserId = "2c191644-1bac-4e9a-bc8e-1c7054118615",
+            FkAddressId = 1,
+            Weight = 70,
+            Height = 170,
+            MedicalCondition = "",
+            Disabilities = "",
+            Firstname = "Contributor",
+            Lastname = "Contributor",
+            Email = "contributor@gmail.com",
+            Phone = 12345,
+            Picture = ""
+        });
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+        {
+            Id = 3,
+            FkUserId = "4d24f01a-5261-40f6-a7e0-f051e8e6f599",
+            FkAddressId = 1,
+            Weight = 65,
+            Height = 165,
+            MedicalCondition = "",
+            Disabilities = "",
+            Firstname = "Regularuser",
+            Lastname = "Regularuser",
+            Email = "regularuser@gmail.com",
+            Phone = 12345,
+            Picture = ""
+        });
 
         modelBuilder.Entity<Goal>().HasData(new Goal
         {
@@ -398,7 +429,6 @@ public partial class MeFitContext : DbContext
             { Id = 6, FkGoalId = 3, FkWorkoutId = 7, FkStatusId = 1 });
         modelBuilder.Entity<GoalWorkouts>().HasData(new GoalWorkouts
             { Id = 7, FkGoalId = 3, FkWorkoutId = 12, FkStatusId = 2 });
-        //modelBuilder.Entity<GoalWorkout>().HasData(new GoalWorkout {Id=7, FkGoalId=4, FkWorkoutId=7,FkStatusId=2});
 
         modelBuilder.Entity<Status>().HasData(new Status { Id = 1, Statustype = "Completed" });
         modelBuilder.Entity<Status>().HasData(new Status { Id = 2, Statustype = "Pending" });

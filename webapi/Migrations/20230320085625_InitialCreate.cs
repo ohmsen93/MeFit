@@ -17,12 +17,12 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressLine_1 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    AddressLine_2 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: true),
-                    AddressLine_3 = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: true),
+                    AddressLine_1 = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    AddressLine_2 = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: true),
+                    AddressLine_3 = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: true),
                     PostalCode = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Country = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    City = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    Category = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +48,7 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -62,7 +62,7 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Musclegroup = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    Musclegroup = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +89,7 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Statustype = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    Statustype = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,7 +102,7 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +114,7 @@ namespace webapi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Username = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     FirstLogin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -206,11 +206,11 @@ namespace webapi.Migrations
                     Height = table.Column<double>(type: "float", nullable: false),
                     MedicalCondition = table.Column<string>(type: "text", nullable: true),
                     Disabilities = table.Column<string>(type: "text", nullable: true),
-                    Firstname = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Lastname = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Firstname = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Lastname = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     Phone = table.Column<int>(type: "int", nullable: false),
-                    Picture = table.Column<string>(type: "nchar(250)", fixedLength: true, maxLength: 250, nullable: true),
-                    Email = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    Picture = table.Column<string>(type: "nvarchar(250)", fixedLength: true, maxLength: 250, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,8 +283,8 @@ namespace webapi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
-                    Type = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 50, nullable: false),
                     FkUserProfileId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

@@ -12,7 +12,7 @@ using webapi.DatabaseContext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(MeFitContext))]
-    [Migration("20230316133117_InitialCreate")]
+    [Migration("20230320085625_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -111,32 +111,32 @@ namespace webapi.Migrations
                     b.Property<string>("AddressLine1")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .HasColumnName("AddressLine_1")
                         .IsFixedLength();
 
                     b.Property<string>("AddressLine2")
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .HasColumnName("AddressLine_2")
                         .IsFixedLength();
 
                     b.Property<string>("AddressLine3")
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .HasColumnName("AddressLine_3")
                         .IsFixedLength();
 
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<int>("PostalCode")
@@ -158,7 +158,7 @@ namespace webapi.Migrations
                     b.Property<string>("Category1")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .HasColumnName("Category")
                         .IsFixedLength();
 
@@ -201,7 +201,7 @@ namespace webapi.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.HasKey("Id");
@@ -288,7 +288,7 @@ namespace webapi.Migrations
                     b.Property<string>("Musclegroup1")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .HasColumnName("Musclegroup")
                         .IsFixedLength();
 
@@ -327,7 +327,7 @@ namespace webapi.Migrations
                     b.Property<string>("Statustype")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.HasKey("Id");
@@ -346,7 +346,7 @@ namespace webapi.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.HasKey("Id");
@@ -365,7 +365,7 @@ namespace webapi.Migrations
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.HasKey("Id");
@@ -387,13 +387,13 @@ namespace webapi.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<int>("FkAddressId")
@@ -411,7 +411,7 @@ namespace webapi.Migrations
                     b.Property<string>("Lastname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<string>("MedicalCondition")
@@ -422,7 +422,7 @@ namespace webapi.Migrations
 
                     b.Property<string>("Picture")
                         .HasMaxLength(250)
-                        .HasColumnType("nchar(250)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<double>("Weight")
@@ -452,13 +452,13 @@ namespace webapi.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasColumnType("nvarchar")
                         .IsFixedLength();
 
                     b.HasKey("Id");
