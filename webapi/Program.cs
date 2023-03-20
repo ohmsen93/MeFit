@@ -119,6 +119,10 @@ namespace webapi
 
             // Build the application.
             var app = builder.Build();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -126,6 +130,7 @@ namespace webapi
                 // Use Swagger UI in development environment
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeFit v1"));
+
             }
 
 
