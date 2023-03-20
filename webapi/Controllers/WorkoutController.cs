@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,24 +36,25 @@ namespace webapi.Controllers
 
         // GET: api/Workouts
         [HttpGet]
+        [Authorize(Roles ="Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkouts()
         {
-            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll()));
+            return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
 
-        // GET: api/Workouts/NoCustom
-        [HttpGet("NoCustom")]
-        public async Task<ActionResult<List<Workout>>> GetAllNoCustom()
-        {
-            var workouts = _mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAllNoCustom());
+        //// GET: api/Workouts/NoCustom
+        //[HttpGet("NoCustom")]
+        //public async Task<ActionResult<List<Workout>>> GetAllNoCustom()
+        //{
+        //    var workouts = _mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAllNoCustom());
 
-            if (workouts == null || workouts.Count == 0)
-            {
-                return NotFound();
-            }
+        //    if (workouts == null || workouts.Count == 0)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(workouts);
-        }
+        //    return Ok(workouts);
+        //}
 
 
         // GET: api/Workouts/5

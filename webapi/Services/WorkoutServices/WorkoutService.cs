@@ -84,18 +84,32 @@ namespace webapi.Services.WorkoutServices
             return Workout;
         }
 
-        public async Task<ICollection<Workout>> GetAllNoCustom()
+        public async Task<ICollection<Workout>> GetAll(string userId)
         {
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x =>x.FkUserId==userId);
+            
+            if (userProfile==null)
+            {
+                throw new EntityNotFoundException(userId, nameof(UserProfile));
+            }
+
             var workouts = await _context.Workouts
                 .Include(x => x.Exercises)
-                .Where(x => x.FkUserProfileId == null)
+                .Where(x => (x.FkUserProfileId == null || x.FkUserProfileId == userProfile.Id))
                 .ToListAsync();
 
             return workouts;
         }
 
+        //public async Task<ICollection<Workout>> GetAllNoCustom()
+        //{
+        //    var workouts = await _context.Workouts
+        //        .Include(x => x.Exercises)
+        //        .Where(x => x.FkUserProfileId == null)
+        //        .ToListAsync();
 
-
+        //    return workouts;
+        //}
 
         public async Task<Workout> GetById(int id)
         {
