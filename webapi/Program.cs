@@ -12,7 +12,6 @@ using webapi.Services.SetServices;
 using webapi.Services.UserProfileServices;
 using webapi.Services.WorkoutServices;
 using webapi.Services.UserServices;
-using webapi.Services.GaolWrokutServices;
 using webapi.Services.AddressServices;
 using webapi.Models;
 using webapi.Services.TrainingprogramServices;
@@ -23,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
+using webapi.Services.GoalWorkoutServices;
 
 
 namespace webapi

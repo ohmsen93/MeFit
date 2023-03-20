@@ -12,7 +12,7 @@ using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.GoalWorkoutDTO;
 using webapi.Services;
-using webapi.Services.GaolWrokutServices;
+using webapi.Services.GoalWorkoutServices;
 
 namespace webapi.Controllers
 {
