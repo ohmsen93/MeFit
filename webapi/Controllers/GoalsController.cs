@@ -45,9 +45,8 @@ namespace webapi.Controllers
         public async Task<ActionResult<Goal>> GetGoal(int id)
         {
             try
-            {
-                var goal = await _service.GetById(id);
-                return Ok(_mapper.Map<GoalReadDto>(goal));
+            {                
+                return Ok(_mapper.Map<GoalReadDto>(await _service.GetById(id)));
             }
             catch (EntityNotFoundException ex)
             {
