@@ -34,12 +34,12 @@ namespace webapi.Services.GoalWorkoutServices
 
         public async Task<ICollection<GoalWorkouts>> GetAll()
         {
-            return await _context.GoalWorkouts.ToListAsync(); ;
+            return await _context.GoalWorkouts.Include(gw=>gw.FkWorkout).ToListAsync(); 
         }
 
         public async Task<GoalWorkouts> GetById(int id)
         {
-            var goalWorkout = await _context.GoalWorkouts.FirstOrDefaultAsync(x => x.Id == id);
+            var goalWorkout = await _context.GoalWorkouts.Include(gw=>gw.FkWorkout).FirstOrDefaultAsync(x => x.Id == id);
 
             if (goalWorkout == null)
             {

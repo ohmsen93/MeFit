@@ -9,7 +9,9 @@ namespace webapi.Profiles
         public GoalWorkoutPF()
         {
             CreateMap<GoalWorkoutCreateDto, GoalWorkouts>();
-            CreateMap<GoalWorkouts, GoalWorkoutReadDto>();
+            CreateMap<GoalWorkouts, GoalWorkoutReadDto>()
+                .ForMember(dto=> dto.WorkoutName, options=>
+                options.MapFrom(goalWoroutDomain=>goalWoroutDomain.FkWorkout.Name));
             CreateMap<GoalWorkoutUpdateDto, GoalWorkouts>();
         }
     }
