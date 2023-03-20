@@ -7,7 +7,7 @@ public partial class Contributionrequest
 {
     public int Id { get; set; }
 
-    public int FkProfileId { get; set; }
+    public int FkUserProfileId { get; set; }
 
-    public virtual Profile FkProfile { get; set; } = null!;
+    public virtual UserProfile FkUserProfile { get; set; } = null!;
 }

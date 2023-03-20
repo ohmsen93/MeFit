@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webapi.Models;
 
@@ -11,7 +12,16 @@ public partial class Workout
 
     public string Type { get; set; } = null!;
 
-    public int FkSetId { get; set; }
+    public int? FkUserProfileId { get; set; }
 
-    public virtual Set FkSet { get; set; } = null!;
+    [ForeignKey("FkUserProfileId")]
+    public virtual UserProfile FkUserProfile { get; set; }
+
+    public ICollection<Trainingprogram> Trainingprograms { get; set; }
+
+    public ICollection<GoalWorkouts> GoalWorkouts { get; set; }
+
+    public ICollection<Exercise> Exercises { get; set; }
+
+
 }

@@ -7,19 +7,21 @@ public partial class Goal
 {
     public int Id { get; set; }
 
-    public int FkProfileId { get; set; }
+    public int FkUserProfileId { get; set; }
+
+    public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
 
-    public bool Achived { get; set; }
-
-    public int? FkProgramId { get; set; }
+    public int? FkTrainingprogramId { get; set; }
 
     public int FkStatusId { get; set; }
 
-    public virtual Profile FkProfile { get; set; } = null!;
+    public virtual UserProfile FkUserProfile { get; set; } = null!;
 
-    public virtual Program? FkProgram { get; set; }
+    public virtual Trainingprogram? FkTrainingprogram { get; set; }
 
     public virtual Status FkStatus { get; set; } = null!;
+
+    public ICollection<GoalWorkouts> GoalWorkouts { get; set; }
 }
