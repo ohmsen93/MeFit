@@ -1,6 +1,6 @@
 ﻿using webapi.Models;
 
-namespace webapi.Services.GaolWrokutServices
+namespace webapi.Services.GoalWorkoutServices
 {
     public interface IGoalWorkoutService:IServices<GoalWorkouts,int>
     {

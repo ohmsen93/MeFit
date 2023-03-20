@@ -3,7 +3,7 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 
-namespace webapi.Services.GaolWrokutServices
+namespace webapi.Services.GoalWorkoutServices
 {
     public class GoalWorkoutService : IGoalWorkoutService
     {
