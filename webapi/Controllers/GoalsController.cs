@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,9 +37,10 @@ namespace webapi.Controllers
         #region basic CRUD
         // GET: api/Goals
         [HttpGet]
+        [Authorize(Roles="Regular")]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoals()
-        {
-            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAll()));
+        {           
+            return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
 
         // GET: api/Goals/5

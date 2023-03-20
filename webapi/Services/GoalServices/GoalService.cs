@@ -111,7 +111,22 @@ namespace webapi.Services.GoalServices
                 .Include(g => g.FkTrainingprogram)
                 .ToListAsync();
         }
+        public async Task<ICollection<Goal>> GetAll(string userId)
+        {
+            var userProfile= await _context.UserProfiles.FirstOrDefaultAsync(x=>x.FkUserId==userId);
 
+            if (userProfile == null)
+            {
+                throw new EntityNotFoundException(userId, nameof(userProfile));
+            }
+
+            return await _context.Goals.Where(g=>g.FkUserProfileId== userProfile.Id)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkWorkout)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkStatus)
+                .Include(g => g.FkStatus)
+                .Include(g => g.FkTrainingprogram)
+                .ToListAsync();
+        }
         public async Task<Goal> GetById(int id)
         {
             var goal = await _context.Goals
@@ -185,5 +200,6 @@ namespace webapi.Services.GoalServices
             await _context.SaveChangesAsync();
             return entity;
         }
+        
     }
 }
