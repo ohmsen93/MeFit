@@ -19,7 +19,7 @@ namespace webapi.Models.DTO.WorkoutDTO
         [ForeignKey("FkUserProfileId")]
         public virtual UserProfile FkUserProfile { get; set; }
 
-        public ICollection<ExerciseReadDto> Exercises { get; set; }
+        public List<int> Exercises { get; set; }
 
         public ICollection<Trainingprogram> Trainingprograms { get; set; }
 
