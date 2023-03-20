@@ -11,5 +11,10 @@ public partial class Exercise
 
     public string? Description { get; set; }
 
-    public virtual ICollection<Set> Sets { get; } = new List<Set>();
+    public ICollection<Set> Sets { get; set;  }
+
+    public ICollection<Musclegroup> Musclegroups { get; set; }
+
+    public ICollection<Workout> Workouts { get; set; }
+
 }
