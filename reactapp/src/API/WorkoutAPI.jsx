@@ -13,7 +13,7 @@ export const fetchWorkouts = async () => {
         })
             .then(response => response.json())
             .then(results => {
-                return results
+                return results.$values
             })
         return request
     } catch (error) {
@@ -36,30 +36,7 @@ export const postWorkout = async (workout) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results
-            })
-        return request
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-// PATCH
-export const patchWorkout = async (workoutId, newWorkout) => {
-    console.log(process.env.REACT_APP_API_URL + "/workouts")
-    try {
-        const request = await fetch(process.env.REACT_APP_API_URL + "/workouts/" + workoutId, {
-            method: 'PATCH',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + keycloak.token
-            },
-            body: JSON.stringify(newWorkout)
-        })
-            .then(response => response.json())
-            .then(results => {
-                return results
+                return results.$values
             })
         return request
     } catch (error) {

@@ -14,9 +14,9 @@ const GoalCreation = () => {
         selectedWorkouts: [],
         selectedExercises: []
     })
-    const [programs, setPrograms] = useState("loading")
-    const [workouts, setWorkouts] = useState("loading")
-    const [exercises, setExercises] = useState("loading")
+    const [programs, setPrograms] = useState(null)
+    const [workouts, setWorkouts] = useState(null)
+    const [exercises, setExercises] = useState(null)
 
     useEffect(() => {
         const getPrograms = async () => {

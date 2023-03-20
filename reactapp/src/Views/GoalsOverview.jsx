@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react"
-import { fetchGoals } from "../API/GoalAPI"
-import { fetchWorkouts, patchWorkout } from "../API/WorkoutAPI"
+import { fetchGoals, fetchGoalWorkouts, patchGoalCompleted, patchGoalWorkout } from "../API/GoalAPI"
 import GoalSelectionList from "../Components/Goal/GoalSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
-import { getStatus } from "../Util/StatusHelper"
+import { getStatus, getStatusId } from "../Util/StatusHelper"
 
 const GoalsOverview = () => {
     const [state, setState] = useState({
         selectedGoal: null,
         selectedWorkout: null
     })
-    const [goals, setGoals] = useState("loading")
-    const [workouts, setWorkouts] = useState("loading")
+    const [goals, setGoals] = useState(null)
+    const [workouts, setWorkouts] = useState(null)
 
     useEffect(() => {
-        setGoals("loading")
+        //setGoals("loading")
         const getGoals = async () => {
             const gs = await fetchGoals()
             console.log(gs)
@@ -23,14 +22,14 @@ const GoalsOverview = () => {
         getGoals()
     }, [])
     useEffect(() => {
-        setWorkouts("loading")
+        //setWorkouts("loading")
         const getWorkouts = async () => {
-            const ws = await fetchWorkouts()
+            const ws = await fetchGoalWorkouts()
             console.log(ws)
             setWorkouts(ws.reverse())
         }
         getWorkouts()
-    }, [state.selectedGoal])
+    }, [])
 
     const goalSelected = (event, goal) => {
         console.log(goal)
@@ -40,13 +39,39 @@ const GoalsOverview = () => {
     const workoutSelected = (event, workout) => {
         console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkout: workout})
-        else setState({...state, selectedWorkout: null})
+        else console.log(workout === state.selectedWorkout)//setState({...state, selectedWorkout: null})
     }
     const workoutCompleted = async () => {
-        const newWorkout = {
-            fkStatusId: 2
+        const newGoalWorkout = {
+            ...state.selectedWorkout,
+            fkStatusId: getStatusId("Completed")
         }
-        patchWorkout(state.selectedWorkout.id, newWorkout)
+        patchGoalWorkout(state.selectedWorkout.id, newGoalWorkout)
+            .then(() => {
+                const tempWorkout = workouts.find(w => w === state.selectedWorkout)
+                if (tempWorkout !== null) {
+                    tempWorkout.fkStatusId = getStatusId("Completed")
+                    setState({...state, selectedWorkout: tempWorkout})
+                }
+            })
+            .finally(goalCompleted)
+    }
+    const goalCompleted = async () => {
+        console.log(!(workouts.filter(w => w.fkGoalId === state.selectedGoal.id).some(w => w.fkStatusId !== getStatusId("Completed"))))
+        if (!(workouts.filter(w => w.fkGoalId === state.selectedGoal.id).some(w => w.fkStatusId !== getStatusId("Completed")))) {
+            const newGoal = {
+                ...state.selectedGoal,
+                fkStatusId: getStatusId("Completed")
+            }
+            patchGoalCompleted(state.selectedGoal.id, newGoal)
+                .finally(() => {
+                    const tempGoal = goals.find(w => w === state.selectedGoal)
+                    if (tempGoal !== null) {
+                        tempGoal.fkStatusId = getStatusId("Completed")
+                        setState({...state, selectedGoal: tempGoal})
+                    }
+                })
+        }
     }
 
     return (
@@ -56,7 +81,7 @@ const GoalsOverview = () => {
                     <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts/*state.selectedGoal.workouts*/} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => w.fkGoalId === state.selectedGoal?.id) || []} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <div className="d-flex flex-column flex-fill align-items-center justify-content-center border wp-100 min-h-0 p-2">

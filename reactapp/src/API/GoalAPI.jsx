@@ -1,4 +1,5 @@
 import keycloak from "../keycloak"
+import { getStatusId } from "../Util/StatusHelper"
 
 // FETCH
 export const fetchGoals = async () => {
@@ -13,7 +14,26 @@ export const fetchGoals = async () => {
         })
             .then(response => response.json())
             .then(results => {
-                return results
+                return results.$values
+            })
+        return request
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const fetchGoalWorkouts = async () => {
+    console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
+    try {
+        const request = await fetch(process.env.REACT_APP_API_URL + "/goalworkouts", {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            }
+        })
+            .then(response => response.json())
+            .then(results => {
+                return results.$values
             })
         return request
     } catch (error) {
@@ -36,7 +56,51 @@ export const postGoal = async (goal) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results
+                return results.$values
+            })
+        return request
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// PATCH
+export const patchGoalCompleted = async (goalId, newGoal) => {
+    console.log(process.env.REACT_APP_API_URL + "/goals")
+    try {
+        const request = await fetch(process.env.REACT_APP_API_URL + "/goals/" + goalId, {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify(newGoal)
+        })
+            .then(response => response.json())
+            .then(results => {
+                return results.$values
+            })
+        return request
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const patchGoalWorkout = async (goalWorkoutId, newGoalWorkout) => {
+    console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
+    try {
+        const request = await fetch(process.env.REACT_APP_API_URL + "/goalworkouts/" + goalWorkoutId, {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify(newGoalWorkout)
+        })
+            .then(response => response.json())
+            .then(results => {
+                return results.$values
             })
         return request
     } catch (error) {

@@ -7,7 +7,7 @@ const ProgramSelectionList = props => {
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
-                        {props.programs === "loading" ? <div className="spinner-border align-self-center" role="status"/> :
+                        {props.programs === null ? <div className="spinner-border align-self-center" role="status"/> :
                         props.programs.map(program => 
                             <div className="d-flex flex-column" key={program.id}>
                                 <input onChange={e => props.programSelected(e, program)} type={props.type} name="program-list-radio" id={`program-${program.id}`} className="btn-check"/>

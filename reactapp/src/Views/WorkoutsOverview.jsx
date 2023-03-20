@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchExercises } from "../API/ExerciseAPI"
+// import { fetchExercises } from "../API/ExerciseAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
@@ -9,11 +9,11 @@ const WorkoutsOverview = () => {
         selectedWorkout: null,
         selectedExercise: null
     })
-    const [workouts, setWorkouts] = useState("loading")
-    const [exercises, setExercises] = useState("loading")
+    const [workouts, setWorkouts] = useState(null)
+    // const [exercises, setExercises] = useState(null)
 
     useEffect(() => {
-        setWorkouts("loading")
+        // setWorkouts("loading")
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
             console.log(ws)
@@ -21,15 +21,15 @@ const WorkoutsOverview = () => {
         }
         getWorkouts()
     }, [])
-    useEffect(() => {
-        setExercises("loading")
-        const getExercises = async () => {
-            const es = await fetchExercises()
-            console.log(es)
-            setExercises(es.reverse())
-        }
-        getExercises()
-    }, [])
+    // useEffect(() => {
+    //     // setExercises("loading")
+    //     const getExercises = async () => {
+    //         const es = await fetchExercises()
+    //         console.log(es)
+    //         setExercises(es.reverse())
+    //     }
+    //     getExercises()
+    // }, [])
 
     const workoutSelected = (event, workout) => {
         console.log(workout)
@@ -50,7 +50,7 @@ const WorkoutsOverview = () => {
                     <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
+                    <ExerciseSelectionList type="radio" exercises={state.selectedWorkout?.exercises.$values || []} exerciseSelected={exerciseSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
@@ -66,6 +66,15 @@ const WorkoutsOverview = () => {
                         {state.selectedExercise !== null &&
                         <>
                             <p>Exercise: {state.selectedExercise.name}</p>
+                            {state.selectedExercise.musclegroups?.$values.length > 0 ?
+                            <>
+                            <p>Musclegroups:</p>
+                            {state.selectedExercise.musclegroups?.$values.map(mg => 
+                                <p key={mg.id}>{mg.name}</p>
+                            )}
+                            </>
+                            : <p>No musclegroups</p>
+                            }
                         </>
                         }
                     </div>

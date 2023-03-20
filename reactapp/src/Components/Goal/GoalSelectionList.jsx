@@ -7,7 +7,7 @@ const GoalSelectionList = props => {
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
-                        {props.goals === "loading" ? <div className="spinner-border align-self-center" role="status"/> :
+                        {props.goals === null ? <div className="spinner-border align-self-center" role="status"/> :
                         props.goals.map(goal => 
                             <div className="d-flex flex-column" key={goal.id}>
                                 <input onChange={e => props.goalSelected(e, goal)} type={props.type} name="goal-list" id={`goal-${goal.id}`} className="btn-check"/>

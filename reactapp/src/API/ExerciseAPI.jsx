@@ -13,7 +13,7 @@ export const fetchExercises = async () => {
         })
             .then(response => response.json())
             .then(results => {
-                return results
+                return results.$values
             })
         return request
     } catch (error) {

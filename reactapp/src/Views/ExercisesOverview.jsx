@@ -6,10 +6,10 @@ const ExercisesOverview = () => {
     const [state, setState] = useState({
         selectedExercise: null
     })
-    const [exercises, setExercises] = useState("loading")
+    const [exercises, setExercises] = useState(null)
 
     useEffect(() => {
-        setExercises("loading")
+        // setExercises("loading")
         const getExercises = async () => {
             const es = await fetchExercises()
             console.log(es)
@@ -37,6 +37,15 @@ const ExercisesOverview = () => {
                         {state.selectedExercise !== null &&
                         <>
                             <p>Exercise: {state.selectedExercise.name}</p>
+                            {state.selectedExercise.musclegroups?.$values.length > 0 ?
+                            <>
+                            <p>Musclegroups:</p>
+                            {state.selectedExercise.musclegroups?.$values.map(mg => 
+                                <p key={mg.id}>{mg.name}</p>
+                            )}
+                            </>
+                            : <p>No musclegroups</p>
+                            }
                         </>
                         }
                     </div>

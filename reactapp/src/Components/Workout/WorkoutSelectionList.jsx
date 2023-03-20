@@ -7,7 +7,7 @@ const WorkoutSelectionList = props => {
             {/* <GoalCreationContext.Consumer>
                 {({workoutSelected}) => ( */}
                     <div className="d-flex flex-column flex-fill text-center overflow-y-scroll wp-100">
-                        {props.workouts === "loading" ? <div className="spinner-border align-self-center" role="status"/> :
+                        {props.workouts === null ? <div className="spinner-border align-self-center" role="status"/> :
                         props.workouts.map(workout => 
                             <div className="d-flex flex-column" key={workout.id}>
                                 <input onChange={e => props.workoutSelected(e, workout)} type={props.type} name="workout-list" id={`workout-${workout.id}`} className="btn-check"/>

@@ -6,6 +6,9 @@ const logo = require("./../../Images/icons8-user-100.png");
 
 const paths = [
   { name: "Dashboard", path: "/Dashboard" },
+  { name: "Programs", path: "/programs" },
+  { name: "Workouts", path: "/workouts" },
+  { name: "Exercises", path: "/exercises" },
   { name: "Profile", path: "/Profile" },
   { name: "Contributor", path: "/Contributor" }
 ]

@@ -9,11 +9,11 @@ const ProgramsOverview = () => {
         selectedProgram: null,
         selectedWorkout: null
     })
-    const [programs, setPrograms] = useState("loading")
-    const [workouts, setWorkouts] = useState("loading")
+    const [programs, setPrograms] = useState(null)
+    const [workouts, setWorkouts] = useState(null)
 
     useEffect(() => {
-        setPrograms("loading")
+        // setPrograms("loading")
         const getPrograms = async () => {
             const ps = await fetchPrograms()
             console.log(ps)
@@ -22,18 +22,18 @@ const ProgramsOverview = () => {
         getPrograms()
     }, [])
     useEffect(() => {
-        setWorkouts("loading")
+        // setWorkouts("loading")
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
             console.log(ws)
             setWorkouts(ws.reverse())
         }
         getWorkouts()
-    }, [state.selectedProgram])
+    }, [])
 
     const programSelected = (event, program) => {
         console.log(program)
-        if (event.target.checked) setState({...state, selectedProgram: program})
+        if (event.target.checked) setState({...state, selectedProgram: program, selectedWorkout: null})
         else setState({...state, selectedProgram: null})
     }
     const workoutSelected = (event, workout) => {
@@ -50,7 +50,7 @@ const ProgramsOverview = () => {
                     <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.$values.includes("api/workouts/" + w.id)) || []} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
@@ -58,6 +58,15 @@ const ProgramsOverview = () => {
                         {state.selectedProgram !== null &&
                         <>
                             <p>Program: {state.selectedProgram.name}</p>
+                            {state.selectedProgram.categories?.$values.length > 0 ?
+                            <>
+                            <p>Categories:</p>
+                            {state.selectedProgram.categories?.$values.map(cg => 
+                                <p key={cg.id}>{cg.name}</p>
+                            )}
+                            </>
+                            : <p>No categories</p>
+                            }
                         </>
                         }
                     </div>
