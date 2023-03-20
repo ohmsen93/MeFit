@@ -317,7 +317,7 @@ public partial class MeFitContext : DbContext
 
         });
 
-        //Seeding(modelBuilder);
+        Seeding(modelBuilder);
 
         OnModelCreatingPartial(modelBuilder);
     }
