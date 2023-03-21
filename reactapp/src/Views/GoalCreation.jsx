@@ -66,7 +66,7 @@ const GoalCreation = () => {
         event.preventDefault()
         const exerciseIds = state.selectedExercises.map(e => e.id)
         if (exerciseIds.length > 0) { // POST
-            let workout = {
+            const workout = {
                 name: event.target[0].value,
                 type: "Custom",
                 exerciseIds

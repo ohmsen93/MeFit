@@ -36,7 +36,7 @@ export const postWorkout = async (workout) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {
