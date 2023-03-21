@@ -16,12 +16,12 @@ namespace webapi.Models.DTO.WorkoutDTO
 
         public int? FkUserProfileId { get; set; }
 
-        [ForeignKey("FkUserProfileId")]
-        public virtual UserProfile FkUserProfile { get; set; }
+        //[ForeignKey("FkUserProfileId")]
+        //public virtual UserProfile FkUserProfile { get; set; }
 
         public List<int> Exercises { get; set; }
 
-        public ICollection<Trainingprogram> Trainingprograms { get; set; }
+        //public ICollection<Trainingprogram> Trainingprograms { get; set; }
 
     }
 
