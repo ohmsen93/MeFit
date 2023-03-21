@@ -50,7 +50,7 @@ const ProgramsOverview = () => {
                     <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.$values.includes(w.id)) || []} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.includes(w.id)) || []} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
@@ -58,10 +58,10 @@ const ProgramsOverview = () => {
                         {state.selectedProgram !== null &&
                         <>
                             <p>Program: {state.selectedProgram.name}</p>
-                            {state.selectedProgram.categories?.$values.length > 0 ?
+                            {state.selectedProgram.categories?.length > 0 ?
                             <>
                             <p>Categories:</p>
-                            {state.selectedProgram.categories?.$values.map(cg => 
+                            {state.selectedProgram.categories?.map(cg => 
                                 <p key={cg.id}>{cg.name}</p>
                             )}
                             </>

@@ -14,7 +14,7 @@ export const fetchGoals = async () => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {
@@ -33,7 +33,7 @@ export const fetchGoalWorkouts = async () => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {
@@ -56,7 +56,7 @@ export const postGoal = async (goal) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {
@@ -79,7 +79,7 @@ export const patchGoalCompleted = async (goalId, newGoal) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {
@@ -100,7 +100,7 @@ export const patchGoalWorkout = async (goalWorkoutId, newGoalWorkout) => {
         })
             .then(response => response.json())
             .then(results => {
-                return results.$values
+                return results
             })
         return request
     } catch (error) {

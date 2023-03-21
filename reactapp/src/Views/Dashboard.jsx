@@ -79,7 +79,7 @@ const Dashboard = () => {
                   <>
                   <p>Goal {state.selectedGoal.id}</p>
                   <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
-                  <p>You have completed {state.selectedGoal.workouts.$values.filter(w => w.workoutStatus === "Completed").length} out of {state.selectedGoal.workouts.$values.length} workouts!</p>
+                  <p>You have completed {state.selectedGoal.workouts.filter(w => w.workoutStatus === "Completed").length} out of {state.selectedGoal.workouts.length} workouts!</p>
                   <Link to="/goals">View more details</Link>
                   </>
                 : "No goal selected.."}
