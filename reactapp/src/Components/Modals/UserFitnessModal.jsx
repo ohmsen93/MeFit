@@ -6,15 +6,38 @@ import keycloak from '../../keycloak';
 
 function UserFitnessModal(props) {
 
+
+    function defaultDataHandler() {
+        // if it's the first time user is prompted to enter information available keycloak data will be used
+        let modalData;
+        if (props.onFirstLogin) {
+            modalData = {
+                key: UserFitnessModal.name,
+                card: "UserFitnessCard",
+                weight: 0.0,
+                height: 0.0,
+                medicalCondition: "",
+                disabilities: ""
+            }
+            return modalData;
+        }
+        else {
+            // check database for data to populate the modal
+            modalData = {
+                key: UserFitnessModal.name,
+                card: "UserFitnessCard",
+                weight: props.onUserData.profileData.weight || 0.0,
+                height: props.onUserData.profileData.height || 0.0,
+                medicalCondition: props.onUserData.profileData.medicalCondition || "",
+                disabilities: props.onUserData.profileData.disabilities || ""
+            }
+            return modalData
+        }
+
+    }
+
     const [show, setShow] = useState(props.requestOpen)
-    const [modalData, setModalData] = useState({
-        key: UserFitnessModal.name,
-        card: "UserFitnessCard",
-        weight: 0.0,
-        height: 0.0,
-        medicalCondition: "",
-        disabilities: ""
-    })
+    const [modalData, setModalData] = useState(defaultDataHandler())
 
     function handleChange(event) {
         const key = event.target.name;
@@ -27,8 +50,8 @@ function UserFitnessModal(props) {
         props.onModalClose();
     }
 
-    function handleSave(event) {
-        props.onSave(event, modalData);
+    function handleSave() {
+        props.onSave(modalData);
         handleClose();
     }
 
@@ -45,6 +68,7 @@ function UserFitnessModal(props) {
                             name="weight"
                             required
                             type="number"
+                            defaultValue={modalData?.weight || ""}
                             onChange={handleChange}
                             placeholder="weight in kg">
                         </Form.Control>
@@ -55,6 +79,7 @@ function UserFitnessModal(props) {
                             name="height"
                             required
                             type="number"
+                            defaultValue={modalData?.height || ""}
                             onChange={handleChange}
                             placeholder="height in cm">
                         </Form.Control>
@@ -65,6 +90,7 @@ function UserFitnessModal(props) {
                             name="medicalCondition"
                             required
                             type="text"
+                            defaultValue={modalData?.medicalCondition || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
@@ -75,6 +101,7 @@ function UserFitnessModal(props) {
                             name="disabilities"
                             required
                             type="text"
+                            defaultValue={modalData?.disabilities || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
@@ -86,7 +113,7 @@ function UserFitnessModal(props) {
                     ? <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
                     : <>
                         <Button variant="primary" onClick={(e => handleClose())}> Close </Button>
-                        <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
+                        <Button variant="primary" onClick={(e => handleSave())}> Save Changes </Button>
                     </>
                 }
             </Modal.Footer>

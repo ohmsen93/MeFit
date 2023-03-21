@@ -6,18 +6,43 @@ import keycloak from '../../keycloak';
 
 function UserAddressModal(props) {
 
-    const [show, setShow] = useState(props.requestOpen)
-    const [modalData, setModalData] = useState({
-        key: UserAddressModal.name,
-        card: "UserAddressCard",
-        address: "",
-        addressSecond: "",
-        addressThird: "",
-        postalCode: "",
-        city: "",
-        country: ""
+    function defaultDataHandler() {
+        // if it's the first time user is prompted to enter information available keycloak data will be used
+        let modalData;
+        
+        if (props.onFirstLogin) {
+            modalData = {
+                key: UserAddressModal.name,
+                card: "UserAddressCard",
+                address: "",
+                addressSecond: "",
+                addressThird: "",
+                postalCode: "",
+                city: "",
+                country: ""
+            }
+            return modalData;
+        }
+        else {
+            // check database for data to populate the modal
+            console.log(props.onUserData.adressData);
+            modalData = {
+                key: UserAddressModal.name,
+                card: "UserAddressCard",
+                address: props.onUserData.adressData.addressLine1 || "",
+                addressSecond: props.onUserData.adressData.addressLine2 || "",
+                addressThird: props.onUserData.adressData.addressLine3 || "",
+                postalCode: props.onUserData.adressData.postalCode || "",
+                city: props.onUserData.adressData.city || "",
+                country: props.onUserData.adressData.country || ""
+            }
 
-    })
+            return modalData
+        }
+    }
+
+    const [show, setShow] = useState(props.requestOpen)
+    const [modalData, setModalData] = useState(defaultDataHandler());
 
     function handleChange(event) {
         const key = event.target.name;
@@ -34,8 +59,8 @@ function UserAddressModal(props) {
         props.onHandleNext(event, modalData, modalData.key);
     }
 
-    function handleSave(event) {
-        props.onSave(event, modalData);
+    function handleSave() {
+        props.onSave(modalData);
         handleClose();
     }
 
@@ -52,6 +77,7 @@ function UserAddressModal(props) {
                             name="address"
                             required
                             type="text"
+                            defaultValue={modalData?.address || ""}
                             onChange={handleChange}
                             placeholder="required">
                         </Form.Control>
@@ -61,6 +87,7 @@ function UserAddressModal(props) {
                         <Form.Control
                             name="addressSecond"
                             type="text"
+                            defaultValue={modalData?.addressSecond || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
@@ -70,6 +97,7 @@ function UserAddressModal(props) {
                         <Form.Control
                             name="addressThird"
                             type="text"
+                            defaultValue={modalData?.addressThird || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
@@ -80,6 +108,7 @@ function UserAddressModal(props) {
                             name="postalCode"
                             required
                             type="number"
+                            defaultValue={modalData?.postalCode || ""}
                             onChange={handleChange}
                             placeholder="Example : 8260 would be Viby j">
                         </Form.Control>
@@ -90,6 +119,7 @@ function UserAddressModal(props) {
                             name="city"
                             required
                             type="text"
+                            defaultValue={modalData?.city || ""}
                             onChange={handleChange}
                             placeholder="Example Viby j">
                         </Form.Control>
@@ -100,6 +130,7 @@ function UserAddressModal(props) {
                             name="country"
                             required
                             type="text"
+                            defaultValue={modalData?.country || ""}
                             onChange={handleChange}
                             placeholder="Example Denmark">
                         </Form.Control>
@@ -111,7 +142,7 @@ function UserAddressModal(props) {
                     ? <Button variant="primary" onClick={e => handleNext(e)}> Next </Button>
                     : <>
                         <Button variant="primary" onClick={(e => handleClose())}> Close </Button>
-                        <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
+                        <Button variant="primary" onClick={(e => handleSave())}> Save Changes </Button>
                     </>
                 }
             </Modal.Footer>

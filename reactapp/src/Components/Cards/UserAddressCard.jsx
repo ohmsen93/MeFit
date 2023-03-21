@@ -6,7 +6,7 @@ let update;
 
 function UserAddressCard(props) {
 
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate()}
+    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
 
     function handleOpenModal() {
         props.onModalOpen("UserAddressModal");

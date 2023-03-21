@@ -7,7 +7,7 @@ import keycloak from '../../keycloak';
 
 function UserInformationModal(props) {
 
-    function defaultDataHandler ()  {
+    function defaultDataHandler() {
         // if it's the first time user is prompted to enter information available keycloak data will be used
         let modalData;
         if (props.onFirstLogin) {
@@ -22,16 +22,28 @@ function UserInformationModal(props) {
             }
             return modalData;
         }
-        else{
+        else {
             // check database for data to populate the modal
+            modalData = {
+                key: UserInformationModal.name,
+                id: props.onUserData.$id,
+                card: "UserProfileCard",
+                firstName: props.onUserData.profileData.firstname || "",
+                lastName: props.onUserData.profileData.lastname || "",
+                email: props.onUserData.profileData.email || "",
+                phoneNumber: props.onUserData.profileData.phone || "",
+                profilePicture: props.onUserData.profileData.picture || ""
+            }
+            
+            return modalData
         }
+        
     }
 
     const [show, setShow] = useState(props.requestOpen)
 
-    const [modalData, setModalData] = useState(defaultDataHandler())
+    const [modalData, setModalData] = useState(defaultDataHandler());
 
-    
 
     function handleChange(event) {
         const key = event.target.name;
@@ -48,8 +60,8 @@ function UserInformationModal(props) {
         props.onHandleNext(event, modalData, modalData.key);
     }
 
-    function handleSave(event) {
-        props.onSave(event, modalData);
+    function handleSave() {
+        props.onSave(modalData);
         handleClose();
     }
 
@@ -65,7 +77,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="firstName"
                             required
-                            defaultValue={modalData.firstName || ""}
+                            defaultValue={modalData?.firstName || ""}
                             type="text"
                             onChange={handleChange}
                             placeholder="first name">
@@ -76,7 +88,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="lastName"
                             required
-                            defaultValue={modalData.lastName || ""}
+                            defaultValue={modalData?.lastName || ""}
                             type="text"
                             onChange={handleChange}
                             placeholder="last name">
@@ -87,7 +99,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="email"
                             required
-                            defaultValue={modalData.email || ""}
+                            defaultValue={modalData?.email || ""}
                             type="email"
                             onChange={handleChange}
                             placeholder="example@gmail.com">
@@ -99,7 +111,7 @@ function UserInformationModal(props) {
                             name="phoneNumber"
                             required
                             type="tel"
-                            defaultValue={modalData.phoneNumber || ""}
+                            defaultValue={modalData?.phoneNumber || ""}
                             onChange={handleChange}
                             placeholder="45+11111111">
                         </Form.Control>
@@ -109,7 +121,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="profilePicture"
                             required
-                            defaultValue={modalData.profilePicture || ""}
+                            defaultValue={modalData?.profilePicture || ""}
                             onChange={handleChange}
                             type="file">
                         </Form.Control>
@@ -121,7 +133,7 @@ function UserInformationModal(props) {
                     ? <Button variant="primary" onClick={e => handleNext(e)}> Next </Button>
                     : <>
                         <Button variant="primary" onClick={(e => handleClose())}> Close </Button>
-                        <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
+                        <Button variant="primary" onClick={(e => handleSave())}> Save Changes </Button>
                     </>
 
                 }

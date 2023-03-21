@@ -24,7 +24,6 @@ function UserProfileCard (props) {
         props.afterUpdate();
     }
 
-
     return (
         <Card>
             <Card.Header as="h5">User Information</Card.Header>
