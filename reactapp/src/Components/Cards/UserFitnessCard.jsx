@@ -6,8 +6,8 @@ let update;
 
 function UserFitnessCard(props) {
     
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate()}
-
+    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
+    
     function handleOpenModal() {
         props.onModalOpen("UserFitnessModal");
     }
