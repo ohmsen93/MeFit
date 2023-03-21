@@ -23,6 +23,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class GoalsController : ControllerBase
     {
         private readonly IGoalService _service;
@@ -63,6 +64,7 @@ namespace webapi.Controllers
         // PUT: api/Goals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> PatchGoal(int id, GoalUpdateDto goalUpdateDto)
         {
             if (id != goalUpdateDto.Id)
@@ -90,17 +92,26 @@ namespace webapi.Controllers
         // POST: api/Goals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        //[Authorize(Roles = "Regular")]
         public async Task<ActionResult<Goal>> PostGoal(GoalCreateDto goalCreateDto)
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
+            //Find userProfileId by userId
+            var userProfile = await _service.GetUserProfile(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            //Assign userProfileId to the goal
+            goal.FkUserProfileId = userProfile.Id;
+
+            //Create goal
             await _service.Create(goal, goalCreateDto.Workouts);
-            
+
             var goalReadDto = _mapper.Map<GoalReadDto>(goal);
             return CreatedAtAction(nameof(GetGoal), new { id = goal.Id }, goalReadDto);
         }
 
         //// DELETE: api/Goals/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteGoal(int id)
         {
             try
