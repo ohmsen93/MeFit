@@ -51,12 +51,12 @@ namespace webapi
             builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             // Add controllers and database context to the container
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            //});
 
-            //builder.Services.AddControllers();
+            builder.Services.AddControllers();
 
 
             builder.Services.AddDbContext<MeFitContext>();
