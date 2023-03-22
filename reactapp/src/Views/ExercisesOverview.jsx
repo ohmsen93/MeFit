@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchExercises } from "../API/ExerciseAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
+import { musclegroupCompare } from "../Util/SortHelper"
 
 const ExercisesOverview = () => {
     const [state, setState] = useState({
@@ -23,12 +24,17 @@ const ExercisesOverview = () => {
         if (event.target.checked) setState({...state, selectedExercise: exercise})
         else setState({...state, selectedExercise: null})
     }
+    const exercisesSort = () => {
+        const es = [...exercises].sort(musclegroupCompare)
+        setExercises(es)
+    }
 
     return (
         <>
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <div className="d-flex flex-fill border wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100">
+                    Sort by: <button onClick={exercisesSort} className="btn btn-outline-secondary">Musclegroup</button>
                     <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">

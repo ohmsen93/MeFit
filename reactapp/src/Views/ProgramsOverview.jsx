@@ -3,6 +3,7 @@ import { fetchPrograms } from "../API/ProgramAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
+import { categoryCompare } from "../Util/SortHelper"
 
 const ProgramsOverview = () => {
     const [state, setState] = useState({
@@ -41,12 +42,17 @@ const ProgramsOverview = () => {
         if (event.target.checked) setState({...state, selectedWorkout: workout})
         else setState({...state, selectedWorkout: null})
     }
+    const programsSort = () => {
+        const ps = [...programs].sort(categoryCompare)
+        setPrograms(ps)
+    }
 
     return (
         <>
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <div className="d-flex flex-fill border wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100">
+                    Sort by: <button onClick={programsSort} className="btn btn-outline-secondary">Category</button>
                     <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">

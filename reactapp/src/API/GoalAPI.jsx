@@ -1,5 +1,4 @@
 import keycloak from "../keycloak"
-import { getStatusId } from "../Util/StatusHelper"
 
 // FETCH
 export const fetchGoals = async () => {

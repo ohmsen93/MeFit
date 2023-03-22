@@ -3,6 +3,7 @@ import { fetchExercises } from "../API/ExerciseAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
+import { typeCompare } from "../Util/SortHelper"
 
 const WorkoutsOverview = () => {
     const [state, setState] = useState({
@@ -41,12 +42,17 @@ const WorkoutsOverview = () => {
         if (event.target.checked) setState({...state, selectedExercise: exercise})
         else setState({...state, selectedExercise: null})
     }
+    const workoutsSort = () => {
+        const ws = [...workouts].sort(typeCompare)
+        setWorkouts(ws)
+    }
 
     return (
         <>
         <div className="d-flex flex-column align-items-center hpx-720 p-5">
             <div className="d-flex flex-fill border wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100">
+                    Sort by: <button onClick={workoutsSort} className="btn btn-outline-secondary">Type</button>
                     <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
