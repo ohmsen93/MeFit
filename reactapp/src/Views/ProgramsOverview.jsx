@@ -167,7 +167,7 @@ const ProgramsOverview = props => {
                     </div>
                     {props.contributor &&
                         <form onSubmit={saveProgram} key="POForm-1" className="d-flex flex-column">
-                            <input type="text" defaultValue={state.selectedProgram?.name} placeholder="Program name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
+                            <input type="text" defaultValue={state.selectedProgram?.name} placeholder="Program name" title="Letters and spaces only (between 2-40)" pattern="[A-Za-z\s]{2,40}" required/>
                             <input type="submit" name="save" id="save-button-1" className="d-none"/>
                             <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite program</label>
                             <input type="submit" name="create" id="create-button-1" className="d-none"/>
