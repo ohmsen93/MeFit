@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { fetchExercises } from "../API/ExerciseAPI"
-import { fetchWorkouts, patchWorkout, postWorkout } from "../API/WorkoutAPI"
+import { fetchWorkouts, patchWorkout, postWorkout, patchWorkoutExercises } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { typeCompare } from "../Util/SortHelper"
@@ -38,7 +38,7 @@ const WorkoutsOverview = props => {
         console.log(workout)
         if (event.target.checked) {
             setState({...state, selectedWorkout: workout})
-            setWExercises(exercises?.filter(e => workout.exercises.includes(e.id)) || [])
+            setWExercises(exercises?.filter(e => workout.exercises?.includes(e.id)) || [])
         }
         else setState({...state, selectedWorkout: null})
     }
@@ -88,18 +88,40 @@ const WorkoutsOverview = props => {
                     const w = {
                         id: state.selectedWorkout.id,
                         name: event.target[0].value,
-                        type: event.target[1].value,
-                        exerciseIds: wExercises.map(e => e.id)
+                        type: event.target[1].value
                     }
-                    console.log(w)
-                    patchWorkout(state.selectedWorkout.id, w)
-                        .then(r => {
-                            const index = workouts.indexOf(state.selectedWorkout)
-                            if (index > -1) {
-                                workouts[index] = r
-                                setState({...state, selectedWorkout: r})
-                            }
-                        })
+                    if (w.name !== state.selectedWorkout.name || w.type !== state.selectedWorkout.type) patchWorkout(state.selectedWorkout.id, w)
+                    const wes = {
+                        exercises: wExercises.map(e => e.id)
+                    }
+                    if (wes.exercises.toString() !== state.selectedWorkout.exercises.toString()) patchWorkoutExercises(state.selectedWorkout.id, wes)
+
+                    const nw = {
+                        id: w.id,
+                        name: w.name,
+                        type: w.type,
+                        exercises: wes.exercises
+                    }
+                    const index = workouts.indexOf(state.selectedWorkout)
+                    if (index > -1) {
+                        workouts[index] = nw
+                        setState({...state, selectedWorkout: nw})
+                    }
+                    // const w = {
+                    //     id: state.selectedWorkout.id,
+                    //     name: event.target[0].value,
+                    //     type: event.target[1].value,
+                    //     exerciseIds: wExercises.map(e => e.id)
+                    // }
+                    // console.log(w)
+                    // patchWorkout(state.selectedWorkout.id, w)
+                    //     .then(r => {
+                    //         const index = workouts.indexOf(state.selectedWorkout)
+                    //         if (index > -1) {
+                    //             workouts[index] = r
+                    //             setState({...state, selectedWorkout: r})
+                    //         }
+                    //     })
                 }
                 else alert("Must select a workout to save")
             }
@@ -109,8 +131,10 @@ const WorkoutsOverview = props => {
                     type: event.target[1].value,
                     exerciseIds: wExercises.map(e => e.id)
                 }
+                console.log(w)
                 postWorkout(w)
                     .then(r => {
+                        console.log(r)
                         setWorkouts([r, ...workouts])
                     })
             }
