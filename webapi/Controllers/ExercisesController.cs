@@ -170,7 +170,7 @@ namespace webapi.Controllers
         {
             try
             {
-                await _service.UpdateExerciseMusclegroups(id, exerciseUpdateSetsDto.Sets);
+                await _service.UpdateExerciseSets(id, exerciseUpdateSetsDto.Sets);
             }
             catch (EntityNotFoundException ex)
             {
