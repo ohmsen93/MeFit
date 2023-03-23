@@ -72,6 +72,8 @@ const WorkoutsOverview = () => {
                         {state.selectedExercise !== null &&
                         <>
                             <p>Exercise: {state.selectedExercise.name}</p>
+                            <p>Description:</p>
+                            <p>{state.selectedExercise.description}</p>
                             {state.selectedExercise.musclegroups?.length > 0 ?
                             <>
                             <p>Musclegroups:</p>

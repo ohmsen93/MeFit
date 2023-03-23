@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
-import { fetchPrograms } from "../API/ProgramAPI"
+import { fetchPrograms, patchProgram, postProgram } from "../API/ProgramAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { categoryCompare } from "../Util/SortHelper"
 
-const ProgramsOverview = () => {
+const ProgramsOverview = props => {
     const [state, setState] = useState({
         selectedProgram: null,
+        selectedPWorkout: null,
         selectedWorkout: null
     })
     const [programs, setPrograms] = useState(null)
     const [workouts, setWorkouts] = useState(null)
+    const [pWorkouts, setPWorkouts] = useState([])
 
     useEffect(() => {
         // setPrograms("loading")
@@ -34,17 +36,74 @@ const ProgramsOverview = () => {
 
     const programSelected = (event, program) => {
         console.log(program)
-        if (event.target.checked) setState({...state, selectedProgram: program, selectedWorkout: null})
+        if (event.target.checked) {
+            setState({...state, selectedProgram: program, selectedPWorkout: null})
+            setPWorkouts(workouts?.filter(w => program.workouts.includes(w.id)) || [])
+        }
         else setState({...state, selectedProgram: null})
+    }
+    const pWorkoutSelected = (event, workout) => {
+        console.log(workout)
+        if (event.target.checked) setState({...state, selectedPWorkout: workout})
+        else setState({...state, selectedPWorkout: null})
+    }
+    const programsSort = () => {
+        const ps = [...programs].sort(categoryCompare)
+        setPrograms(ps)
     }
     const workoutSelected = (event, workout) => {
         console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkout: workout})
         else setState({...state, selectedWorkout: null})
     }
-    const programsSort = () => {
-        const ps = [...programs].sort(categoryCompare)
-        setPrograms(ps)
+    const addWorkout = () => {
+        if (state.selectedWorkout !== null) {
+            const index = pWorkouts.indexOf(state.selectedWorkout)
+            if (index === -1) // Currently only add if unique
+                setPWorkouts([...pWorkouts, state.selectedWorkout])
+            else alert("Workout is already in program")
+        }
+        else alert("Must select a registered workout to add")
+    }
+    const removePWorkout = () => {
+        if (state.selectedPWorkout !== null) {
+            const pws = [...pWorkouts]
+            const index = pws.indexOf(state.selectedPWorkout)
+            if (index > -1) {
+                pws.splice(index, 1)
+                setPWorkouts(pws)
+            }
+            else console.log("ERROR: PWORKOUT NOT FOUND")
+        }
+        else alert("Must select a program workout to remove")
+    }
+    const saveProgram = event => {
+        event.preventDefault()
+        // console.log(event)
+        if (pWorkouts.length > 0) {
+            if (event.nativeEvent.submitter.name === "save") { // PATCH program
+                if (state.selectedProgram !== null) {
+                    // console.log(event.target[0].value)
+                    const p = {
+                        id: state.selectedProgram.id,
+                        name: event.target[0].value,
+                        workoutIds: pWorkouts.map(w => w.id),
+                        categoryIds: state.selectedProgram.categories
+                    }
+                    patchProgram(state.selectedProgram.id, p)
+                }
+                else alert("Must select a program to save")
+            }
+            else { // POST program
+                const p = {
+                    name: event.target[0].value,
+                    workoutIds: pWorkouts.map(w => w.id),
+                    categoryIds: []
+                }
+                postProgram(p)
+            }
+        }
+        else alert("Must add at least 1 workout to program")
     }
 
     return (
@@ -56,18 +115,29 @@ const ProgramsOverview = () => {
                     <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => state.selectedProgram?.workouts.includes(w.id)) || []} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={pWorkouts} workoutSelected={pWorkoutSelected} k={1}/>
+                    {props.contributor && 
+                        <>
+                        <div className="d-flex">
+                            <button onClick={removePWorkout} className="btn btn-outline-secondary wp-100">↓</button>
+                            <button onClick={addWorkout} className="btn btn-outline-secondary wp-100">↑</button>
+                        </div>
+                        <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected} k={2}/>
+                        </>
+                    }
                 </div>
+
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
                     <div className="d-flex flex-column justify-content-center hp-100">
                         {state.selectedProgram !== null &&
                         <>
                             <p>Program: {state.selectedProgram.name}</p>
+
                             {state.selectedProgram.categories?.length > 0 ?
                             <>
                             <p>Categories:</p>
-                            {state.selectedProgram.categories?.map(cg => 
+                            {state.selectedProgram.categories.map(cg => 
                                 <p key={cg.id}>{cg.name}</p>
                             )}
                             </>
@@ -77,13 +147,22 @@ const ProgramsOverview = () => {
                         }
                     </div>
                     <div className="d-flex flex-column justify-content-center hp-100">
-                        {state.selectedWorkout !== null &&
+                        {state.selectedPWorkout !== null &&
                         <>
-                            <p>Workout: {state.selectedWorkout.name}</p>
-                            <p>Type: {state.selectedWorkout.type}</p>
+                            <p>Workout: {state.selectedPWorkout.name}</p>
+                            <p>Type: {state.selectedPWorkout.type}</p>
                         </>
                         }
                     </div>
+                    {props.contributor &&
+                        <form onSubmit={saveProgram} key="POForm-1" className="d-flex flex-column">
+                            <input type="text" defaultValue={state.selectedProgram?.name} placeholder="Program name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
+                            <input type="submit" name="save" id="save-button-1" className="d-none"/>
+                            <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite program</label>
+                            <input type="submit" name="create" id="create-button-1" className="d-none"/>
+                            <label htmlFor={"create-button-1"} className="btn btn-outline-secondary wp-100">Save as new program</label>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
