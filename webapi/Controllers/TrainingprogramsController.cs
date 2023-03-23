@@ -89,10 +89,10 @@ namespace webapi.Controllers
         {
             var trainingprogram = _mapper.Map<Trainingprogram>(trainingprogramCreateDto);
             await _service.Create(trainingprogram);
-            var trainingprogramUpdateWorkoutsDto = new TrainingprogramUpdateWorkoutsDto { WorkoutIds = trainingprogramCreateDto.WorkoutIds };
-            var trainingprogramUpdateCategoriesDto = new TrainingprogramUpdateCategoriesDto { CategoryIds = trainingprogramCreateDto.CategoryIds };
-            await _service.UpdateTrainingprogramWorkouts(trainingprogram.Id, trainingprogramUpdateWorkoutsDto.WorkoutIds);
-            await _service.UpdateTrainingprogramCategories(trainingprogram.Id, trainingprogramUpdateCategoriesDto.CategoryIds);
+            //var trainingprogramUpdateWorkoutsDto = new TrainingprogramUpdateWorkoutsDto { WorkoutIds = trainingprogramCreateDto.WorkoutIds };
+            //var trainingprogramUpdateCategoriesDto = new TrainingprogramUpdateCategoriesDto { CategoryIds = trainingprogramCreateDto.CategoryIds };
+            //await _service.UpdateTrainingprogramWorkouts(trainingprogram.Id, trainingprogramUpdateWorkoutsDto.WorkoutIds);
+            //await _service.UpdateTrainingprogramCategories(trainingprogram.Id, trainingprogramUpdateCategoriesDto.CategoryIds);
 
             return CreatedAtAction(nameof(GetTrainingprogram), new { id = trainingprogram.Id }, trainingprogram);
         }
@@ -105,6 +105,47 @@ namespace webapi.Controllers
             try
             {
                 await _service.DeleteById(id);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+
+
+
+        // PATCH: api/Trainingprograms/5/workouts
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPatch("{id}/workouts")]
+        public async Task<IActionResult> PatchTrainingprogramWorkouts(int id, TrainingprogramUpdateWorkoutsDto trainingprogramUpdateWorkoutsDto)
+        {
+            try
+            {          
+                await _service.UpdateTrainingprogramWorkouts(id, trainingprogramUpdateWorkoutsDto.Workouts);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+
+        // PATCH: api/Trainingprograms/5/categories
+        [HttpPatch("{id}/categories")]
+        public async Task<IActionResult> PatchTrainingprogramCategories(int id, TrainingprogramUpdateCategoriesDto trainingprogramUpdateCategoriesDto)
+        {
+            try
+            {
+                await _service.UpdateTrainingprogramCategories(id, trainingprogramUpdateCategoriesDto.Categories);
             }
             catch (EntityNotFoundException ex)
             {

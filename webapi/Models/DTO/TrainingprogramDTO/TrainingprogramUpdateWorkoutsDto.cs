@@ -1,8 +1,7 @@
 ﻿namespace webapi.Models.DTO.TrainingprogramDTO
 {
     public class TrainingprogramUpdateWorkoutsDto
-    {
-        public List<int> WorkoutIds { get; set; }
-
+    {        
+        public List<int> Workouts { get; set; }
     }
 }

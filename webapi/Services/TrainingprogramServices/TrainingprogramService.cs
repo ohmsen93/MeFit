@@ -80,8 +80,8 @@ namespace webapi.Services.TrainingprogramServices
             }
             // Finding the Trainingprogram with its Workouts
             var trainingprogramToUpdateWorkouts = await _context.Trainingprograms
-                .Include(m => m.Goals)
-                .Where(m => m.Id == trainingprogramId)
+                .Include(tp=>tp.Workouts)
+                .Where(tp => tp.Id == trainingprogramId)
                 .FirstAsync();
             // Loop through Workouts, try and assign to Trainingprogram
             var workouts = new List<Workout>();
@@ -107,8 +107,8 @@ namespace webapi.Services.TrainingprogramServices
             }
             // Finding the Trainingprogram with its Categories
             var trainingprogramToUpdateCategories = await _context.Trainingprograms
-                .Include(m => m.Categories)
-                .Where(m => m.Id == trainingprogramId)
+                .Include(tp => tp.Categories)
+                .Where(tp => tp.Id == trainingprogramId)
                 .FirstAsync();
             // Loop through Categories, try and assign to Trainingprogram
             var categories = new List<Category>();
