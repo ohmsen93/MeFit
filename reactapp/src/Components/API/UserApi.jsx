@@ -52,28 +52,28 @@ export const fetchUserById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        let responses;
+
         const user = await fetch(`https://localhost:7101/api/users/${id}`, options)
-            .then(async (response) => {
-                if (!response.ok) {
-                    responses = response;
-                }
-                else {
-                    response.json()
+            .then(response => response.json());
 
-                    const profile = await fetchUserProfileById(user.userProfiles.$values[0]);
-                    const address = await fetchUserAddressById(profile.fkAddressId);
+        if (user.status == "404") {
+            return user.status;
+        }
+        else {
 
-                    const data = {
-                        userData: user,
-                        profileData: profile,
-                        adressData: address
-                    }
-                    console.log(data);
-                    return data;
-                }
-            });
-        return responses;
+            const profile = await fetchUserProfileById(user.userProfiles[0]);
+            const address = await fetchUserAddressById(profile.fkAddressId);
+
+            const data = {
+                userData: user,
+                profileData: profile,
+                adressData: address
+            }
+
+            return data;
+        }
+
+
     } catch (error) {
         console.log(error);
     }
@@ -89,7 +89,7 @@ export const patchUserById = async (id, payload) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                $id: payload.userData.$id,
+                id: payload.userData.id,
                 firstLogin: payload.userData.firstLogin,
                 username: payload.userData.username
             })
@@ -122,7 +122,7 @@ const postAddress = async (payload) => {
         }
 
         const address = await fetch('https://localhost:7101/api/addresses', postOptions)
-        .then(response => response.json());
+            .then(response => response.json());
 
         const data = {
             adressData: address
@@ -134,9 +134,10 @@ const postAddress = async (payload) => {
     }
 }
 
-const postProfile = async (payload, address) => {
-    console.log(payload);
+const postProfile = async (payload, address, user) => {
+    console.log(user);
     console.log(address);
+    console.log(payload);
     try {
         const postOptions = {
             method: 'POST',
@@ -146,10 +147,10 @@ const postProfile = async (payload, address) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                fkUserId: keycloak.tokenParsed.user_Id,
-                fkAddressId: address.id,
-                weight: payload.profileData.weight,
-                height: payload.profileData.height,
+                fkUserId: user.id,
+                fkAddressId: parseInt(address.id),
+                weight: parseInt(payload.profileData.weight),
+                height: parseInt(payload.profileData.height),
                 medicalCondition: payload.profileData.medicalCondition,
                 disabilities: payload.profileData.disabilities,
                 firstname: payload.userData.firstName,
@@ -160,15 +161,13 @@ const postProfile = async (payload, address) => {
             })
         }
 
-        const profile = await fetch('https://localhost:7101/api/userprofiles')
-        .then(response => response.json());
-        
-        console.log(profile);
-        
+        const profile = await fetch('https://localhost:7101/api/userprofiles', postOptions)
+            .then(response => response.json());
+
         const data = {
             profileData: profile
         }
-        
+
         return data;
 
     } catch (error) {
@@ -178,11 +177,8 @@ const postProfile = async (payload, address) => {
 
 export const postUser = async (payload, firstlogin) => {
     try {
-
         const address = await postAddress(payload);
-        const profile = await postProfile(payload, address.adressData);
-        
-        const postOptions = {
+        const userOptions = {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -190,14 +186,17 @@ export const postUser = async (payload, firstlogin) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                id: profile.profileData.fkUserId,
-                username: profile.profileData.email,
-                firstLogin: firstlogin,
+                id: keycloak.tokenParsed.user_Id,
+                username: payload.userData.email,
+                firstLogin: !firstlogin,
             })
         }
 
-        const user = await fetch('https://localhost:7101/api/users', postOptions)
-        .then(response => response.json());
+        const user = await fetch('https://localhost:7101/api/users', userOptions)
+            .then(response => response.json());
+
+
+        const profile = await postProfile(payload, address.adressData, user);
 
         const data = {
             userData: user,

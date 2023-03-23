@@ -32,7 +32,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="address"
-                            defaultValue={update?.address || ""}
+                            defaultValue={update?.address || props.userData.adressData.addressLine1}
                             type="text"
                             placeholder="required">
                         </Form.Control>
@@ -42,7 +42,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="addressSecond"
-                            defaultValue={update?.addressSecond || ""}
+                            defaultValue={update?.addressSecond || props.userData.adressData.addressLine2}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -52,7 +52,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="addressThird"
-                            defaultValue={update?.addressThird || ""}
+                            defaultValue={update?.addressThird || props.userData.adressData.addressLine3}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -62,7 +62,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="postalCode"
-                            defaultValue={update?.postalCode || ""}
+                            defaultValue={update?.postalCode || props.userData.adressData.postalCode}
                             required
                             type="number"
                             placeholder="Example : 8260 would be Viby j">
@@ -73,7 +73,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="city"
-                            defaultValue={update?.city || ""}
+                            defaultValue={update?.city || props.userData.adressData.city}
                             required
                             type="text"
                             placeholder="Example Viby j">
@@ -84,7 +84,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="country"
-                            defaultValue={update?.country || ""}
+                            defaultValue={update?.country || props.userData.adressData.country}
                             required
                             type="text"
                             placeholder="Example Denmark">

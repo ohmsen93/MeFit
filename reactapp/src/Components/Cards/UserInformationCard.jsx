@@ -8,11 +8,11 @@ let update;
 function UserProfileCard (props) {
     
     if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
-
+    console.log(props.userData);
     function handleOpenModal (){
         props.onModalOpen("UserInformationModal");
     }
-
+    
     function handleUpdate() {
         console.log("UserProfileCard");
         update = props.updateRequired;
@@ -34,7 +34,7 @@ function UserProfileCard (props) {
                         <Form.Control
                             readOnly
                             name="firstName"
-                            defaultValue={update?.firstName || ""}
+                            defaultValue={update?.firstName || props.userData.profileData.firstname}
                             type="text"
                             placeholder="first name">
                         </Form.Control>
@@ -45,7 +45,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="lastName"
                             type="text"
-                            defaultValue={update?.lastName || ""}
+                            defaultValue={update?.lastName || props.userData.profileData.lastname}
                             placeholder="last name">
                         </Form.Control>
                     </Form.Group>
@@ -55,7 +55,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="email"
                             type="email"
-                            defaultValue={update?.email || ""}
+                            defaultValue={update?.email || props.userData.profileData.email}
                             placeholder="example@gmail.com">
                         </Form.Control>
                     </Form.Group>
@@ -65,7 +65,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="phoneNumber"
                             type="tel"
-                            defaultValue={update?.phoneNumber || ""}
+                            defaultValue={update?.phoneNumber || props.userData.profileData.phone}
                             placeholder="45+11111111">
                         </Form.Control>
                     </Form.Group>
@@ -74,7 +74,7 @@ function UserProfileCard (props) {
                         <Form.Control
                             readOnly
                             name="profilePicture"
-                            defaultValue={update?.profilePicture || ""}
+                            defaultValue={update?.profilePicture || props.userData.profileData.picture}
                             type="file">
                         </Form.Control>
                     </Form.Group>
