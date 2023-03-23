@@ -20,6 +20,36 @@ namespace webapi.Services.TrainingprogramServices
             return entity;
         }
 
+        public async Task<Trainingprogram> Create(Trainingprogram entity, List<int> workoutsId, List<int> categoriesId)
+        {
+
+            var workouts = new List<Workout>();
+            foreach (var id in workoutsId)
+            {
+                var workout = await _context.Workouts.FindAsync(id);
+                if (workout == null)
+                    throw new KeyNotFoundException($"workout with {id} not found");
+                workouts.Add(workout);
+            }
+
+            var categories = new List<Category>();
+            foreach (var id in categoriesId)
+            {
+                var category = await _context.Categories.FindAsync(id);
+                if (category == null)
+                    throw new KeyNotFoundException($"categroy with {id} not found");
+                categories.Add(category);
+            }
+
+            entity.Workouts = workouts;
+            entity.Categories = categories;
+
+            _context.Trainingprograms.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+
+
         public async Task DeleteById(int id)
         {
             var trainingprogram = await _context.Trainingprograms.FindAsync(id);
@@ -124,7 +154,6 @@ namespace webapi.Services.TrainingprogramServices
             _context.Entry(trainingprogramToUpdateCategories).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-
 
     }
 }
