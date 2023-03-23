@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
 import { fetchExercises } from "../API/ExerciseAPI"
-import { fetchWorkouts } from "../API/WorkoutAPI"
+import { fetchWorkouts, patchWorkout, postWorkout } from "../API/WorkoutAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { typeCompare } from "../Util/SortHelper"
 
-const WorkoutsOverview = () => {
+const WorkoutsOverview = props => {
     const [state, setState] = useState({
         selectedWorkout: null,
+        selectedWExercise: null,
         selectedExercise: null
     })
     const [workouts, setWorkouts] = useState(null)
     const [exercises, setExercises] = useState(null)
+    const [wExercises, setWExercises] = useState([])
 
     useEffect(() => {
         // setWorkouts("loading")
@@ -34,7 +36,10 @@ const WorkoutsOverview = () => {
 
     const workoutSelected = (event, workout) => {
         console.log(workout)
-        if (event.target.checked) setState({...state, selectedWorkout: workout})
+        if (event.target.checked) {
+            setState({...state, selectedWorkout: workout})
+            setWExercises(exercises?.filter(e => workout.exercises.includes(e.id)) || [])
+        }
         else setState({...state, selectedWorkout: null})
     }
     const exerciseSelected = (event, exercise) => {
@@ -42,9 +47,75 @@ const WorkoutsOverview = () => {
         if (event.target.checked) setState({...state, selectedExercise: exercise})
         else setState({...state, selectedExercise: null})
     }
+    const wExerciseSelected = (event, exercise) => {
+        console.log(exercise)
+        if (event.target.checked) setState({...state, selectedWExercise: exercise})
+        else setState({...state, selectedWExercise: null})
+    }
     const workoutsSort = () => {
         const ws = [...workouts].sort(typeCompare)
         setWorkouts(ws)
+    }
+    const addWExercise = () => {
+        if (state.selectedExercise !== null) {
+            const index = wExercises.indexOf(state.selectedExercise)
+            if (index === -1) // Currently only add if unique
+                setWExercises([...wExercises, state.selectedExercise])
+            else alert("Exercise is already in workout")
+        }
+        else alert("Must select a registered exercise to add")
+    }
+    const removeWExercise = () => {
+        if (state.selectedWExercise !== null) {
+            const wes = [...wExercises]
+            const index = wes.indexOf(state.selectedWExercise)
+            if (index > -1) {
+                wes.splice(index, 1)
+                setWExercises(wes)
+                setState({...state, selectedWExercise: null})
+            }
+            else console.log("ERROR: WExercise NOT FOUND")
+        }
+        else alert("Must select a workout exercise to remove")
+    }
+    const saveWorkout = event => {
+        event.preventDefault()
+        // console.log(event)
+        if (wExercises.length > 0) {
+            if (event.nativeEvent.submitter.name === "save") { // PATCH workout
+                if (state.selectedWorkout !== null) {
+                    // console.log(event.target[0].value)
+                    const w = {
+                        id: state.selectedWorkout.id,
+                        name: event.target[0].value,
+                        type: event.target[1].value,
+                        exerciseIds: wExercises.map(e => e.id)
+                    }
+                    console.log(w)
+                    patchWorkout(state.selectedWorkout.id, w)
+                        .then(r => {
+                            const index = workouts.indexOf(state.selectedWorkout)
+                            if (index > -1) {
+                                workouts[index] = r
+                                setState({...state, selectedWorkout: r})
+                            }
+                        })
+                }
+                else alert("Must select a workout to save")
+            }
+            else { // POST workout
+                const w = {
+                    name: event.target[0].value,
+                    type: event.target[1].value,
+                    exerciseIds: wExercises.map(e => e.id)
+                }
+                postWorkout(w)
+                    .then(r => {
+                        setWorkouts([r, ...workouts])
+                    })
+            }
+        }
+        else alert("Must add at least 1 exercise to workout")
     }
 
     return (
@@ -56,7 +127,16 @@ const WorkoutsOverview = () => {
                     <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <ExerciseSelectionList type="radio" exercises={exercises?.filter(e => state.selectedWorkout?.exercises.includes(e.id)) || []} exerciseSelected={exerciseSelected}/>
+                    <ExerciseSelectionList type="radio" exercises={wExercises} exerciseSelected={wExerciseSelected} k={1}/>
+                    {props.contributor && 
+                        <>
+                        <div className="d-flex">
+                            <button onClick={removeWExercise} className="btn btn-outline-secondary wp-100">↓</button>
+                            <button onClick={addWExercise} className="btn btn-outline-secondary wp-100">↑</button>
+                        </div>
+                        <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected} k={2}/>
+                        </>
+                    }                
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <h3>Details</h3>
@@ -69,15 +149,15 @@ const WorkoutsOverview = () => {
                         }
                     </div>
                     <div className="d-flex flex-column justify-content-center hp-100">
-                        {state.selectedExercise !== null &&
+                        {state.selectedWExercise !== null &&
                         <>
-                            <p>Exercise: {state.selectedExercise.name}</p>
+                            <p>Exercise: {state.selectedWExercise.name}</p>
                             <p>Description:</p>
-                            <p>{state.selectedExercise.description}</p>
-                            {state.selectedExercise.musclegroups?.length > 0 ?
+                            <p>{state.selectedWExercise.description}</p>
+                            {state.selectedWExercise.musclegroups?.length > 0 ?
                             <>
                             <p>Musclegroups:</p>
-                            {state.selectedExercise.musclegroups?.map(mg => 
+                            {state.selectedWExercise.musclegroups?.map(mg => 
                                 <p key={mg.id}>{mg.name}</p>
                             )}
                             </>
@@ -86,6 +166,16 @@ const WorkoutsOverview = () => {
                         </>
                         }
                     </div>
+                    {props.contributor &&
+                        <form onSubmit={saveWorkout} key="WOForm-1" className="d-flex flex-column">
+                            <input type="text" defaultValue={state.selectedWorkout?.name} placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
+                            <input type="text" defaultValue={state.selectedWorkout?.type} placeholder="Workout type" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
+                            <input type="submit" name="save" id="save-button-1" className="d-none"/>
+                            <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite workout</label>
+                            <input type="submit" name="create" id="create-button-1" className="d-none"/>
+                            <label htmlFor={"create-button-1"} className="btn btn-outline-secondary wp-100">Save as new workout</label>
+                        </form>
+                    }
                 </div>
             </div>
         </div>

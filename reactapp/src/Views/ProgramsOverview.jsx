@@ -42,6 +42,11 @@ const ProgramsOverview = props => {
         }
         else setState({...state, selectedProgram: null})
     }
+    const workoutSelected = (event, workout) => {
+        console.log(workout)
+        if (event.target.checked) setState({...state, selectedWorkout: workout})
+        else setState({...state, selectedWorkout: null})
+    }
     const pWorkoutSelected = (event, workout) => {
         console.log(workout)
         if (event.target.checked) setState({...state, selectedPWorkout: workout})
@@ -51,12 +56,7 @@ const ProgramsOverview = props => {
         const ps = [...programs].sort(categoryCompare)
         setPrograms(ps)
     }
-    const workoutSelected = (event, workout) => {
-        console.log(workout)
-        if (event.target.checked) setState({...state, selectedWorkout: workout})
-        else setState({...state, selectedWorkout: null})
-    }
-    const addWorkout = () => {
+    const addPWorkout = () => {
         if (state.selectedWorkout !== null) {
             const index = pWorkouts.indexOf(state.selectedWorkout)
             if (index === -1) // Currently only add if unique
@@ -72,6 +72,7 @@ const ProgramsOverview = props => {
             if (index > -1) {
                 pws.splice(index, 1)
                 setPWorkouts(pws)
+                setState({...state, selectedPWorkout: null})
             }
             else console.log("ERROR: PWORKOUT NOT FOUND")
         }
@@ -91,6 +92,13 @@ const ProgramsOverview = props => {
                         categoryIds: state.selectedProgram.categories
                     }
                     patchProgram(state.selectedProgram.id, p)
+                        .then(r => {
+                            const index = programs.indexOf(state.selectedProgram)
+                            if (index > -1) {
+                                programs[index] = r
+                                setState({...state, selectedProgram: r})
+                            }
+                        })
                 }
                 else alert("Must select a program to save")
             }
@@ -101,6 +109,9 @@ const ProgramsOverview = props => {
                     categoryIds: []
                 }
                 postProgram(p)
+                    .then(r => {
+                        setPrograms([r, ...programs])
+                    })
             }
         }
         else alert("Must add at least 1 workout to program")
@@ -120,7 +131,7 @@ const ProgramsOverview = props => {
                         <>
                         <div className="d-flex">
                             <button onClick={removePWorkout} className="btn btn-outline-secondary wp-100">↓</button>
-                            <button onClick={addWorkout} className="btn btn-outline-secondary wp-100">↑</button>
+                            <button onClick={addPWorkout} className="btn btn-outline-secondary wp-100">↑</button>
                         </div>
                         <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected} k={2}/>
                         </>

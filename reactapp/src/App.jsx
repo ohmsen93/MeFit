@@ -37,7 +37,7 @@ function App() {
             <Route path="/goals" element={<KeycloakRoute role={ Roles.Regular }> <GoalsOverview /> </KeycloakRoute>}/>
             <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /> </KeycloakRoute>}/>
             <Route path="/programs" element={<KeycloakRoute role={ Roles.Regular }><ProgramsOverview contributor={true} /> </KeycloakRoute>}/>
-            <Route path="/workouts" element={<KeycloakRoute role={ Roles.Regular }><WorkoutsOverview /> </KeycloakRoute>}/>
+            <Route path="/workouts" element={<KeycloakRoute role={ Roles.Regular }><WorkoutsOverview contributor={true} /> </KeycloakRoute>}/>
             <Route path="/exercises" element={<KeycloakRoute role={ Roles.Regular }><ExercisesOverview /> </KeycloakRoute>}/>
           </Routes>
         </main>
