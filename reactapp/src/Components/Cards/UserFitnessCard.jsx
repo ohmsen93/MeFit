@@ -6,8 +6,8 @@ let update;
 
 function UserFitnessCard(props) {
     
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate()}
-
+    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
+    
     function handleOpenModal() {
         props.onModalOpen("UserFitnessModal");
     }
@@ -29,7 +29,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Weight</Form.Label>
                         <Form.Control
                             readOnly
-                            defaultValue={update?.weight || ""}
+                            defaultValue={update?.weight || props.userData.profileData.weight}
                             name="weight"                           
                             type="number"
                             placeholder="weight in kg">
@@ -39,7 +39,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Height</Form.Label>
                         <Form.Control
                             readOnly
-                            defaultValue={update?.height || ""}
+                            defaultValue={update?.height || props.userData.profileData.height}
                             name="height"                       
                             type="number"
                             placeholder="height in cm">
@@ -49,7 +49,7 @@ function UserFitnessCard(props) {
                         <Form.Label>MedicalCondition</Form.Label>
                         <Form.Control as="textarea" rows={4}
                             readOnly
-                            defaultValue={update?.medicalCondition || ""}
+                            defaultValue={update?.medicalCondition || props.userData.profileData.medicalCondition}
                             name="medicalCondition"              
                             type="text"
                             placeholder="">
@@ -59,7 +59,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Disabilities</Form.Label>
                         <Form.Control as="textarea" rows={4}
                             readOnly
-                            defaultValue={update?.disabilities || ""}
+                            defaultValue={update?.disabilities || props.userData.profileData.disabilities}
                             name="disabilities"
                             type="text"
                             placeholder="">

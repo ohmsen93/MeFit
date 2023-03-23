@@ -893,19 +893,19 @@ namespace webapi.Migrations
                         new
                         {
                             Id = "78acbd80-93b7-4821-9fb0-a5ee776318da",
-                            FirstLogin = false,
+                            FirstLogin = true,
                             Username = "administrator@gmail.com"
                         },
                         new
                         {
                             Id = "2c191644-1bac-4e9a-bc8e-1c7054118615",
-                            FirstLogin = false,
+                            FirstLogin = true,
                             Username = "contributor@gmail.com"
                         },
                         new
                         {
                             Id = "4d24f01a-5261-40f6-a7e0-f051e8e6f599",
-                            FirstLogin = false,
+                            FirstLogin = true,
                             Username = "regularuser@gmail.com"
                         });
                 });

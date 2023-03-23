@@ -44,6 +44,7 @@ namespace webapi
             builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
             builder.Services.AddTransient<IGoalService, GoalService>();
+            builder.Services.AddCors();
 
             // Add middleware
 
@@ -51,12 +52,13 @@ namespace webapi
             builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             // Add controllers and database context to the container
+            /*
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
-
-            //builder.Services.AddControllers();
+            */
+            builder.Services.AddControllers();
 
 
             builder.Services.AddDbContext<MeFitContext>();
@@ -126,6 +128,10 @@ namespace webapi
                 // Use Swagger UI in development environment
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeFit v1"));
+                app.UseCors(builder => builder
+                       .AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
             }
 
 
