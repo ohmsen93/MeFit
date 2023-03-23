@@ -165,14 +165,14 @@ namespace webapi.Controllers
         /// Updates workouts exercises by id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="exercises"></param>
+        /// <param name="workoutUpdateExercisesDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}/exercises")]
-        public async Task<IActionResult> PatchWorkoutExercises(int id, List<int> exercises)
+        public async Task<IActionResult> PatchWorkoutExercises(int id, WorkoutUpdateExercisesDto workoutUpdateExercisesDto)
         {           
             try
             {                
-                await _service.UpdateWorkoutExercises(id,exercises);
+                await _service.UpdateWorkoutExercises(id, workoutUpdateExercisesDto.Exercises);
             }
             catch (EntityNotFoundException ex)
             {
