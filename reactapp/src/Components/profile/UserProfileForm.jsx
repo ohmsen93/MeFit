@@ -9,11 +9,13 @@ import keycloak from '../../keycloak';
 import { fetchUserById, postUser } from '../API/UserApi';
 
 
-async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin) {
+async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin,setCardRequiredUpdate) {
 
+    setLoading(true);
+    
     let data = await fetchUserById(keycloak.tokenParsed.user_Id);
 
-    if (!data?.ok) {
+    if (data.status == "404") {
         const tempData = {
             firstName: keycloak.tokenParsed?.firstName || "",
             lastName: keycloak.tokenParsed?.lastName || "",
@@ -22,12 +24,9 @@ async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin) {
         data = tempData;
     }
 
-    if (data == null || data == undefined) {
-        setLoading(true);
-    }
-    else {
+    if (data != null || data != undefined){
         setUserData(data);
-        setFirstLogin(data?.userData?.firstLogin || true);
+        setFirstLogin(data?.userData?.firstLogin);
         setLoading(false);
     }
 }
@@ -52,7 +51,8 @@ function UserProfileForm() {
             await OnIntialProfileLoad(
                 setLoading,
                 setUserData,
-                setFirstLogin);
+                setFirstLogin,
+                );
         }
         if (userData == null || userData == undefined) {
             GetUserData();
@@ -68,7 +68,6 @@ function UserProfileForm() {
         if (isfirstlogin && currentmodal == null) {
             handleOpenModal("UserInformationModal");
         }
-
     }
 
 
@@ -120,7 +119,7 @@ function UserProfileForm() {
         setShow(false);
     }
 
-    function handlePayload(key, payload) {
+    function handleNewUserPayload(key, payload) {
         switch (key) {
             case "UserInformationModal":
                 userPayLoad.userData = payload
@@ -139,8 +138,9 @@ function UserProfileForm() {
     function handleSaveModal(data) {
         console.log(data);
         setCardRequiredUpdate(data);
+        
         if (isfirstlogin) {
-            handlePayload(data.key, data);
+            handleNewUserPayload(data.key, data);
             handleNewUser(userPayLoad);
         }
     }
@@ -173,7 +173,7 @@ function UserProfileForm() {
 
     function handleNextModal(event, data, key) {
         setCardRequiredUpdate(data);
-        handlePayload(key, data);
+        handleNewUserPayload(key, data);
         switch (key) {
             case "UserInformationModal":
                 setNewModal(
