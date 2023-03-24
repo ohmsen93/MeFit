@@ -2,7 +2,7 @@
 {
     public class TrainingprogramUpdateCategoriesDto
     {
-        public List<int> CategoryIds { get; set; }
+        public List<int> Categories { get; set; }
 
     }
 }

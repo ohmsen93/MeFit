@@ -31,6 +31,11 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
+        /// <summary>
+        /// Gets all sets
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Sets
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Set>>> GetSets()
@@ -38,6 +43,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<SetReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets a set by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Sets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Set>> GetSet(int id)
@@ -55,6 +65,12 @@ namespace webapi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a set by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="setUpdateDto"></param>
+        /// <returns></returns>
         // PATCH: api/Sets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
@@ -82,6 +98,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new set
+        /// </summary>
+        /// <param name="setCreateDto"></param>
+        /// <returns></returns>
         // POST: api/Sets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -92,7 +113,12 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetSet), new { id = set.Id }, set);
         }
 
-        //// DELETE: api/Sets/5
+        /// <summary>
+        /// Delets a set by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Sets/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSet(int id)
         {
@@ -110,5 +136,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }

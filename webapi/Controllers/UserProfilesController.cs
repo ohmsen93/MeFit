@@ -31,6 +31,11 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
+        /// <summary>
+        /// Gets all userprofiles
+        /// </summary>
+        /// <returns></returns>
         // GET: api/UserProfiles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserProfile>>> GetUserProfiles()
@@ -38,6 +43,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<UserProfileReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets a userprofile by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/UserProfiles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserProfile>> GetUserProfile(int id)
@@ -55,6 +65,12 @@ namespace webapi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a userprofile by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userProfileUpdateDto"></param>
+        /// <returns></returns>
         // Patch: api/UserProfiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
@@ -81,6 +97,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new userprofile
+        /// </summary>
+        /// <param name="userProfileCreateDto"></param>
+        /// <returns></returns>
         // POST: api/UserProfiles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -91,6 +112,11 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetUserProfile), new { id = userProfile.Id }, userProfile);
         }
 
+        /// <summary>
+        /// Delets a userprofile by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/UserProfiles/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserProfile(int id)
@@ -109,5 +135,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }
