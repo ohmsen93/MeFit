@@ -32,6 +32,10 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all goalworkouts
+        /// </summary>
+        /// <returns></returns>
         // GET: api/GoalWorkouts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GoalWorkouts>>> GetGoalWorkouts()
@@ -39,6 +43,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<GoalWorkoutReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets a goalworkout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/GoalWorkouts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GoalWorkouts>> GetGoalWorkout(int id)
@@ -46,7 +55,13 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<GoalWorkoutReadDto>(await _service.GetById(id)));
         }
 
-        // PUT: api/GoalWorkouts/5
+        /// <summary>
+        /// Updates a goalworkout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="goalWorkoutUpdateDto"></param>
+        /// <returns></returns>
+        // PATCH: api/GoalWorkouts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchGoalWorkout(int id, GoalWorkoutUpdateDto goalWorkoutUpdateDto)
@@ -72,6 +87,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new goalworkout
+        /// </summary>
+        /// <param name="goalWorkoutCreateDto"></param>
+        /// <returns></returns>
         // POST: api/GoalWorkouts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -82,6 +102,11 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetGoalWorkout), new { id = goalWorkout.Id }, goalWorkout);
         }
 
+        /// <summary>
+        /// Delets a goalworkout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/GoalWorkouts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGoalWorkout(int id)
