@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchExercises, patchExercise, postExercise } from "../API/ExerciseAPI"
+import { fetchExercises, patchExercise, patchExerciseMusclegroups, patchExerciseSets, postExercise } from "../API/ExerciseAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import { musclegroupCompare } from "../Util/SortHelper"
 
@@ -37,19 +37,46 @@ const ExercisesOverview = props => {
                 const e = {
                     id: state.selectedExercise.id,
                     name: event.target[0].value,
-                    description: event.target[1].value,
-                    setIds: [],
-                    musclegroupIds: []
+                    description: event.target[1].value
                 }
-                console.log(e)
-                patchExercise(state.selectedExercise.id, e)
-                    .then(r => {
-                        const index = exercises.indexOf(state.selectedExercise)
-                        if (index > -1) {
-                            exercises[index] = r
-                            setState({...state, selectedExercise: r})
-                        }
-                    })
+                if (e.name !== state.selectedExercise.name || e.description !== state.selectedExercise.description) patchExercise(state.selectedExercise.id, e)
+                const ems = {
+                    musclegroups: []
+                }
+                if (ems.musclegroups.toString() !== state.selectedExercise.musclegroups.toString()) patchExerciseMusclegroups(state.selectedExercise.id, ems)
+                const ess = {
+                    sets: []
+                }
+                if (ess.sets.toString() !== state.selectedExercise.sets.toString()) patchExerciseSets(state.selectedExercise.id, ess)
+
+                const ne = {
+                    id: e.id,
+                    name: e.name,
+                    description: e.description,
+                    musclegroups: ems.musclegroups,
+                    sets: ess.sets
+                }
+                const index = exercises.indexOf(state.selectedExercise)
+                if (index > -1) {
+                    exercises[index] = ne
+                    setState({...state, selectedExercise: ne})
+                }
+                // const e = {
+                //     id: state.selectedExercise.id,
+                //     name: event.target[0].value,
+                //     description: event.target[1].value,
+                //     setIds: [],
+                //     musclegroupIds: []
+                // }
+                // console.log(e)
+                // patchExercise(state.selectedExercise.id, e)
+                //     .then(r => {
+                //         const index = exercises.indexOf(state.selectedExercise)
+                //         if (index > -1) {
+                //             exercises[index] = r
+                //             setState({...state, selectedExercise: r})
+                //         }
+                //     })
             }
             else alert("Must select an exercise to save")
         }
@@ -57,8 +84,8 @@ const ExercisesOverview = props => {
             const e = {
                 name: event.target[0].value,
                 description: event.target[1].value,
-                setIds: [],
-                musclegroupIds: []
+                sets: [],
+                musclegroups: []
             }
             postExercise(e)
                 .then(r => {

@@ -105,20 +105,20 @@ const GoalCreation = () => {
 
                     {state.tab === "program" && 
                         // <GoalCreationContext.Provider value={programSelected}>
-                            <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
+                            <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected} k={1}/>
                         // </GoalCreationContext.Provider>
                     }
 
                     {state.tab === "workout" && 
                         // <GoalCreationContext.Provider value={workoutSelected}>
-                            <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected}/>
+                            <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected} k={1}/>
                         // </GoalCreationContext.Provider>
                     }
 
                     {state.tab === "exercise" && 
                         <>
                         {/* <GoalCreationContext.Provider value={{workoutSelected, changeTab}}> */}
-                            <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected}/>
+                            <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected} k={1}/>
                         {/* </GoalCreationContext.Provider> */}
                         
                         <form onSubmit={submitWorkout} className="text-center">

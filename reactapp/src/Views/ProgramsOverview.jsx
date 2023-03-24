@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchPrograms, patchProgram, postProgram } from "../API/ProgramAPI"
+import { fetchPrograms, patchProgram, postProgram, patchProgramWorkouts, patchProgramCategories } from "../API/ProgramAPI"
 import { fetchWorkouts } from "../API/WorkoutAPI"
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
@@ -38,7 +38,7 @@ const ProgramsOverview = props => {
         console.log(program)
         if (event.target.checked) {
             setState({...state, selectedProgram: program, selectedPWorkout: null})
-            setPWorkouts(workouts?.filter(w => program.workouts.includes(w.id)) || [])
+            setPWorkouts(workouts?.filter(w => program.workouts?.includes(w.id)) || [])
         }
         else setState({...state, selectedProgram: null})
     }
@@ -87,18 +87,37 @@ const ProgramsOverview = props => {
                     // console.log(event.target[0].value)
                     const p = {
                         id: state.selectedProgram.id,
-                        name: event.target[0].value,
-                        workoutIds: pWorkouts.map(w => w.id),
-                        categoryIds: state.selectedProgram.categories
+                        name: event.target[0].value
                     }
-                    patchProgram(state.selectedProgram.id, p)
-                        .then(r => {
-                            const index = programs.indexOf(state.selectedProgram)
-                            if (index > -1) {
-                                programs[index] = r
-                                setState({...state, selectedProgram: r})
-                            }
-                        })
+                    if (p.name !== state.selectedProgram.name) patchProgram(state.selectedProgram.id, p)
+                    const pws = {
+                        workouts: pWorkouts.map(w => w.id)
+                    }
+                    if (pws.workouts.toString() !== state.selectedProgram.workouts.toString()) patchProgramWorkouts(state.selectedProgram.id, pws)
+                    const pcs = {
+                        categories: state.selectedProgram.categories
+                    }
+                    if (pcs.categories.toString() !== state.selectedProgram.categories.toString()) patchProgramCategories(state.selectedProgram.id, pcs)
+
+                    const np = {
+                        id: p.id,
+                        name: p.name,
+                        workouts: pws.workouts,
+                        categories: pcs.categories
+                    }
+                    const index = programs.indexOf(state.selectedProgram)
+                    if (index > -1) {
+                        programs[index] = np
+                        setState({...state, selectedProgram: np})
+                    }
+                    //patchProgram(state.selectedProgram.id, p)
+                        // .then(r => {
+                        //     const index = programs.indexOf(state.selectedProgram)
+                        //     if (index > -1) {
+                        //         programs[index] = r
+                        //         setState({...state, selectedProgram: r})
+                        //     }
+                        // })
                 }
                 else alert("Must select a program to save")
             }
@@ -110,6 +129,7 @@ const ProgramsOverview = props => {
                 }
                 postProgram(p)
                     .then(r => {
+                        console.log(r)
                         setPrograms([r, ...programs])
                     })
             }

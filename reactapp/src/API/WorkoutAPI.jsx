@@ -66,3 +66,24 @@ export const patchWorkout = async (workoutId, newWorkout) => {
         console.log(error)
     }
 }
+export const patchWorkoutExercises = async (workoutId, newExercises) => {
+    console.log(process.env.REACT_APP_API_URL + "/workouts")
+    try {
+        const request = await fetch(process.env.REACT_APP_API_URL + "/workouts/" + workoutId + "/exercises", {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify(newExercises)
+        })
+            .then(response => response.json())
+            .then(results => {
+                return results
+            })
+        return request
+    } catch (error) {
+        console.log(error)
+    }
+}

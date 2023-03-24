@@ -81,7 +81,7 @@ const GoalsOverview = () => {
                     <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => w.fkGoalId === state.selectedGoal?.id) || []} workoutSelected={workoutSelected}/>
+                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => w.fkGoalId === state.selectedGoal?.id) || []} workoutSelected={workoutSelected} k={1}/>
                 </div>
                 <div className="d-flex flex-column text-center wp-100">
                     <div className="d-flex flex-column flex-fill align-items-center justify-content-center border wp-100 min-h-0 p-2">
