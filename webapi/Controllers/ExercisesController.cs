@@ -32,6 +32,7 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
         /// <summary>
         /// Gets all exercises
         /// </summary>
@@ -182,6 +183,7 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
 
     }
 }

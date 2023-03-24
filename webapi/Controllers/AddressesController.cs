@@ -34,6 +34,8 @@ namespace webapi.Controllers
             _service = service;
             _mapper = mapper;
         }
+
+        #region basic CRUD
         /// <summary>
         /// Gets all addresses
         /// </summary>
@@ -143,5 +145,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }

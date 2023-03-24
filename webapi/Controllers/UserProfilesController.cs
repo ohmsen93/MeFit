@@ -31,6 +31,7 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
         /// <summary>
         /// Gets all userprofiles
         /// </summary>
@@ -134,5 +135,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }

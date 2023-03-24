@@ -32,6 +32,7 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
         /// <summary>
         /// Gets all trainingprograms
         /// </summary>
@@ -132,7 +133,7 @@ namespace webapi.Controllers
 
             return NoContent();
         }
-
+        #endregion
 
         /// <summary>
         /// Updates trainingporgram workouts by id
