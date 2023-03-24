@@ -18,7 +18,7 @@ async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin, userD
     if (userData == null || userData == undefined) {
         data = await fetchUserById(keycloak.tokenParsed.user_Id);
 
-        if (data.status == "404") {
+        if (data?.status == "404") {
             const tempData = {
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
