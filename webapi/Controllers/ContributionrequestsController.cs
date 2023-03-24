@@ -31,6 +31,10 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all contributionrequests
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Contributionrequests
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contributionrequest>>> GetContributionrequests()
@@ -38,6 +42,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<ContributionrequestReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets an contributionrequest by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Contributionrequests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Contributionrequest>> GetContributionrequest(int id)
@@ -55,6 +64,12 @@ namespace webapi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an contributionrequest by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="contributionrequestUpdateDto"></param>
+        /// <returns></returns>
         // PATCH: api/Contributionrequests/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
@@ -82,6 +97,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new contributionrequest
+        /// </summary>
+        /// <param name="contributionrequestCreateDto"></param>
+        /// <returns></returns>
         // POST: api/Contributionrequests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -92,7 +112,12 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetContributionrequest), new { id = contributionrequest.Id }, contributionrequest);
         }
 
-        //// DELETE: api/Contributionrequests/5
+        /// <summary>
+        /// Delets a contributionrequest by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Contributionrequests/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteContributionrequest(int id)
         {
