@@ -11,7 +11,7 @@ const fetchUserProfileById = async (id) => {
             }
         }
         
-        const request = await fetch(process.env.REACT_APP_API_URL +`/userProfiles/${id}`, options)
+        const request = await fetch(process.env.REACT_APP_API_URL +`/userprofiles/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -61,8 +61,8 @@ export const fetchUserById = async (id) => {
             return user.status;
         }
         else {
-
-            const profile = await fetchUserProfileById(user.userProfiles[0]);
+            
+            const profile = await fetchUserProfileById(user.userProfiles[0].charAt(user.userProfiles[0].length -1));
             const address = await fetchUserAddressById(profile.fkAddressId);
 
             const data = {
@@ -105,7 +105,7 @@ export const patchPersonalById = async (payload, data) => {
             })
         }
 
-        await fetch(process.env.REACT_APP_API_URL +`/${data.userData.userProfiles[0]}`, profilePatch);
+        await fetch(process.env.REACT_APP_API_URL +`/userprofiles/${data.userData.userProfiles[0].charAt(data.userData.userProfiles[0].length -1)}`, profilePatch);
 
 
     } catch (error) {
@@ -138,7 +138,7 @@ export const patchFitnessById = async (payload, data) => {
             })
         }
 
-        await fetch(process.env.REACT_APP_API_URL + `/${data.userData.userProfiles[0]}`, fitnessPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/userprofiles/${data.userData.userProfiles[0].charAt(data.userData.userProfiles[0].length -1)}`, fitnessPatch);
 
 
     } catch (error) {
