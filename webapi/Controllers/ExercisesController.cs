@@ -12,6 +12,7 @@ using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.ExerciseDTO;
 using webapi.Models.DTO.TrainingprogramDTO;
+using webapi.Profiles;
 using webapi.Services.ExerciseServices;
 
 namespace webapi.Controllers
@@ -104,13 +105,9 @@ namespace webapi.Controllers
         public async Task<ActionResult<Exercise>> PostExercise(ExerciseCreateDto exerciseCreateDto)
         {
             var exercise = _mapper.Map<Exercise>(exerciseCreateDto);
-            await _service.Create(exercise);
-            //var exerciseUpdateSetsDto = new ExerciseUpdateSetsDto { SetIds = exerciseCreateDto.SetIds };
-            //var exerciseUpdateMusclegroupsDto = new ExerciseUpdateMusclegroupsDto { MusclegroupIds = exerciseCreateDto.MusclegroupIds };
-            //await _service.UpdateExerciseSets(exercise.Id, exerciseUpdateSetsDto.SetIds);
-            //await _service.UpdateExerciseMusclegroups(exercise.Id, exerciseUpdateMusclegroupsDto.MusclegroupIds);
-
-            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exercise);
+            await _service.Create(exercise, exerciseCreateDto.SetIds,exerciseCreateDto.MusclegroupIds);
+            var exerciseReadDto = _mapper.Map<ExerciseReadDto>(exercise);
+            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exerciseReadDto);
         }
 
 
