@@ -19,6 +19,33 @@ namespace webapi.Services.ExerciseServices
             await _context.SaveChangesAsync();
             return entity;
         }
+        public async Task<Exercise> Create(Exercise entity, List<int> setsId,List<int> musclegroupsId)
+        {
+            var sets = new List<Set>();
+            foreach (var id in setsId)
+            {
+                var set = await _context.Sets.FindAsync(id);
+                if (set == null)
+                    throw new KeyNotFoundException($"set with {id} not found");
+                sets.Add(set);
+            }
+
+            var musclegroups = new List<Musclegroup>();
+            foreach (var id in musclegroupsId)
+            {
+                var musclegroup = await _context.Musclegroups.FindAsync(id);
+                if (musclegroup == null)
+                    throw new KeyNotFoundException($"musclegroup with {id} not found");
+                musclegroups.Add(musclegroup);
+            }
+
+            entity.Sets = sets;
+            entity.Musclegroups = musclegroups;
+
+            _context.Exercises.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
 
         public async Task DeleteById(int id)
         {
