@@ -109,8 +109,12 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetTrainingprogram), new { id = trainingprogram.Id }, trainingprogramReadDto);
         }
 
-
-        //// DELETE: api/Exercises/5
+        /// <summary>
+        /// Delets a trainingprogram by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Exercises/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExercise(int id)
         {
@@ -155,7 +159,7 @@ namespace webapi.Controllers
         }
 
         /// <summary>
-        /// Updates trainingporgram categories by id
+        /// Updates trainingprogram categories by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="trainingprogramUpdateCategoriesDto"></param>
