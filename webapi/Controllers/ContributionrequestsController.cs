@@ -43,7 +43,7 @@ namespace webapi.Controllers
         }
 
         /// <summary>
-        /// Gets an contributionrequest by id
+        /// Gets a contributionrequest by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -65,7 +65,7 @@ namespace webapi.Controllers
         }
 
         /// <summary>
-        /// Updates an contributionrequest by id
+        /// Updates a contributionrequest by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="contributionrequestUpdateDto"></param>
