@@ -10,7 +10,8 @@ const fetchUserProfileById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        const request = await fetch(process.env.REACT_APP_API_URL +`/${id}`, options)
+        
+        const request = await fetch(process.env.REACT_APP_API_URL +`/userProfiles/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
