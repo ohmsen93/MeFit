@@ -15,12 +15,9 @@ function UserAddressCard(props) {
     function handleUpdate() {
         console.log("UserAddressCard");
         update = props.updateRequired;
-        handleAfterUpdate();
+       
     }
 
-    function handleAfterUpdate() {
-        props.afterUpdate();
-    }
 
     return (
         <Card>
