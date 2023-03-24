@@ -34,6 +34,11 @@ namespace webapi.Controllers
             _mapper=   mapper;
         }
 
+        #region basic CRUD
+        /// <summary>
+        /// Gets all users
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -41,6 +46,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<UserReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
@@ -58,6 +68,12 @@ namespace webapi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userUpdateDto"></param>
+        /// <returns></returns>
         // PATCH: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
@@ -85,6 +101,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new user
+        /// </summary>
+        /// <param name="userCreateDto"></param>
+        /// <returns></returns>
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -97,6 +118,11 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
+        /// <summary>
+        /// Delets a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
@@ -115,5 +141,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }

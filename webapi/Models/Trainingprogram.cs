@@ -11,7 +11,6 @@ public partial class Trainingprogram
 
     public virtual ICollection<Goal> Goals { get; } = new List<Goal>();
 
-
     public ICollection<Workout> Workouts { get; set; }
 
     public ICollection<Category> Categories { get; set; }

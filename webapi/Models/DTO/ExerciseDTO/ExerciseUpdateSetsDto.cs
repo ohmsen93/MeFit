@@ -2,7 +2,7 @@
 {
     public class ExerciseUpdateSetsDto
     {
-        public List<int> SetIds { get; set; }
+        public List<int> Sets { get; set; }
 
     }
 }

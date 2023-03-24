@@ -3,7 +3,7 @@
 
     public class WorkoutUpdateExercisesDto
     {
-        public List<int> ExerciseIds { get; set; }
+        public List<int> Exercises { get; set; }
 
     }
 }

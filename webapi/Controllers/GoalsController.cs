@@ -23,6 +23,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class GoalsController : ControllerBase
     {
         private readonly IGoalService _service;
@@ -35,6 +36,10 @@ namespace webapi.Controllers
         }
 
         #region basic CRUD
+        /// <summary>
+        /// Gets all goals
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Goals
         [HttpGet]
         [Authorize(Roles="Regular")]
@@ -43,6 +48,11 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
 
+        /// <summary>
+        /// Gets a goal by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Goals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Goal>> GetGoal(int id)
@@ -60,9 +70,16 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Goals/5
+        /// <summary>
+        /// Updates a goal by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="goalUpdateDto"></param>
+        /// <returns></returns>
+        // PATCH: api/Goals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> PatchGoal(int id, GoalUpdateDto goalUpdateDto)
         {
             if (id != goalUpdateDto.Id)
@@ -87,20 +104,39 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new goal
+        /// </summary>
+        /// <param name="goalCreateDto"></param>
+        /// <returns></returns>
         // POST: api/Goals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        //[Authorize(Roles = "Regular")]
         public async Task<ActionResult<Goal>> PostGoal(GoalCreateDto goalCreateDto)
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
+            //Find userProfileId by userId
+            var userProfile = await _service.GetUserProfile(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            //Assign userProfileId to the goal
+            goal.FkUserProfileId = userProfile.Id;
+
+            //Create goal
             await _service.Create(goal, goalCreateDto.Workouts);
-            
+
             var goalReadDto = _mapper.Map<GoalReadDto>(goal);
             return CreatedAtAction(nameof(GetGoal), new { id = goal.Id }, goalReadDto);
         }
 
-        //// DELETE: api/Goals/5
+        /// <summary>
+        /// Delets a goal by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Goals/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteGoal(int id)
         {
             try

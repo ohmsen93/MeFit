@@ -2,7 +2,7 @@
 {
     public class ExerciseUpdateMusclegroupsDto
     {
-        public List<int> MusclegroupIds { get; set; }
+        public List<int> Musclegroups { get; set; }
 
     }
 }

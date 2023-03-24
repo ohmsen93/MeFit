@@ -1,5 +1,6 @@
 ﻿using webapi.Models;
 using webapi.Models.DTO.SetDTO;
+using webapi.Models.Entities;
 
 namespace webapi.Models.DTO.ExerciseDTO
 {
@@ -13,6 +14,6 @@ namespace webapi.Models.DTO.ExerciseDTO
 
         public List<string> Sets { get; set; }
 
-        public List<string> Musclegroups { get; set; }
+        public List<MuscleGroupRc> Musclegroups { get; set; }
     }
 }

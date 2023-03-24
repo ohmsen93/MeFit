@@ -2,6 +2,7 @@
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
+using webapi.Profiles;
 
 namespace webapi.Services.GoalServices
 {
@@ -24,13 +25,16 @@ namespace webapi.Services.GoalServices
         {
             // Set default values for the goal
             entity.FkStatusId = 2;// Pending
-            entity.FkUserProfileId = 3;
 
             // Create Goal
             _context.Goals.Add(entity);
             await _context.SaveChangesAsync();
 
-            var goal = await _context.Goals.FindAsync(entity.Id);
+            var goal = await _context.Goals.Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkWorkout)
+                .Include(g => g.GoalWorkouts).ThenInclude(gw => gw.FkStatus)
+                .Include(g => g.FkStatus)
+                .Include(g => g.FkTrainingprogram)
+                .FirstOrDefaultAsync(x => x.Id == entity.Id);
 
             if (goal == null)
             {
@@ -70,7 +74,7 @@ namespace webapi.Services.GoalServices
             _context.GoalWorkouts.AddRange(goalWorkoutList);
             await _context.SaveChangesAsync();
 
-            return entity;
+            return goal;
         }
 
         public async Task DeleteById(int id)
@@ -111,6 +115,7 @@ namespace webapi.Services.GoalServices
                 .Include(g => g.FkTrainingprogram)
                 .ToListAsync();
         }
+
         public async Task<ICollection<Goal>> GetAll(string userId)
         {
             var userProfile= await _context.UserProfiles.FirstOrDefaultAsync(x=>x.FkUserId==userId);
@@ -127,6 +132,7 @@ namespace webapi.Services.GoalServices
                 .Include(g => g.FkTrainingprogram)
                 .ToListAsync();
         }
+
         public async Task<Goal> GetById(int id)
         {
             var goal = await _context.Goals
@@ -200,6 +206,16 @@ namespace webapi.Services.GoalServices
             await _context.SaveChangesAsync();
             return entity;
         }
-        
+
+        public async Task<UserProfile> GetUserProfile(string id)
+        {
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.FkUserId == id);
+
+            if (userProfile == null)
+            {
+                throw new EntityNotFoundException(id, nameof(UserProfile));
+            }
+            return userProfile;
+        }
     }
 }
