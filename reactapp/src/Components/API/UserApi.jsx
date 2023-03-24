@@ -10,7 +10,7 @@ const fetchUserProfileById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        const request = await fetch(`https://localhost:7101/${id}`, options)
+        const request = await fetch(process.env.REACT_APP_API_URL +`/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -31,7 +31,7 @@ const fetchUserAddressById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        const request = await fetch(`https://localhost:7101/api/addresses/${id}`, options)
+        const request = await fetch(process.env.REACT_APP_API_URL +`/addresses/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -53,7 +53,7 @@ export const fetchUserById = async (id) => {
             }
         }
 
-        const user = await fetch(`https://localhost:7101/api/users/${id}`, options)
+        const user = await fetch(process.env.REACT_APP_API_URL +`/users/${id}`, options)
             .then(response => response.json());
 
         if (user.status == "404") {
@@ -104,7 +104,7 @@ export const patchPersonalById = async (payload, data) => {
             })
         }
 
-        await fetch(`https://localhost:7101/${data.userData.userProfiles[0]}`, profilePatch);
+        await fetch(process.env.REACT_APP_API_URL +`/${data.userData.userProfiles[0]}`, profilePatch);
 
 
     } catch (error) {
@@ -137,7 +137,7 @@ export const patchFitnessById = async (payload, data) => {
             })
         }
 
-        await fetch(`https://localhost:7101/${data.userData.userProfiles[0]}`, fitnessPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/${data.userData.userProfiles[0]}`, fitnessPatch);
 
 
     } catch (error) {
@@ -164,7 +164,7 @@ export const patchAddressById = async (payload, data) => {
             })
         }
 
-        await fetch(`https://localhost:7101/api/addresses/${data.profileData.fkAddressId}`, addressPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/${data.profileData.fkAddressId}`, addressPatch);
 
 
     } catch (error) {
@@ -191,7 +191,7 @@ const postAddress = async (payload) => {
             })
         }
 
-        const address = await fetch('https://localhost:7101/api/addresses', postOptions)
+        const address = await fetch(process.env.REACT_APP_API_URL + '/addresses', postOptions)
             .then(response => response.json());
 
         const data = {
@@ -231,7 +231,7 @@ const postProfile = async (payload, address, user) => {
             })
         }
 
-        const profile = await fetch('https://localhost:7101/api/userprofiles', postOptions)
+        const profile = await fetch(process.env.REACT_APP_API_URL + '/userprofiles', postOptions)
             .then(response => response.json());
 
         const data = {
@@ -262,7 +262,7 @@ export const postUser = async (payload, firstlogin) => {
             })
         }
 
-        const user = await fetch('https://localhost:7101/api/users', userOptions)
+        const user = await fetch(process.env.REACT_APP_API_URL +'/users', userOptions)
             .then(response => response.json());
 
 
