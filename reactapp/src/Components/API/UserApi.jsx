@@ -79,9 +79,9 @@ export const fetchUserById = async (id) => {
     }
 }
 
-export const patchUserById = async (id, payload) => {
+export const patchPersonalById = async (payload, data) => {
     try {
-        const patchOptions = {
+        const profilePatch = {
             method: 'PATCH',
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -89,13 +89,83 @@ export const patchUserById = async (id, payload) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                id: payload.userData.id,
-                firstLogin: payload.userData.firstLogin,
-                username: payload.userData.username
+                id: parseInt(data.profileData.id),
+                fkUserId: payload.id,
+                fkAddressId: parseInt(data.profileData.fkAddressId),
+                weight: parseInt(data.profileData.weight),
+                height: parseInt(data.profileData.height),
+                medicalCondition: data.profileData.medicalCondition,
+                disabilities: data.profileData.disabilities,
+                firstname: payload.firstName,
+                lastname: payload.lastName,
+                phone: parseInt(payload.phoneNumber),
+                picture: payload.profilePicture,
+                email: payload.email,
             })
         }
 
-        await fetch(`https://localhost:7101/api/users/${id}`, patchOptions);
+        await fetch(`https://localhost:7101/${data.userData.userProfiles[0]}`, profilePatch);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const patchFitnessById = async (payload, data) => {
+    try {
+        const fitnessPatch = {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify({
+                id: parseInt(data.profileData.id),
+                fkUserId: data.profileData.fkUserId,
+                fkAddressId: parseInt(data.profileData.fkAddressId),
+                weight: parseInt(payload.weight),
+                height: parseInt(payload.height),
+                medicalCondition: payload.medicalCondition,
+                disabilities: payload.disabilities,
+                firstname: data.profileData.firstname,
+                lastname: data.profileData.lastname,
+                phone: parseInt(data.profileData.phone),
+                picture: data.profileData.picture,
+                email: data.profileData.email,
+            })
+        }
+
+        await fetch(`https://localhost:7101/${data.userData.userProfiles[0]}`, fitnessPatch);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const patchAddressById = async (payload, data) => {
+    try {
+        const addressPatch = {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify({
+                addressLine1: payload.address,
+                addressLine2: payload.addressSecond,
+                addressLine3: payload.addressThird,
+                city: payload.city,
+                country: payload.country,
+                postalCode: payload.postalCode,
+            })
+        }
+
+        await fetch(`https://localhost:7101/api/addresses/${data.profileData.fkAddressId}`, addressPatch);
+
 
     } catch (error) {
         console.log(error);

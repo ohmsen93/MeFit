@@ -1,25 +1,28 @@
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-let update;
-
 function UserFitnessCard(props) {
     
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
+    const [update,setUpdate] = useState();
+    
+    useEffect(() => {
+
+        console.log(props.userData);
+        if (props.updateRequired != undefined){
+            setUpdate(props.updateRequired)
+        }
+        else {
+            setUpdate(props.userData.profileData)
+        }
+        
+    },[props.updateRequired,props.userData.profileData])
     
     function handleOpenModal() {
         props.onModalOpen("UserFitnessModal");
     }
-    function handleUpdate() {
-        console.log("UserFitnessCard");
-        update = props.updateRequired;
-        handleAfterUpdate();
-    }
 
-    function handleAfterUpdate() {
-        props.afterUpdate();
-    }
     return (
         <Card>
             <Card.Header as="h5">Fitness Information</Card.Header>
@@ -29,7 +32,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Weight</Form.Label>
                         <Form.Control
                             readOnly
-                            defaultValue={update?.weight || props.userData.profileData.weight}
+                            defaultValue={update?.weight}
                             name="weight"                           
                             type="number"
                             placeholder="weight in kg">
@@ -39,7 +42,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Height</Form.Label>
                         <Form.Control
                             readOnly
-                            defaultValue={update?.height || props.userData.profileData.height}
+                            defaultValue={update?.height}
                             name="height"                       
                             type="number"
                             placeholder="height in cm">
@@ -49,7 +52,7 @@ function UserFitnessCard(props) {
                         <Form.Label>MedicalCondition</Form.Label>
                         <Form.Control as="textarea" rows={4}
                             readOnly
-                            defaultValue={update?.medicalCondition || props.userData.profileData.medicalCondition}
+                            defaultValue={update?.medicalCondition}
                             name="medicalCondition"              
                             type="text"
                             placeholder="">
@@ -59,7 +62,7 @@ function UserFitnessCard(props) {
                         <Form.Label>Disabilities</Form.Label>
                         <Form.Control as="textarea" rows={4}
                             readOnly
-                            defaultValue={update?.disabilities || props.userData.profileData.disabilities}
+                            defaultValue={update?.disabilities}
                             name="disabilities"
                             type="text"
                             placeholder="">
