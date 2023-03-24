@@ -84,8 +84,8 @@ const ExercisesOverview = props => {
             const e = {
                 name: event.target[0].value,
                 description: event.target[1].value,
-                sets: [],
-                musclegroups: []
+                setIds: [],
+                musclegroupIds: []
             }
             postExercise(e)
                 .then(r => {
