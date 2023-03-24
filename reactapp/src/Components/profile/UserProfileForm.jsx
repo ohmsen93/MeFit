@@ -6,25 +6,31 @@ import UserInformationCard from '../Cards/UserInformationCard'
 import UserAddressCard from '../Cards/UserAddressCard';
 import UserFitnessCard from '../Cards/UserFitnessCard';
 import keycloak from '../../keycloak';
-import { fetchUserById, postUser } from '../API/UserApi';
+import { fetchUserById, patchFitnessById, patchPersonalById, postUser } from '../API/UserApi';
 
 
-async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin,setCardRequiredUpdate) {
+async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin, userData) {
 
     setLoading(true);
-    
-    let data = await fetchUserById(keycloak.tokenParsed.user_Id);
 
-    if (data.status == "404") {
-        const tempData = {
-            firstName: keycloak.tokenParsed?.firstName || "",
-            lastName: keycloak.tokenParsed?.lastName || "",
-            email: keycloak.tokenParsed?.email || "",
+    let data
+
+    if (userData == null || userData == undefined) {
+        data = await fetchUserById(keycloak.tokenParsed.user_Id);
+
+        if (data.status == "404") {
+            const tempData = {
+                firstName: keycloak.tokenParsed?.firstName || "",
+                lastName: keycloak.tokenParsed?.lastName || "",
+                email: keycloak.tokenParsed?.email || "",
+            }
+            data = tempData;
         }
-        data = tempData;
     }
+    else { data = userData }
 
-    if (data != null || data != undefined){
+
+    if (data != null || data != undefined) {
         setUserData(data);
         setFirstLogin(data?.userData?.firstLogin);
         setLoading(false);
@@ -52,7 +58,8 @@ function UserProfileForm() {
                 setLoading,
                 setUserData,
                 setFirstLogin,
-                );
+                userData
+            );
         }
         if (userData == null || userData == undefined) {
             GetUserData();
@@ -136,12 +143,15 @@ function UserProfileForm() {
     }
 
     function handleSaveModal(data) {
-        console.log(data);
-        setCardRequiredUpdate(data);
         
+        setCardRequiredUpdate(data);
+
         if (isfirstlogin) {
             handleNewUserPayload(data.key, data);
             handleNewUser(userPayLoad);
+        }
+        else {
+            handlePatchPayload(data, userData);
         }
     }
 
@@ -152,8 +162,46 @@ function UserProfileForm() {
         setUserData(data);
     }
 
-    function handlePatchUser(id, payload) {
-        console.log(id, payload);
+    async function handlePatchPayload(payload, data) {
+        switch (payload.card) {
+            case "UserProfileCard":
+                await patchPersonalById(payload, data);
+                await handleDataChange(payload, data);
+                break;
+            case "UserAddressCard":
+
+                break;
+            case "UserFitnessCard":
+                await patchFitnessById(payload,data);
+                await handleDataChange(payload,data);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    async function handleDataChange(payload, data) {
+        switch (payload.card) {
+            case "UserProfileCard":
+                data.profileData.email = payload.email;
+                data.profileData.firstname = payload.firstName;
+                data.profileData.lastname = payload.lastName;
+                data.profileData.phone = payload.phoneNumber;
+                data.profileData.picture = payload.profilePicture;      
+                break;
+            case "UserAddressCard":
+
+                break;
+            case "UserFitnessCard":
+                data.profileData.weight = payload.weight;
+                data.profileData.height = payload.height;
+                data.profileData.medicalCondition = payload.medicalCondition;
+                data.profileData.disabilities = payload.disabilities;
+                break;
+            default:
+                break;
+        }
     }
 
     function handleCardUpdate(data, cardToUpdate) {
@@ -165,10 +213,6 @@ function UserProfileForm() {
             }
             return null;
         }
-    }
-
-    function handleAfterCardUpdate() {
-        if (cardUpdateRequired != null || cardUpdateRequired != undefined) { setCardRequiredUpdate(null); }
     }
 
     function handleNextModal(event, data, key) {
@@ -218,16 +262,16 @@ function UserProfileForm() {
                         ?
                         <>
                             {currentmodal}
-                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")} afterUpdate={handleAfterCardUpdate} />
-                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")} afterUpdate={handleAfterCardUpdate} />
-                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")} afterUpdate={handleAfterCardUpdate} />
+                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")}  />
+                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")}  />
+                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")}  />
                         </>
                         :
                         <>
                             {currentmodal}
-                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")} afterUpdate={handleAfterCardUpdate} />
-                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")} afterUpdate={handleAfterCardUpdate} />
-                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")} afterUpdate={handleAfterCardUpdate} />
+                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")}  />
+                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")}  />
+                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")}  />
                         </>
                     }
                 </>
