@@ -190,9 +190,9 @@ function UserProfileForm() {
                 data.profileData.picture = payload.profilePicture;
                 break;
             case "UserAddressCard":
-                data.adressData.addressLine1 = payload.address;
-                data.adressData.addressLine2 = payload.addressSecond;
-                data.adressData.addressLine3 = payload.addressThird;
+                data.adressData.addressLine1 = payload.addressLine1;
+                data.adressData.addressLine2 = payload.addressLine2;
+                data.adressData.addressLine3 = payload.addressLine3;
                 data.adressData.city = payload.city;
                 data.adressData.country = payload.country;
                 data.adressData.postalCode = payload.postalCode;

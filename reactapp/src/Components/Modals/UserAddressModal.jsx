@@ -14,9 +14,9 @@ function UserAddressModal(props) {
             modalData = {
                 key: UserAddressModal.name,
                 card: "UserAddressCard",
-                address: "",
-                addressSecond: "",
-                addressThird: "",
+                addressLine1: "",
+                addressLine2: "",
+                addressLine3: "",
                 postalCode: "",
                 city: "",
                 country: ""
@@ -28,9 +28,9 @@ function UserAddressModal(props) {
             modalData = {
                 key: UserAddressModal.name,
                 card: "UserAddressCard",
-                address: props.onUserData.adressData.addressLine1 || "",
-                addressSecond: props.onUserData.adressData.addressLine2 || "",
-                addressThird: props.onUserData.adressData.addressLine3 || "",
+                addressLine1: props.onUserData.adressData.addressLine1 || "",
+                addressLine2: props.onUserData.adressData.addressLine2 || "",
+                addressLine3: props.onUserData.adressData.addressLine3 || "",
                 postalCode: props.onUserData.adressData.postalCode || "",
                 city: props.onUserData.adressData.city || "",
                 country: props.onUserData.adressData.country || ""
@@ -73,10 +73,10 @@ function UserAddressModal(props) {
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Address</Form.Label>
                         <Form.Control
-                            name="address"
+                            name="addressLine1"
                             required
                             type="text"
-                            defaultValue={modalData?.address || ""}
+                            defaultValue={modalData?.addressLine1 || ""}
                             onChange={handleChange}
                             placeholder="required">
                         </Form.Control>
@@ -84,9 +84,9 @@ function UserAddressModal(props) {
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Address 1</Form.Label>
                         <Form.Control
-                            name="addressSecond"
+                            name="addressLine2"
                             type="text"
-                            defaultValue={modalData?.addressSecond || ""}
+                            defaultValue={modalData?.addressLine2 || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
@@ -94,9 +94,9 @@ function UserAddressModal(props) {
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Address 2</Form.Label>
                         <Form.Control
-                            name="addressThird"
+                            name="addressLine3"
                             type="text"
-                            defaultValue={modalData?.addressThird || ""}
+                            defaultValue={modalData?.addressLine3 || ""}
                             onChange={handleChange}
                             placeholder="">
                         </Form.Control>
