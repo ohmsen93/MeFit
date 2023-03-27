@@ -23,7 +23,7 @@ function UserAddressCard(props) {
         props.onModalOpen("UserAddressModal");
     }
 
-
+    console.log(update);
     return (
         <Card>
             <Card.Header as="h5">Address Information</Card.Header>
@@ -33,7 +33,7 @@ function UserAddressCard(props) {
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                             readOnly
-                            name="address"
+                            name="addressLine1"
                             defaultValue={update?.addressLine1}
                             type="text"
                             placeholder="required">
@@ -43,7 +43,7 @@ function UserAddressCard(props) {
                         <Form.Label>Address 1</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressSecond"
+                            name="addressLine2"
                             defaultValue={update?.addressLine2}
                             type="text"
                             placeholder="">
@@ -53,7 +53,7 @@ function UserAddressCard(props) {
                         <Form.Label>Address 2</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressThird"
+                            name="addressLine3"
                             defaultValue={update?.addressLine3}
                             type="text"
                             placeholder="">
