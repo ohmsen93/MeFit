@@ -13,49 +13,32 @@ const Dashboard = () => {
   const [goals, setGoals] = useState(null)
 
   useEffect(() => {
-    //console.log(keycloak.token)
-    // setGoals("loading")
     const getGoals = async () => {
         const gs = await fetchGoals()
           .then(x => x.filter(y => getStatus(y.fkStatusId) === "Pending"))
-        console.log(gs)
+        // console.log(gs)
         setGoals(gs.reverse())
     }
     getGoals()
   }, [])
 
   const goalSelected = (event, goal) => {
-    console.log(goal)
+    // console.log(goal)
     if (event.target.checked) setState({...state, selectedGoal: goal})
     else setState({...state, selectedGoal: null})
   }
 
   const dateDiff = (first, second) => {
-    return Math.ceil((second - first) / (1000 * 60 * 60 * 24));
+    return Math.ceil((second - first) / (1000 * 60 * 60 * 24)) + 1;
   }
 
   return (
     <div className="d-flex flex-column align-items-center p-5">
       <div className="d-flex wpx-960 hpx-480">
 
-        {/* GoalList Component */}
-        {/* <DashboardContext.Provider value={goalSelected}> */}
           <div className="d-flex flex-column align-items-center flex-fill border wp-50 hp-100">
             
             <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
-            {/* <p>Goals</p>
-            <DashboardContext.Consumer>
-              {goalSelected => (
-                <div className="d-flex flex-column flex-fill overflow-y-scroll wp-100">
-                  {state.goals.map(goal => 
-                    <div key={goal.id} className="d-flex flex-column">
-                      <input onChange={() => goalSelected(goal)} type="radio" name="goal-radio" id={"goal-radio-" + goal.id} className="btn-check"/>
-                      <label htmlFor={"goal-radio-" + goal.id} className="btn btn-outline-secondary">{goal.name}</label>
-                    </div>
-                  )}
-                </div>
-              )}
-            </DashboardContext.Consumer> */}
 
             <div>
               <Link to="/goals">
@@ -66,30 +49,23 @@ const Dashboard = () => {
               </Link>
             </div>
           </div>
-        {/* </DashboardContext.Provider> */}
 
-        {/* GoalProgress Component */}
-        {/* <DashboardContext.Provider value={state.selectedGoal}> */}
           <div className="d-flex flex-column align-items-center flex-fill border wp-50 p-2">
-            {/* <DashboardContext.Consumer> */}
-              {/* {goal => (
-                <> */}
                 <h3>Progress</h3>
                 {state.selectedGoal !== null ?
                   <>
                   <p>Goal {state.selectedGoal.id}</p>
-                  <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
+                  {dateDiff(new Date(), new Date(state.selectedGoal.endDate)) > 0 ?
+                    <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
+                  :
+                    <p>You have no more time to complete this goal.</p>
+                  }
                   <p>You have completed {state.selectedGoal.workouts.filter(w => w.workoutStatus === "Completed").length} out of {state.selectedGoal.workouts.length} workouts!</p>
                   <Link to="/goals">View more details</Link>
                   </>
                 : "No goal selected.."}
-                {/* </>
-              )} */}
-            {/* </DashboardContext.Consumer> */}
           </div>
-        {/* </DashboardContext.Provider> */}
 
-        {/* GoalCalendar Component */}
         <div className="d-flex flex-column align-items-center border">
           <Calendar className={["wpx-240"]}/>
         </div>
