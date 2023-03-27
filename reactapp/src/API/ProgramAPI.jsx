@@ -2,7 +2,7 @@ import keycloak from "../keycloak"
 
 // FETCH
 export const fetchPrograms = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
+    // console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/trainingprograms", {
             headers: {
@@ -23,7 +23,7 @@ export const fetchPrograms = async () => {
 
 // POST
 export const postProgram = async (program) => {
-    console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
+    // console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/trainingprograms", {
             method: 'POST',
@@ -46,7 +46,7 @@ export const postProgram = async (program) => {
 
 // PATCH
 export const patchProgram = async (programId, newProgram) => {
-    console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
+    // console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/trainingprograms/" + programId, {
             method: 'PATCH',
@@ -67,7 +67,7 @@ export const patchProgram = async (programId, newProgram) => {
     }
 }
 export const patchProgramWorkouts = async (programId, newWorkouts) => {
-    console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
+    // console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/trainingprograms/" + programId + "/workouts", {
             method: 'PATCH',
@@ -88,7 +88,7 @@ export const patchProgramWorkouts = async (programId, newWorkouts) => {
     }
 }
 export const patchProgramCategories = async (programId, newCategories) => {
-    console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
+    // console.log(process.env.REACT_APP_API_URL + "/trainingprograms")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/trainingprograms/" + programId + "/categories", {
             method: 'PATCH',
