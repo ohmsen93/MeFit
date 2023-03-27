@@ -165,7 +165,7 @@ export const patchAddressById = async (payload, data) => {
             })
         }
 
-        await fetch(process.env.REACT_APP_API_URL + `/${data.profileData.fkAddressId}`, addressPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/addresses/${data.profileData.fkAddressId}`, addressPatch);
 
 
     } catch (error) {
