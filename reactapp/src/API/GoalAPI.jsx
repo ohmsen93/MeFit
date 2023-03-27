@@ -2,7 +2,7 @@ import keycloak from "../keycloak"
 
 // FETCH
 export const fetchGoals = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/goals")
+    // console.log(process.env.REACT_APP_API_URL + "/goals")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/goals", {
             headers: {
@@ -21,7 +21,7 @@ export const fetchGoals = async () => {
     }
 }
 export const fetchGoalWorkouts = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
+    // console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/goalworkouts", {
             headers: {
@@ -42,7 +42,7 @@ export const fetchGoalWorkouts = async () => {
 
 // POST
 export const postGoal = async (goal) => {
-    console.log(process.env.REACT_APP_API_URL + "/goals")
+    // console.log(process.env.REACT_APP_API_URL + "/goals")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/goals", {
             method: 'POST',
@@ -65,7 +65,7 @@ export const postGoal = async (goal) => {
 
 // PATCH
 export const patchGoalCompleted = async (goalId, newGoal) => {
-    console.log(process.env.REACT_APP_API_URL + "/goals")
+    // console.log(process.env.REACT_APP_API_URL + "/goals")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/goals/" + goalId, {
             method: 'PATCH',
@@ -86,7 +86,7 @@ export const patchGoalCompleted = async (goalId, newGoal) => {
     }
 }
 export const patchGoalWorkout = async (goalWorkoutId, newGoalWorkout) => {
-    console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
+    // console.log(process.env.REACT_APP_API_URL + "/goalworkouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/goalworkouts/" + goalWorkoutId, {
             method: 'PATCH',
