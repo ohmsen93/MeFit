@@ -157,9 +157,9 @@ export const patchAddressById = async (payload, data) => {
             },
             body: JSON.stringify({
                 id: parseInt(data.profileData.fkAddressId),
-                addressLine1: payload.address,
-                addressLine2: payload.addressSecond,
-                addressLine3: payload.addressThird,
+                addressLine1: payload.addressLine1,
+                addressLine2: payload.addressLine2,
+                addressLine3: payload.addressLine3,
                 city: payload.city,
                 country: payload.country,
                 postalCode: parseInt(payload.postalCode),
