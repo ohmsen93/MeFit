@@ -71,6 +71,7 @@ function UserProfileForm() {
     if (!loading) {
         if (isfirstlogin && currentmodal == null) {
             handleOpenModal("UserInformationModal");
+            console.log("test");
         }
     }
 
