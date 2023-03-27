@@ -184,9 +184,9 @@ const postAddress = async (payload) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                addressLine1: payload.adressData.address,
-                addressLine2: payload.adressData.addressSecond,
-                addressLine3: payload.adressData.addressThird,
+                addressLine1: payload.adressData.addressLine1,
+                addressLine2: payload.adressData.addressLine2,
+                addressLine3: payload.adressData.addressLine3,
                 city: payload.adressData.city,
                 country: payload.adressData.country,
                 postalCode: payload.adressData.postalCode,
@@ -264,6 +264,7 @@ export const postUser = async (payload, firstlogin) => {
             })
         }
 
+       
         const user = await fetch(process.env.REACT_APP_API_URL +'/users', userOptions)
             .then(response => response.json());
 

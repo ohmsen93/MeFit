@@ -500,9 +500,9 @@ namespace webapi.Migrations
                 columns: new[] { "Id", "FirstLogin", "Username" },
                 values: new object[,]
                 {
-                    { "2c191644-1bac-4e9a-bc8e-1c7054118615", true, "contributor@gmail.com" },
-                    { "4d24f01a-5261-40f6-a7e0-f051e8e6f599", true, "regularuser@gmail.com" },
-                    { "78acbd80-93b7-4821-9fb0-a5ee776318da", true, "administrator@gmail.com" }
+                    { "2c191644-1bac-4e9a-bc8e-1c7054118615", false, "contributor@gmail.com" },
+                    { "4d24f01a-5261-40f6-a7e0-f051e8e6f599", false, "regularuser@gmail.com" },
+                    { "78acbd80-93b7-4821-9fb0-a5ee776318da", false, "administrator@gmail.com" }
                 });
 
             migrationBuilder.InsertData(

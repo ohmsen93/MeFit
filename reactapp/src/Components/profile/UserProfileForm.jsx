@@ -222,6 +222,7 @@ function UserProfileForm() {
     function handleNextModal(event, data, key) {
         setCardRequiredUpdate(data);
         handleNewUserPayload(key, data);
+        console.log(key);
         switch (key) {
             case "UserInformationModal":
                 setNewModal(

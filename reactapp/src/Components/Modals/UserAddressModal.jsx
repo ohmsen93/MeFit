@@ -14,12 +14,12 @@ function UserAddressModal(props) {
             modalData = {
                 key: UserAddressModal.name,
                 card: "UserAddressCard",
-                addressLine1: "",
-                addressLine2: "",
-                addressLine3: "",
-                postalCode: "",
-                city: "",
-                country: ""
+                addressLine1: props.onUserData.adressData.addressLine1 || "",
+                addressLine2: props.onUserData.adressData.addressLine2 || "",
+                addressLine3: props.onUserData.adressData.addressLine3 || "",
+                postalCode: props.onUserData.adressData.postalCode || "",
+                city: props.onUserData.adressData.city || "",
+                country: props.onUserData.adressData.country || ""
             }
             return modalData;
         }

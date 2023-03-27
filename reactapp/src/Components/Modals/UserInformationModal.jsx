@@ -17,8 +17,8 @@ function UserInformationModal(props) {
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
                 email: keycloak.tokenParsed?.email || "",
-                phoneNumber: "",
-                profilePicture: ""
+                phoneNumber: props.onUserData.profileData.phone || "",
+                profilePicture: props.onUserData.profileData.picture || ""
             }
             return modalData;
         }
@@ -58,7 +58,6 @@ function UserInformationModal(props) {
 
     function handleNext(event) {
         props.onHandleNext(event, modalData, modalData.key);
-        handleClose();
     }
 
     function handleSave() {
