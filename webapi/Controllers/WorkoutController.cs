@@ -34,30 +34,22 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Workouts
+        #region basic CRUD
+        /// <summary>
+        /// Gets all workouts
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles ="Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkouts()
         {
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
-
-        //// GET: api/Workouts/NoCustom
-        //[HttpGet("NoCustom")]
-        //public async Task<ActionResult<List<Workout>>> GetAllNoCustom()
-        //{
-        //    var workouts = _mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAllNoCustom());
-
-        //    if (workouts == null || workouts.Count == 0)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(workouts);
-        //}
-
-
-        // GET: api/Workouts/5
+        /// <summary>
+        /// Gets a workout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Workout>> GetWorkout(int id)
         {
@@ -73,9 +65,13 @@ namespace webapi.Controllers
                 });
             }
         }
-
+        /// <summary>
+        /// Gets workouts by trainingprogram id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Workouts/ByTrainingProgramId/5
-        [HttpGet("ByTrainingProgramId/{id}")]
+        [HttpGet("trainingprograms/{id}")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkoutsByTrainingprogramId(int id)
         {
             try
@@ -92,8 +88,12 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Workouts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a workout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="workoutUpdateDto"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchWorkout(int id, WorkoutUpdateDto workoutUpdateDto)
         {
@@ -101,9 +101,7 @@ namespace webapi.Controllers
             if (id != workoutUpdateDto.Id)
             {
                 return BadRequest();
-            }
-
-     
+            }     
 
             try
             {
@@ -122,8 +120,11 @@ namespace webapi.Controllers
 
         }
 
-        // POST: api/Workouts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new workout 
+        /// </summary>
+        /// <param name="workoutCreateDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Workout>> PostWorkout(WorkoutCreateDto workoutCreateDto)
         {
@@ -138,7 +139,11 @@ namespace webapi.Controllers
         }
 
 
-        //// DELETE: api/Workouts/5
+        /// <summary>
+        /// Delets a workout by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
@@ -156,5 +161,30 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Updates workouts exercises by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="workoutUpdateExercisesDto"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/exercises")]
+        public async Task<IActionResult> PatchWorkoutExercises(int id, WorkoutUpdateExercisesDto workoutUpdateExercisesDto)
+        {           
+            try
+            {                
+                await _service.UpdateWorkoutExercises(id, workoutUpdateExercisesDto.Exercises);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+        #endregion
     }
 }

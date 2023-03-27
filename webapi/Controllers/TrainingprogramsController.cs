@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
+using webapi.Models.DTO.GoalDTO;
 using webapi.Models.DTO.TrainingprogramDTO;
 using webapi.Services.TrainingprogramServices;
 
@@ -31,14 +32,22 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Trainingprograms
+        #region basic CRUD
+        /// <summary>
+        /// Gets all trainingprograms
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Trainingprogram>>> GetTrainingprograms()
         {
             return Ok(_mapper.Map<ICollection<TrainingprogramReadDto>>(await _service.GetAll()));
         }
 
-        // GET: api/Trainingprograms/5
+        /// <summary>
+        /// Gets a trainingprogram by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Trainingprogram>> GetTrainingprogram(int id)
         {
@@ -55,8 +64,12 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Trainingprograms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a trainingprogram by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trainingprogramUpdateDto"></param>
+        /// <returns></returns>        
         [HttpPatch("{id}")]
         public async Task<IActionResult> PutTrainingprogram(int id, TrainingprogramUpdateDto trainingprogramUpdateDto)
         {
@@ -82,29 +95,82 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/Trainingprograms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new trainingprogram
+        /// </summary>
+        /// <param name="trainingprogramCreateDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Trainingprogram>> PostTrainingprogram(TrainingprogramCreateDto trainingprogramCreateDto)
         {
             var trainingprogram = _mapper.Map<Trainingprogram>(trainingprogramCreateDto);
-            await _service.Create(trainingprogram);
-            var trainingprogramUpdateWorkoutsDto = new TrainingprogramUpdateWorkoutsDto { WorkoutIds = trainingprogramCreateDto.WorkoutIds };
-            var trainingprogramUpdateCategoriesDto = new TrainingprogramUpdateCategoriesDto { CategoryIds = trainingprogramCreateDto.CategoryIds };
-            await _service.UpdateTrainingprogramWorkouts(trainingprogram.Id, trainingprogramUpdateWorkoutsDto.WorkoutIds);
-            await _service.UpdateTrainingprogramCategories(trainingprogram.Id, trainingprogramUpdateCategoriesDto.CategoryIds);
 
-            return CreatedAtAction(nameof(GetTrainingprogram), new { id = trainingprogram.Id }, trainingprogram);
+            await _service.Create(trainingprogram,trainingprogramCreateDto.WorkoutIds,trainingprogramCreateDto.CategoryIds);
+            var trainingprogramReadDto = _mapper.Map<TrainingprogramReadDto>(trainingprogram);
+            return CreatedAtAction(nameof(GetTrainingprogram), new { id = trainingprogram.Id }, trainingprogramReadDto);
         }
 
-
-        //// DELETE: api/Exercises/5
+        /// <summary>
+        /// Delets a trainingprogram by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Exercises/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExercise(int id)
         {
             try
             {
                 await _service.DeleteById(id);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+        #endregion
+
+        /// <summary>
+        /// Updates trainingporgram workouts by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trainingprogramUpdateWorkoutsDto"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/workouts")]
+        public async Task<IActionResult> PatchTrainingprogramWorkouts(int id, TrainingprogramUpdateWorkoutsDto trainingprogramUpdateWorkoutsDto)
+        {
+            try
+            {          
+                await _service.UpdateTrainingprogramWorkouts(id, trainingprogramUpdateWorkoutsDto.Workouts);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Updates trainingprogram categories by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trainingprogramUpdateCategoriesDto"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/categories")]
+        public async Task<IActionResult> PatchTrainingprogramCategories(int id, TrainingprogramUpdateCategoriesDto trainingprogramUpdateCategoriesDto)
+        {
+            try
+            {
+                await _service.UpdateTrainingprogramCategories(id, trainingprogramUpdateCategoriesDto.Categories);
             }
             catch (EntityNotFoundException ex)
             {

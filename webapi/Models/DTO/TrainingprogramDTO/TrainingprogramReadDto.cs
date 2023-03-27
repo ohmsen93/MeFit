@@ -1,4 +1,5 @@
 ﻿using webapi.Models.DTO.SetDTO;
+using webapi.Models.Entities;
 
 namespace webapi.Models.DTO.TrainingprogramDTO
 {
@@ -10,9 +11,9 @@ namespace webapi.Models.DTO.TrainingprogramDTO
 
         public List<string> Goals { get; set; }
 
-        public List<string> Workouts { get; set; }
+        public List<int> Workouts { get; set; }
 
-        public List<string> Categories { get; set; }
+        public List<CategoryRc> Categories { get; set; }
 
 
     }

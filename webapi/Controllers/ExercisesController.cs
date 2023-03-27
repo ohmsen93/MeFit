@@ -11,6 +11,8 @@ using webapi.DatabaseContext;
 using webapi.Exceptions;
 using webapi.Models;
 using webapi.Models.DTO.ExerciseDTO;
+using webapi.Models.DTO.TrainingprogramDTO;
+using webapi.Profiles;
 using webapi.Services.ExerciseServices;
 
 namespace webapi.Controllers
@@ -31,14 +33,22 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Exercises
+        #region basic CRUD
+        /// <summary>
+        /// Gets all exercises
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
         {
             return Ok(_mapper.Map<ICollection<ExerciseReadDto>>(await _service.GetAll()));
         }
 
-        // GET: api/Exercises/5
+        /// <summary>
+        /// Gets an exercise by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> GetExercise(int id)
         {
@@ -55,8 +65,12 @@ namespace webapi.Controllers
             }
         }
 
-        // PUT: api/Exercises/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new exercise 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="exerciseUpdateDto"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         public async Task<IActionResult> PutExercise(int id, ExerciseUpdateDto exerciseUpdateDto)
         {
@@ -82,23 +96,26 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/Exercises
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an exercise ny id
+        /// </summary>
+        /// <param name="exerciseCreateDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Exercise>> PostExercise(ExerciseCreateDto exerciseCreateDto)
         {
             var exercise = _mapper.Map<Exercise>(exerciseCreateDto);
-            await _service.Create(exercise);
-            var exerciseUpdateSetsDto = new ExerciseUpdateSetsDto { SetIds = exerciseCreateDto.SetIds };
-            var exerciseUpdateMusclegroupsDto = new ExerciseUpdateMusclegroupsDto { MusclegroupIds = exerciseCreateDto.MusclegroupIds };
-            await _service.UpdateExerciseSets(exercise.Id, exerciseUpdateSetsDto.SetIds);
-            await _service.UpdateExerciseMusclegroups(exercise.Id, exerciseUpdateMusclegroupsDto.MusclegroupIds);
-
-            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exercise);
+            await _service.Create(exercise, exerciseCreateDto.SetIds,exerciseCreateDto.MusclegroupIds);
+            var exerciseReadDto = _mapper.Map<ExerciseReadDto>(exercise);
+            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exerciseReadDto);
         }
 
 
-        //// DELETE: api/Exercises/5
+        /// <summary>
+        /// Delets an exercise ny id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExercise(int id)
         {
@@ -116,5 +133,54 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+
+
+        /// <summary>
+        /// Updates exercise musclegroup by exercise id
+        /// </summary>
+        /// <param name="musclegroups"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/musclegroups")]
+        public async Task<ActionResult<Exercise>> PatchExerciseMusclegroups(int id, ExerciseUpdateMusclegroupsDto exerciseUpdateMusclegroupsDto)
+        {
+            try
+            {
+                await _service.UpdateExerciseMusclegroups(id, exerciseUpdateMusclegroupsDto.Musclegroups);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Updates exercise sets by exercise id
+        /// </summary>
+        /// <param name="sets"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/sets")]
+        public async Task<ActionResult<Exercise>> PatchExerciseSets(int id, ExerciseUpdateSetsDto exerciseUpdateSetsDto)
+        {
+            try
+            {
+                await _service.UpdateExerciseSets(id, exerciseUpdateSetsDto.Sets);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+
+            return NoContent();
+        }
+        #endregion
+
     }
 }

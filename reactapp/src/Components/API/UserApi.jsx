@@ -10,7 +10,8 @@ const fetchUserProfileById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        const request = await fetch(`https://localhost:7101/${id}`, options)
+        
+        const request = await fetch(process.env.REACT_APP_API_URL +`/userProfiles/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -31,7 +32,7 @@ const fetchUserAddressById = async (id) => {
                 'Authorization': 'Bearer ' + keycloak.token
             }
         }
-        const request = await fetch(`https://localhost:7101/api/addresses/${id}`, options)
+        const request = await fetch(process.env.REACT_APP_API_URL +`/addresses/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -53,7 +54,7 @@ export const fetchUserById = async (id) => {
             }
         }
 
-        const user = await fetch(`https://localhost:7101/api/users/${id}`, options)
+        const user = await fetch(process.env.REACT_APP_API_URL +`/users/${id}`, options)
             .then(response => response.json());
 
         if (user.status == "404") {
@@ -79,9 +80,9 @@ export const fetchUserById = async (id) => {
     }
 }
 
-export const patchUserById = async (id, payload) => {
+export const patchPersonalById = async (payload, data) => {
     try {
-        const patchOptions = {
+        const profilePatch = {
             method: 'PATCH',
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -89,13 +90,83 @@ export const patchUserById = async (id, payload) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                id: payload.userData.id,
-                firstLogin: payload.userData.firstLogin,
-                username: payload.userData.username
+                id: parseInt(data.profileData.id),
+                fkUserId: payload.id,
+                fkAddressId: parseInt(data.profileData.fkAddressId),
+                weight: parseInt(data.profileData.weight),
+                height: parseInt(data.profileData.height),
+                medicalCondition: data.profileData.medicalCondition,
+                disabilities: data.profileData.disabilities,
+                firstname: payload.firstName,
+                lastname: payload.lastName,
+                phone: parseInt(payload.phoneNumber),
+                picture: payload.profilePicture,
+                email: payload.email,
             })
         }
 
-        await fetch(`https://localhost:7101/api/users/${id}`, patchOptions);
+        await fetch(process.env.REACT_APP_API_URL +`/${data.userData.userProfiles[0]}`, profilePatch);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const patchFitnessById = async (payload, data) => {
+    try {
+        const fitnessPatch = {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify({
+                id: parseInt(data.profileData.id),
+                fkUserId: data.profileData.fkUserId,
+                fkAddressId: parseInt(data.profileData.fkAddressId),
+                weight: parseInt(payload.weight),
+                height: parseInt(payload.height),
+                medicalCondition: payload.medicalCondition,
+                disabilities: payload.disabilities,
+                firstname: data.profileData.firstname,
+                lastname: data.profileData.lastname,
+                phone: parseInt(data.profileData.phone),
+                picture: data.profileData.picture,
+                email: data.profileData.email,
+            })
+        }
+
+        await fetch(process.env.REACT_APP_API_URL + `/${data.userData.userProfiles[0]}`, fitnessPatch);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const patchAddressById = async (payload, data) => {
+    try {
+        const addressPatch = {
+            method: 'PATCH',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            },
+            body: JSON.stringify({
+                addressLine1: payload.address,
+                addressLine2: payload.addressSecond,
+                addressLine3: payload.addressThird,
+                city: payload.city,
+                country: payload.country,
+                postalCode: payload.postalCode,
+            })
+        }
+
+        await fetch(process.env.REACT_APP_API_URL + `/${data.profileData.fkAddressId}`, addressPatch);
+
 
     } catch (error) {
         console.log(error);
@@ -121,7 +192,7 @@ const postAddress = async (payload) => {
             })
         }
 
-        const address = await fetch('https://localhost:7101/api/addresses', postOptions)
+        const address = await fetch(process.env.REACT_APP_API_URL + '/addresses', postOptions)
             .then(response => response.json());
 
         const data = {
@@ -161,7 +232,7 @@ const postProfile = async (payload, address, user) => {
             })
         }
 
-        const profile = await fetch('https://localhost:7101/api/userprofiles', postOptions)
+        const profile = await fetch(process.env.REACT_APP_API_URL + '/userprofiles', postOptions)
             .then(response => response.json());
 
         const data = {
@@ -192,7 +263,7 @@ export const postUser = async (payload, firstlogin) => {
             })
         }
 
-        const user = await fetch('https://localhost:7101/api/users', userOptions)
+        const user = await fetch(process.env.REACT_APP_API_URL +'/users', userOptions)
             .then(response => response.json());
 
 

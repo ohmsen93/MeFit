@@ -35,6 +35,12 @@ namespace webapi.Controllers
             _mapper = mapper;
         }
 
+        #region basic CRUD
+        /// <summary>
+        /// Gets all addresses
+        /// </summary>
+        /// <param name="addressReadDto"></param>
+        /// <returns></returns>
         // GET: api/Addresses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
@@ -45,6 +51,12 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<ICollection<AddressReadDto>>(await _service.GetAll()));
         }
 
+        /// <summary>
+        /// Gets an address by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="addressReadDto"></param>
+        /// <returns></returns>
         // GET: api/Addresses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Address>> GetAddress(int id)
@@ -62,6 +74,12 @@ namespace webapi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an address by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="addressUpdateDto"></param>
+        /// <returns></returns>
         // PATCH: api/Addresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
@@ -89,6 +107,11 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new address
+        /// </summary>
+        /// <param name="addressCreateDto"></param>
+        /// <returns></returns>
         // POST: api/Addresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -99,7 +122,12 @@ namespace webapi.Controllers
             return CreatedAtAction(nameof(GetAddress), new { id = address.Id }, address);
         }
 
-        //// DELETE: api/Addresses/5
+        /// <summary>
+        /// Delets a address by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/Addresses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
@@ -117,5 +145,6 @@ namespace webapi.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }
