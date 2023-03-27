@@ -9,7 +9,6 @@ function UserFitnessCard(props) {
     
     useEffect(() => {
 
-        console.log(props.userData);
         if (props.updateRequired != undefined){
             setUpdate(props.updateRequired)
         }

@@ -14,10 +14,10 @@ function UserFitnessModal(props) {
             modalData = {
                 key: UserFitnessModal.name,
                 card: "UserFitnessCard",
-                weight: 0.0,
-                height: 0.0,
-                medicalCondition: "",
-                disabilities: ""
+                weight: props.onUserData.profileData.weight || 0.0,
+                height: props.onUserData.profileData.height || 0.0,
+                medicalCondition: props.onUserData.profileData.medicalCondition || "",
+                disabilities: props.onUserData.profileData.disabilities || ""
             }
             return modalData;
         }

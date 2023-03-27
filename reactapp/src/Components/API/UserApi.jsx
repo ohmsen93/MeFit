@@ -11,7 +11,7 @@ const fetchUserProfileById = async (id) => {
             }
         }
         
-        const request = await fetch(process.env.REACT_APP_API_URL +`/userProfiles/${id}`, options)
+        const request = await fetch(process.env.REACT_APP_API_URL +`/userprofiles/${id}`, options)
             .then(response => response.json())
             .then(results => {
                 return results
@@ -61,8 +61,8 @@ export const fetchUserById = async (id) => {
             return user.status;
         }
         else {
-
-            const profile = await fetchUserProfileById(user.userProfiles[0]);
+            
+            const profile = await fetchUserProfileById(user.userProfiles[0].charAt(user.userProfiles[0].length -1));
             const address = await fetchUserAddressById(profile.fkAddressId);
 
             const data = {
@@ -105,7 +105,7 @@ export const patchPersonalById = async (payload, data) => {
             })
         }
 
-        await fetch(process.env.REACT_APP_API_URL +`/${data.userData.userProfiles[0]}`, profilePatch);
+        await fetch(process.env.REACT_APP_API_URL +`/userprofiles/${data.userData.userProfiles[0].charAt(data.userData.userProfiles[0].length -1)}`, profilePatch);
 
 
     } catch (error) {
@@ -138,7 +138,7 @@ export const patchFitnessById = async (payload, data) => {
             })
         }
 
-        await fetch(process.env.REACT_APP_API_URL + `/${data.userData.userProfiles[0]}`, fitnessPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/userprofiles/${data.userData.userProfiles[0].charAt(data.userData.userProfiles[0].length -1)}`, fitnessPatch);
 
 
     } catch (error) {
@@ -156,16 +156,17 @@ export const patchAddressById = async (payload, data) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                addressLine1: payload.address,
-                addressLine2: payload.addressSecond,
-                addressLine3: payload.addressThird,
+                id: parseInt(data.profileData.fkAddressId),
+                addressLine1: payload.addressLine1,
+                addressLine2: payload.addressLine2,
+                addressLine3: payload.addressLine3,
                 city: payload.city,
                 country: payload.country,
-                postalCode: payload.postalCode,
+                postalCode: parseInt(payload.postalCode),
             })
         }
-
-        await fetch(process.env.REACT_APP_API_URL + `/${data.profileData.fkAddressId}`, addressPatch);
+        console.log(payload);
+        await fetch(process.env.REACT_APP_API_URL + `/addresses/${data.profileData.fkAddressId}`, addressPatch);
 
 
     } catch (error) {
@@ -183,9 +184,9 @@ const postAddress = async (payload) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                addressLine1: payload.adressData.address,
-                addressLine2: payload.adressData.addressSecond,
-                addressLine3: payload.adressData.addressThird,
+                addressLine1: payload.adressData.addressLine1,
+                addressLine2: payload.adressData.addressLine2,
+                addressLine3: payload.adressData.addressLine3,
                 city: payload.adressData.city,
                 country: payload.adressData.country,
                 postalCode: payload.adressData.postalCode,
@@ -263,6 +264,7 @@ export const postUser = async (payload, firstlogin) => {
             })
         }
 
+       
         const user = await fetch(process.env.REACT_APP_API_URL +'/users', userOptions)
             .then(response => response.json());
 

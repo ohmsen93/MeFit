@@ -6,7 +6,7 @@ import UserInformationCard from '../Cards/UserInformationCard'
 import UserAddressCard from '../Cards/UserAddressCard';
 import UserFitnessCard from '../Cards/UserFitnessCard';
 import keycloak from '../../keycloak';
-import { fetchUserById, patchFitnessById, patchPersonalById, postUser } from '../API/UserApi';
+import { fetchUserById, patchAddressById, patchFitnessById, patchPersonalById, postUser } from '../API/UserApi';
 
 
 async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin, userData) {
@@ -68,14 +68,13 @@ function UserProfileForm() {
 
 
 
-    if (loading) {
-
-    }
-    else {
+    if (!loading) {
         if (isfirstlogin && currentmodal == null) {
             handleOpenModal("UserInformationModal");
+            console.log("test");
         }
     }
+
 
 
     function handleOpenModal(key) {
@@ -143,7 +142,7 @@ function UserProfileForm() {
     }
 
     function handleSaveModal(data) {
-        
+
         setCardRequiredUpdate(data);
 
         if (isfirstlogin) {
@@ -169,11 +168,12 @@ function UserProfileForm() {
                 await handleDataChange(payload, data);
                 break;
             case "UserAddressCard":
-
+                await patchAddressById(payload, data);
+                await handleDataChange(payload, data);
                 break;
             case "UserFitnessCard":
-                await patchFitnessById(payload,data);
-                await handleDataChange(payload,data);
+                await patchFitnessById(payload, data);
+                await handleDataChange(payload, data);
                 break;
             default:
                 break;
@@ -188,10 +188,15 @@ function UserProfileForm() {
                 data.profileData.firstname = payload.firstName;
                 data.profileData.lastname = payload.lastName;
                 data.profileData.phone = payload.phoneNumber;
-                data.profileData.picture = payload.profilePicture;      
+                data.profileData.picture = payload.profilePicture;
                 break;
             case "UserAddressCard":
-
+                data.adressData.addressLine1 = payload.addressLine1;
+                data.adressData.addressLine2 = payload.addressLine2;
+                data.adressData.addressLine3 = payload.addressLine3;
+                data.adressData.city = payload.city;
+                data.adressData.country = payload.country;
+                data.adressData.postalCode = payload.postalCode;
                 break;
             case "UserFitnessCard":
                 data.profileData.weight = payload.weight;
@@ -218,6 +223,7 @@ function UserProfileForm() {
     function handleNextModal(event, data, key) {
         setCardRequiredUpdate(data);
         handleNewUserPayload(key, data);
+        console.log(key);
         switch (key) {
             case "UserInformationModal":
                 setNewModal(
@@ -262,16 +268,16 @@ function UserProfileForm() {
                         ?
                         <>
                             {currentmodal}
-                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")}  />
-                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")}  />
-                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")}  />
+                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")} />
+                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")} />
+                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")} />
                         </>
                         :
                         <>
                             {currentmodal}
-                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")}  />
-                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")}  />
-                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")}  />
+                            <UserInformationCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserProfileCard")} />
+                            <UserAddressCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserAddressCard")} />
+                            <UserFitnessCard onModalOpen={handleOpenModal} userData={userData} updateRequired={handleCardUpdate(cardUpdateRequired, "UserFitnessCard")} />
                         </>
                     }
                 </>

@@ -1,23 +1,26 @@
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-let update;
-
 function UserAddressCard(props) {
 
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
+    const [update,setUpdate] = useState();
+    
+    useEffect(() => {
 
+        if (props.updateRequired != undefined){
+            setUpdate(props.updateRequired)
+        }
+        else {
+            setUpdate(props.userData.adressData)
+        }
+        
+    },[props.updateRequired,props.userData.adressData])
+    
     function handleOpenModal() {
         props.onModalOpen("UserAddressModal");
     }
-
-    function handleUpdate() {
-        console.log("UserAddressCard");
-        update = props.updateRequired;
-       
-    }
-
 
     return (
         <Card>
@@ -28,8 +31,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                             readOnly
-                            name="address"
-                            defaultValue={update?.address || props.userData.adressData.addressLine1}
+                            name="addressLine1"
+                            defaultValue={update?.addressLine1}
                             type="text"
                             placeholder="required">
                         </Form.Control>
@@ -38,8 +41,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address 1</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressSecond"
-                            defaultValue={update?.addressSecond || props.userData.adressData.addressLine2}
+                            name="addressLine2"
+                            defaultValue={update?.addressLine2}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -48,8 +51,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address 2</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressThird"
-                            defaultValue={update?.addressThird || props.userData.adressData.addressLine3}
+                            name="addressLine3"
+                            defaultValue={update?.addressLine3}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -59,7 +62,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="postalCode"
-                            defaultValue={update?.postalCode || props.userData.adressData.postalCode}
+                            defaultValue={update?.postalCode}
                             required
                             type="number"
                             placeholder="Example : 8260 would be Viby j">
@@ -70,7 +73,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="city"
-                            defaultValue={update?.city || props.userData.adressData.city}
+                            defaultValue={update?.city}
                             required
                             type="text"
                             placeholder="Example Viby j">
@@ -81,7 +84,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="country"
-                            defaultValue={update?.country || props.userData.adressData.country}
+                            defaultValue={update?.country}
                             required
                             type="text"
                             placeholder="Example Denmark">
