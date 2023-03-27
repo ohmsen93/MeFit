@@ -20,9 +20,9 @@ import WorkoutsOverview from './Views/WorkoutsOverview';
 import ExercisesOverview from './Views/ExercisesOverview';
 
 function App() {
-
+  
   const {auth} = useAuth();
-
+  
     return (
       <BrowserRouter>
       {auth && (
