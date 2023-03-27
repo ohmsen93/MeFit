@@ -6,18 +6,18 @@ import Form from 'react-bootstrap/Form';
 
 function UserProfileCard(props) {
 
-    const [update,setUpdate] = useState();
-    
+    const [update, setUpdate] = useState();
+
     useEffect(() => {
 
-        if (props.updateRequired != undefined){
+        if (props.updateRequired != undefined || props.updateRequired != null) {
             setUpdate(props.updateRequired)
         }
-        else {
+        else if (props.userData.profileData != null || props.userData.profileData != undefined) {
             setUpdate(props.userData.profileData)
         }
-        
-    },[props.updateRequired,props.userData.profileData])
+
+    }, [props.updateRequired, props.userData.profileData])
 
     function handleOpenModal() {
         props.onModalOpen("UserInformationModal");

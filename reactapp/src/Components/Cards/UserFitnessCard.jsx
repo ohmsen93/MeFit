@@ -9,10 +9,10 @@ function UserFitnessCard(props) {
     
     useEffect(() => {
 
-        if (props.updateRequired != undefined){
+        if (props.updateRequired != undefined || props.updateRequired != null) {
             setUpdate(props.updateRequired)
         }
-        else {
+        else if (props.userData.profileData != null || props.userData.profileData != undefined) {
             setUpdate(props.userData.profileData)
         }
         
