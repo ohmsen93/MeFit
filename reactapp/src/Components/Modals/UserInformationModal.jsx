@@ -58,6 +58,7 @@ function UserInformationModal(props) {
 
     function handleNext(event) {
         props.onHandleNext(event, modalData, modalData.key);
+        handleClose();
     }
 
     function handleSave() {
