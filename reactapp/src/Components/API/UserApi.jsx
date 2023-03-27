@@ -156,16 +156,17 @@ export const patchAddressById = async (payload, data) => {
                 'Authorization': 'Bearer ' + keycloak.token
             },
             body: JSON.stringify({
-                addressLine1: payload.addressLine1,
-                addressLine2: payload.addressLine2,
-                addressLine3: payload.addressLine3,
+                id: parseInt(payload.id),
+                addressLine1: payload.address,
+                addressLine2: payload.addressSecond,
+                addressLine3: payload.addressThird,
                 city: payload.city,
                 country: payload.country,
                 postalCode: payload.postalCode,
             })
         }
         console.log(payload);
-        await fetch(process.env.REACT_APP_API_URL + `/addresses/${data.profileData.fkAddressId}`, addressPatch);
+        await fetch(process.env.REACT_APP_API_URL + `/addresses/${payload.id}`, addressPatch);
 
 
     } catch (error) {
