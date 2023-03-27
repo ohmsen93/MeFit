@@ -21,28 +21,35 @@ import ExercisesOverview from './Views/ExercisesOverview';
 
 function App() {
 
-  const {auth} = useAuth();
+  const { auth } = useAuth();
 
-    return (
-      <BrowserRouter>
-      {auth && (
-        <Navbar />
-      )}
-        <main className="container">
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<KeycloakRoute role={ Roles.Regular }> <Dashboard /> </KeycloakRoute>}/>
-            <Route path="/contributor" element={<KeycloakRoute role={ Roles.Contributor}> <Contributor /> </KeycloakRoute>}/>
-            <Route path="/profile" element={<KeycloakRoute role={ Roles.Regular }> <UserProfile /> </KeycloakRoute>}/>
-            <Route path="/goals" element={<KeycloakRoute role={ Roles.Regular }> <GoalsOverview /> </KeycloakRoute>}/>
-            <Route path="/goals/new" element={<KeycloakRoute role={ Roles.Regular }><GoalCreation /> </KeycloakRoute>}/>
-            <Route path="/programs" element={<KeycloakRoute role={ Roles.Regular }><ProgramsOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>}/>
-            <Route path="/workouts" element={<KeycloakRoute role={ Roles.Regular }><WorkoutsOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>}/>
-            <Route path="/exercises" element={<KeycloakRoute role={ Roles.Regular }><ExercisesOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>}/>
-          </Routes>
-        </main>
-      </BrowserRouter>
-    );
-  }
-  
-  export default App;
+  return (
+    <BrowserRouter>
+      {auth
+        ?
+        <>
+          <Navbar />
+          <main className="container">
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/dashboard" element={<KeycloakRoute role={Roles.Regular}> <Dashboard /> </KeycloakRoute>} />
+              <Route path="/contributor" element={<KeycloakRoute role={Roles.Contributor}> <Contributor /> </KeycloakRoute>} />
+              <Route path="/profile" element={<KeycloakRoute role={Roles.Regular}> <UserProfile /> </KeycloakRoute>} />
+              <Route path="/goals" element={<KeycloakRoute role={Roles.Regular}> <GoalsOverview /> </KeycloakRoute>} />
+              <Route path="/goals/new" element={<KeycloakRoute role={Roles.Regular}><GoalCreation /> </KeycloakRoute>} />
+              <Route path="/programs" element={<KeycloakRoute role={Roles.Regular}><ProgramsOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>} />
+              <Route path="/workouts" element={<KeycloakRoute role={Roles.Regular}><WorkoutsOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>} />
+              <Route path="/exercises" element={<KeycloakRoute role={Roles.Regular}><ExercisesOverview contributor={useAuth().role.length > 1} /> </KeycloakRoute>} />
+            </Routes>
+          </main>
+        </>
+        :
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      }
+    </BrowserRouter>
+  );
+}
+
+export default App;
