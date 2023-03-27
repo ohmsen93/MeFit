@@ -9,7 +9,6 @@ function UserAddressCard(props) {
     
     useEffect(() => {
 
-        console.log(props.userData);
         if (props.updateRequired != undefined){
             setUpdate(props.updateRequired)
         }
@@ -23,7 +22,6 @@ function UserAddressCard(props) {
         props.onModalOpen("UserAddressModal");
     }
 
-    console.log(update);
     return (
         <Card>
             <Card.Header as="h5">Address Information</Card.Header>
