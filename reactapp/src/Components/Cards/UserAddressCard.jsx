@@ -34,7 +34,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="address"
-                            defaultValue={update?.address}
+                            defaultValue={update?.addressLine1}
                             type="text"
                             placeholder="required">
                         </Form.Control>
@@ -44,7 +44,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="addressSecond"
-                            defaultValue={update?.addressSecond}
+                            defaultValue={update?.addressLine2}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -54,7 +54,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="addressThird"
-                            defaultValue={update?.addressThird}
+                            defaultValue={update?.addressLine3}
                             type="text"
                             placeholder="">
                         </Form.Control>
