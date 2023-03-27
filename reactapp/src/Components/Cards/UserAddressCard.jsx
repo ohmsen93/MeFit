@@ -1,8 +1,7 @@
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-
-let update;
 
 function UserAddressCard(props) {
 
