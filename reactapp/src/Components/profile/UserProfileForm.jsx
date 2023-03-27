@@ -17,22 +17,22 @@ async function OnIntialProfileLoad(setLoading, setUserData, setFirstLogin, userD
 
     if (userData == null || userData == undefined) {
         data = await fetchUserById(keycloak.tokenParsed.user_Id);
-
-        if (data?.status == "404") {
+        if (data == "404") {
             const tempData = {
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
                 email: keycloak.tokenParsed?.email || "",
+                firstLogin: true
             }
             data = tempData;
         }
     }
     else { data = userData }
-
+   
 
     if (data != null || data != undefined) {
         setUserData(data);
-        setFirstLogin(data?.userData?.firstLogin);
+        setFirstLogin(data?.userData?.firstLogin || data?.firstLogin);
         setLoading(false);
     }
 }
@@ -71,7 +71,6 @@ function UserProfileForm() {
     if (!loading) {
         if (isfirstlogin && currentmodal == null) {
             handleOpenModal("UserInformationModal");
-            console.log("test");
         }
     }
 

@@ -17,8 +17,8 @@ function UserInformationModal(props) {
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
                 email: keycloak.tokenParsed?.email || "",
-                phoneNumber: props.onUserData.profileData.phone || "",
-                profilePicture: props.onUserData.profileData.picture || ""
+                phoneNumber: props?.onUserData?.profileData?.phone || 0,
+                profilePicture: props?.onUserData?.profileData?.picture || ""
             }
             return modalData;
         }
@@ -26,12 +26,12 @@ function UserInformationModal(props) {
             // check database for data to populate the modal
             modalData = {
                 key: UserInformationModal.name,
-                id: props.onUserData.userData.id || "",
+                id: props?.onUserData?.userData?.id || "",
                 card: "UserProfileCard",
                 firstName: props.onUserData.profileData.firstname || "",
                 lastName: props.onUserData.profileData.lastname || "",
                 email: props.onUserData.profileData.email || "",
-                phoneNumber: props.onUserData.profileData.phone || "",
+                phoneNumber: props.onUserData.profileData.phone || 0,
                 profilePicture: props.onUserData.profileData.picture || ""
             }
 
