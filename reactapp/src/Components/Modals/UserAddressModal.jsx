@@ -25,7 +25,6 @@ function UserAddressModal(props) {
         }
         else {
             // check database for data to populate the modal
-            console.log(props.onUserData.adressData);
             modalData = {
                 key: UserAddressModal.name,
                 card: "UserAddressCard",
