@@ -66,7 +66,6 @@
 #Dashboard{
     position:relative;
     font-size: 12pt;
-
 }
 
 .dashboard-item{
@@ -147,12 +146,16 @@
     
 }
 
+
+/* Content */
+.contentBox{
+    position:relative;
+    font-size: 16pt;  
+}
+
 /* ProgramsOverview */
 
-#Programs{
-    position:relative;
-    font-size: 16pt;
-}
+
 
 .programs-item{
     background-color: rgba(0, 0, 0, 0.5);
@@ -162,10 +165,7 @@
 
 /* WorkoutsOverview */
 
-#Workouts{
-    position:relative;
-    font-size: 16pt;  
-}
+
 
 .workouts-item{
     background-color: rgba(0, 0, 0, 0.5);
@@ -175,13 +175,18 @@
 
 /* ExercisesOverview */
 
-#Exercises{
-    position:relative;
-    font-size: 16pt;  
-}
+
 
 .exercises-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
     font-family: "Poiret One";
+}
+
+/* Goal */
+
+#GoalCreationForm{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+
 }
