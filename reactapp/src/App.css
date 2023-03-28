@@ -146,3 +146,16 @@
     font-weight: bold;
     
 }
+
+/* ProgramsOverview */
+
+#Programs{
+    position:relative;
+    font-size: 16pt;
+}
+
+.programs-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: "Poiret One";
+}
