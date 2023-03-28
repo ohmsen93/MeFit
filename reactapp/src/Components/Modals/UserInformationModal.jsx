@@ -37,18 +37,18 @@ function UserInformationModal(props) {
 
             return modalData
         }
-        
+
     }
 
     const [show, setShow] = useState(props.requestOpen)
 
     const [modalData, setModalData] = useState(defaultDataHandler());
 
-
-    function handleChange(event) {
+    function handleChange(event) {       
         const key = event.target.name;
         const value = event.target.value;
         setModalData({ ...modalData, [key]: value })
+        console.log(modalData);
     }
 
     function handleClose() {
@@ -72,12 +72,12 @@ function UserInformationModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Group className="mb-3" controlId="">
+                    <Form.Group className="mb-3">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control
                             name="firstName"
-                            required
                             defaultValue={modalData?.firstName || ""}
+                            required
                             type="text"
                             onChange={handleChange}
                             placeholder="first name">
