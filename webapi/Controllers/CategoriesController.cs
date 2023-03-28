@@ -33,7 +33,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>        
         [HttpGet]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategoríes()
         {
             return Ok(_mapper.Map<ICollection<CategoryReadDto>>(await _service.GetAll()));
@@ -45,7 +45,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>        
         [HttpGet("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
             try
@@ -68,7 +68,7 @@ namespace webapi.Controllers
         /// <param name="categoryUpdateDto"></param>
         /// <returns></returns>                
         [HttpPatch("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<IActionResult> PutCategory(int id, CategoryUpdateDto categoryUpdateDto)
         {
             if (id != categoryUpdateDto.Id)
@@ -99,7 +99,7 @@ namespace webapi.Controllers
         /// <param name="categoryCreateDto"></param>
         /// <returns></returns>        
         [HttpPost]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Category>> PostCategory(CategoryCreateDto categoryCreateDto)
         {
             var category = _mapper.Map<Category>(categoryCreateDto);
@@ -113,7 +113,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>        
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             try

@@ -41,7 +41,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
         {
             return Ok(_mapper.Map<ICollection<ExerciseReadDto>>(await _service.GetAll()));
@@ -53,7 +53,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Exercise>> GetExercise(int id)
         {
             try
@@ -76,7 +76,7 @@ namespace webapi.Controllers
         /// <param name="exerciseUpdateDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<IActionResult> PutExercise(int id, ExerciseUpdateDto exerciseUpdateDto)
         {
             if (id != exerciseUpdateDto.Id)
@@ -107,7 +107,7 @@ namespace webapi.Controllers
         /// <param name="exerciseCreateDto"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Exercise>> PostExercise(ExerciseCreateDto exerciseCreateDto)
         {
             var exercise = _mapper.Map<Exercise>(exerciseCreateDto);
@@ -123,7 +123,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<IActionResult> DeleteExercise(int id)
         {
             try
@@ -148,7 +148,7 @@ namespace webapi.Controllers
         /// <param name="musclegroups"></param>
         /// <returns></returns>
         [HttpPatch("{id}/musclegroups")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Exercise>> PatchExerciseMusclegroups(int id, ExerciseUpdateMusclegroupsDto exerciseUpdateMusclegroupsDto)
         {
             try
@@ -172,7 +172,7 @@ namespace webapi.Controllers
         /// <param name="sets"></param>
         /// <returns></returns>
         [HttpPatch("{id}/sets")]
-        [Authorize(Roles = "Contributor")]
+        [Authorize(Roles = "Admin,Contributor")]
         public async Task<ActionResult<Exercise>> PatchExerciseSets(int id, ExerciseUpdateSetsDto exerciseUpdateSetsDto)
         {
             try
