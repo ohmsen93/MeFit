@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { fetchGoals } from "../API/GoalAPI";
 import GoalSelectionList from "../Components/Goal/GoalSelectionList";
 import { getStatus } from "../Util/StatusHelper";
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
+
 
 
 const Dashboard = () => {
