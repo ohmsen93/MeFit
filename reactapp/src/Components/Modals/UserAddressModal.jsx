@@ -7,10 +7,10 @@ import keycloak from '../../keycloak';
 function UserAddressModal(props) {
 
     const [form, setForm] = useState({
-        addressLine1: props.onUserData.adressData.addressLine1 || "",
-        postalCode: props.onUserData.adressData.postalCode || "",
-        city: props.onUserData.adressData.city || "",
-        country: props.onUserData.adressData.country || ""
+        addressLine1: props?.onUserData?.adressData?.addressLine1 || "",
+        postalCode: props?.onUserData?.adressData?.postalCode || "",
+        city: props?.onUserData?.adressData?.city || "",
+        country: props?.onUserData?.adressData?.country || ""
     });
 
     const [errors, setErrors] = useState({});
