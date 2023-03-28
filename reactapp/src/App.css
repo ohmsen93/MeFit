@@ -157,7 +157,7 @@
 .programs-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
 /* WorkoutsOverview */
@@ -167,7 +167,7 @@
 .workouts-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
 /* ExercisesOverview */
@@ -177,7 +177,7 @@
 .exercises-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
 /* Goal */

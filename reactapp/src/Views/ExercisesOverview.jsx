@@ -103,7 +103,7 @@ const ExercisesOverview = props => {
         <div id="Exercises" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0">
-                    <div className="d-flex flex-column p-2 overflow-y-scroll">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
                         Sort by: <button onClick={exercisesSort} className="btn btn-secondary border">Musclegroup</button>
                         <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
                     </div>

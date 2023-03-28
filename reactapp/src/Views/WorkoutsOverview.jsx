@@ -151,7 +151,7 @@ const WorkoutsOverview = props => {
         <div id="Workouts" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0">
-                    <div className="d-flex flex-column p-2 overflow-y-scroll">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
                         Sort by: <button onClick={workoutsSort} className="btn btn-secondary border mt-2">Type</button>
                         <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                     </div>
@@ -159,13 +159,15 @@ const WorkoutsOverview = props => {
                 <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0 overflow-y-scroll">
                     <ExerciseSelectionList type="radio" exercises={wExercises} exerciseSelected={wExerciseSelected} k={1}/>
                     {props.contributor && 
-                        <div class="overflow-y-scroll">
+                        // <div class="overflow-y-scroll">
+                        <>
                             <div className="d-flex p-2">
                                 <button onClick={removeWExercise} className="btn btn-secondary border wp-100">↓</button>
                                 <button onClick={addWExercise} className="btn btn-secondary border wp-100">↑</button>
                             </div>
                             <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected} k={2}/>
-                        </div>
+                        </>
+                        // </div>
                     }                
                 </div>
                 <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0 pt-2">

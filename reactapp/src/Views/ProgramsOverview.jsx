@@ -147,7 +147,7 @@ const ProgramsOverview = props => {
         <div id="Programs" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 programs-item m-2 mb-0">
-                    <div className="d-flex flex-column p-2 overflow-y-scroll">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
                         Sort by: <button onClick={programsSort} className="btn btn-secondary border mt-2">Category</button>
                         <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
                     </div>
@@ -155,13 +155,15 @@ const ProgramsOverview = props => {
                 <div className="d-flex flex-column text-center wp-100 programs-item mt-2 mb-0 pt-2">
                     <WorkoutSelectionList type="radio" workouts={pWorkouts} workoutSelected={pWorkoutSelected} k={1}/>
                     {props.contributor && 
-                        <div class="overflow-y-scroll">
+                        // <div class="overflow-y-scroll">
+                        <>
                             <div className="d-flex p-2">
                                 <button onClick={removePWorkout} className="btn btn-secondary border wp-100">↓</button>
                                 <button onClick={addPWorkout} className="btn btn-secondary border wp-100">↑</button>
                             </div>
                             <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected} k={2}/>
-                        </div>
+                        </>
+                        // </div>
                     }
                 </div>
 
