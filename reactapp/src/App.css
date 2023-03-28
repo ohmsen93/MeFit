@@ -1,0 +1,58 @@
+.bg{
+    position: fixed; 
+    top: -50%; 
+    left: -50%; 
+    width: 200%; 
+    height: 200%;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+.bg img {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    margin: auto; 
+    min-width: 50%;
+    min-height: 50%;
+  }
+
+/* Login */
+
+#loginMain{
+    position:relative;
+    margin-top:100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#loginMain h1{
+    font-size: 50pt;
+    color:white;
+    font-family: "Poiret One";
+}
+
+#loginForm{
+    margin-top:60px;
+}
+
+#loginForm button{
+    padding:25px;
+    font-size: 25pt;
+    font-family: "Poiret One";
+
+}
+
+/* Dashboard */
+
+#Dashboard{
+    position:relative;
+}
+
+.dashboard-item{
+    margin:10px;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}

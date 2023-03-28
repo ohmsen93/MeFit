@@ -7,11 +7,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div className="actions">
-                <button onClick={() => keycloak.register(navigate("profile"))}>Register</button>
-            </div>
-        </div>
+                <button className="col-6 btn btn-lg btn-secondary" onClick={() => keycloak.register(navigate("profile"))}>Register</button>
     );
 }
 
