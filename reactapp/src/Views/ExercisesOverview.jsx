@@ -100,7 +100,7 @@ const ExercisesOverview = props => {
         <div class="bg">
             <img src={Background} alt=""/>
         </div>
-        <div id="Exercises" className="d-flex flex-column align-items-center hpx-720 p-5">
+        <div id="Exercises" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0">
                     <div className="d-flex flex-column p-2 overflow-y-scroll">

@@ -3,6 +3,8 @@ import { fetchGoals, fetchGoalWorkouts, patchGoalCompleted, patchGoalWorkout } f
 import GoalSelectionList from "../Components/Goal/GoalSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { getStatus, getStatusId } from "../Util/StatusHelper"
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
+
 
 const GoalsOverview = () => {
     const [state, setState] = useState({
@@ -75,40 +77,45 @@ const GoalsOverview = () => {
     }
 
     return (
-        <div className="d-flex flex-column align-items-center hpx-720 p-5">
-            <div className="d-flex flex-fill border wp-100 min-h-0">
-                <div className="d-flex flex-column text-center wp-100">
-                    <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
-                </div>
-                <div className="d-flex flex-column text-center wp-100">
-                    <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => w.fkGoalId === state.selectedGoal?.id) || []} workoutSelected={workoutSelected} k={1}/>
-                </div>
-                <div className="d-flex flex-column text-center wp-100">
-                    <div className="d-flex flex-column flex-fill align-items-center justify-content-center border wp-100 min-h-0 p-2">
-                        <h3>Details</h3>
-                        <div className="d-flex flex-column justify-content-center hp-100">
-                        {state.selectedGoal !== null &&
-                        <>
-                            <p>Goal: Goal {state.selectedGoal.id}</p>
-                            <p>Period: {state.selectedGoal.startDate.split("T")[0]} - {state.selectedGoal.endDate.split("T")[0]}</p>
-                            <p>Status: {getStatus(state.selectedGoal.fkStatusId)}</p>
-                            <p>Program: {state.selectedGoal.programNavn ?? "Custom"}</p>
-                        </>
-                        }
-                        </div>
-                        <div className="d-flex flex-column justify-content-center hp-100">
-                        {state.selectedWorkout !== null &&
-                        <>
-                            <p>Workout: {state.selectedWorkout.name}</p>
-                            <p>Status: {getStatus(state.selectedWorkout.fkStatusId)}</p>
-                            <button onClick={workoutCompleted} className="btn btn-outline-secondary">Log workout as completed</button>
-                        </>
-                        }
+        <>
+            <div class="bg">
+                <img src={Background} alt=""/>
+            </div>
+            <div id="Goals" className="d-flex flex-column align-items-center hpx-720 p-5 mt-5 contentBox">
+                <div className="d-flex flex-fill wp-100 min-h-0">
+                    <div className="d-flex flex-column text-center wp-100">
+                        <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
+                    </div>
+                    <div className="d-flex flex-column text-center wp-100">
+                        <WorkoutSelectionList type="radio" workouts={workouts?.filter(w => w.fkGoalId === state.selectedGoal?.id) || []} workoutSelected={workoutSelected} k={1}/>
+                    </div>
+                    <div className="d-flex flex-column text-center wp-100">
+                        <div className="d-flex flex-column flex-fill align-items-center justify-content-center wp-100 min-h-0 p-2">
+                            <h3>Details</h3>
+                            <div className="d-flex flex-column justify-content-center hp-100">
+                            {state.selectedGoal !== null &&
+                            <>
+                                <p>Goal: Goal {state.selectedGoal.id}</p>
+                                <p>Period: {state.selectedGoal.startDate.split("T")[0]} - {state.selectedGoal.endDate.split("T")[0]}</p>
+                                <p>Status: {getStatus(state.selectedGoal.fkStatusId)}</p>
+                                <p>Program: {state.selectedGoal.programNavn ?? "Custom"}</p>
+                            </>
+                            }
+                            </div>
+                            <div className="d-flex flex-column justify-content-center hp-100">
+                            {state.selectedWorkout !== null &&
+                            <>
+                                <p>Workout: {state.selectedWorkout.name}</p>
+                                <p>Status: {getStatus(state.selectedWorkout.fkStatusId)}</p>
+                                <button onClick={workoutCompleted} className="btn btn-outline-secondary">Log workout as completed</button>
+                            </>
+                            }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
   }
   

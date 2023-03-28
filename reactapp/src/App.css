@@ -66,7 +66,6 @@
 #Dashboard{
     position:relative;
     font-size: 12pt;
-
 }
 
 .dashboard-item{
@@ -75,9 +74,6 @@
     font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
-.goalList label{
-    font-size: 20pt;
-}
 
 .goalList .btn:hover{
     background-color: #d4d4d4;
@@ -147,12 +143,16 @@
     
 }
 
+
+/* Content */
+.contentBox{
+    position:relative;
+    font-size: 16pt;  
+}
+
 /* ProgramsOverview */
 
-#Programs{
-    position:relative;
-    font-size: 16pt;
-}
+
 
 .programs-item{
     background-color: rgba(0, 0, 0, 0.5);
@@ -162,10 +162,7 @@
 
 /* WorkoutsOverview */
 
-#Workouts{
-    position:relative;
-    font-size: 16pt;  
-}
+
 
 .workouts-item{
     background-color: rgba(0, 0, 0, 0.5);
@@ -175,13 +172,23 @@
 
 /* ExercisesOverview */
 
-#Exercises{
-    position:relative;
-    font-size: 16pt;  
-}
+
 
 .exercises-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
     font-family: "Poiret One";
+}
+
+/* Goal */
+
+#GoalCreationForm{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+
+}
+
+#Goals{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
 }
