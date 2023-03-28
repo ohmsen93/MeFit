@@ -40,6 +40,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Contributor")]
         public async Task<ActionResult<IEnumerable<Trainingprogram>>> GetTrainingprograms()
         {
             return Ok(_mapper.Map<ICollection<TrainingprogramReadDto>>(await _service.GetAll()));
@@ -51,6 +52,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Contributor")]
         public async Task<ActionResult<Trainingprogram>> GetTrainingprogram(int id)
         {
             try
@@ -73,6 +75,7 @@ namespace webapi.Controllers
         /// <param name="trainingprogramUpdateDto"></param>
         /// <returns></returns>        
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> PutTrainingprogram(int id, TrainingprogramUpdateDto trainingprogramUpdateDto)
         {
             if (id != trainingprogramUpdateDto.Id)
@@ -103,6 +106,7 @@ namespace webapi.Controllers
         /// <param name="trainingprogramCreateDto"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Contributor")]
         public async Task<ActionResult<Trainingprogram>> PostTrainingprogram(TrainingprogramCreateDto trainingprogramCreateDto)
         {
             var trainingprogram = _mapper.Map<Trainingprogram>(trainingprogramCreateDto);
@@ -119,6 +123,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Exercises/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> DeleteExercise(int id)
         {
             try
@@ -144,6 +149,7 @@ namespace webapi.Controllers
         /// <param name="trainingprogramUpdateWorkoutsDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}/workouts")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> PatchTrainingprogramWorkouts(int id, TrainingprogramUpdateWorkoutsDto trainingprogramUpdateWorkoutsDto)
         {
             try
@@ -168,6 +174,7 @@ namespace webapi.Controllers
         /// <param name="trainingprogramUpdateCategoriesDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}/categories")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> PatchTrainingprogramCategories(int id, TrainingprogramUpdateCategoriesDto trainingprogramUpdateCategoriesDto)
         {
             try
