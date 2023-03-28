@@ -43,13 +43,13 @@ const Dashboard = () => {
       <div id="Dashboard" className="d-flex flex-column align-items-center p-5">
         <div className="d-flex wpx-960 hpx-480">
 
-          <div className="d-flex flex-column align-items-center wp-50 hp-100">
+          <div className="dashboard-item d-flex flex-column flex-fill align-items-center wp-50 hp-100 mt-2 mb-2 p-2">
             
-            <div className="dashboard-item flex-shrink-0 m-2 mb-0 wp-100 hp-100">
+            {/* <div className="dashboard-item flex-shrink-0 m-2 mb-0 wp-100 hp-100"> */}
               <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
-            </div>
+            {/* </div> */}
 
-            <div className="btn-group dashboard-item d-flex justify-content-center m-2 wp-100">
+            <div className="btn-group d-flex flex-fill justify-content-center wp-100">
               <Link to="/goals">
                 <button className="btn btn-primary m-2">View all goals</button>
               </Link>
@@ -59,26 +59,22 @@ const Dashboard = () => {
             </div>
           </div>
 
-        {/* GoalProgress Component */}
-        {/* <DashboardContext.Provider value={state.selectedGoal}> */}
           <div className="dashboard-item d-flex flex-column align-items-center flex-fill m-2 wp-50 p-2 hp-100">
-            {/* <DashboardContext.Consumer> */}
-              {/* {goal => (
-                <> */}
                 <h3>Progress</h3>
                 {state.selectedGoal !== null ?
                   <>
                   <p>Goal {state.selectedGoal.id}</p>
-                  <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
+                  {/* <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p> */}
+                  {dateDiff(new Date(), new Date(state.selectedGoal.endDate)) > 0 ?
+                    <p>You have {dateDiff(new Date(), new Date(state.selectedGoal.endDate))} day(s) to complete goal!</p>
+                  :
+                    <p>You have no more time to complete this goal.</p>
+                  }
                   <p>You have completed {state.selectedGoal.workouts.filter(w => w.workoutStatus === "Completed").length} out of {state.selectedGoal.workouts.length} workouts!</p>
                   <Link to="/goals">View more details</Link>
                   </>
                 : "No goal selected.."}
-                {/* </>
-              )} */}
-            {/* </DashboardContext.Consumer> */}
           </div>
-        {/* </DashboardContext.Provider> */}
 
         <div className="dashboard-item d-flex flex-column align-items-center p-2 mt-2 mb-2 hp-100">
           <Calendar className={["wpx-240"]}/>
