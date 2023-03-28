@@ -78,7 +78,13 @@ function UserAddressModal(props) {
     }
 
     function handleNext(event) {
-        props.onHandleNext(event, modalData, modalData.key);
+        event.preventDefault();
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+        } else {
+            props.onHandleNext(event, modalData, modalData.key);
+        }
     }
 
     function validateForm() {

@@ -70,6 +70,7 @@ function UserInformationModal(props) {
         const key = event.target.name;
         const value = event.target.value;
         setModalData({ ...modalData, [key]: value })
+        console.log(form);
     }
 
     function handleClose() {
@@ -78,7 +79,14 @@ function UserInformationModal(props) {
     }
 
     function handleNext(event) {
-        props.onHandleNext(event, modalData, modalData.key);
+        event.preventDefault();
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+        } else {
+            props.onHandleNext(event, modalData, modalData.key);
+        }
+        
     }
    
     function validateForm() {
@@ -90,13 +98,12 @@ function UserInformationModal(props) {
         if (!email || email === '') { newErrors.email = "Please Enter Your Email" }
         if (!phoneNumber || phoneNumber.length === 0) { newErrors.phoneNumber = "Please Enter Your Phone Number" }
         else if (!phoneNumber || phoneNumber.length < 8) { newErrors.phoneNumber = "Please Enter A 8 Digit Phone Number" }
-
+        
         return newErrors;
     }
 
     function handleSave(event) {
         event.preventDefault();
-
         const formErrors = validateForm()
         if (Object.keys(formErrors).length > 0) {
             setErrors(formErrors);
@@ -104,7 +111,6 @@ function UserInformationModal(props) {
             props.onSave(modalData);
             handleClose();
         }
-
     }
 
     return (
@@ -167,7 +173,7 @@ function UserInformationModal(props) {
                         <Form.Control
                             name="phoneNumber"
                             required
-                            type="tel"
+                            type="number"
                             defaultValue={modalData?.phoneNumber || ""}
                             onChange={(e) => { handleChange(e); setField('phoneNumber', e.target.value); }}
                             placeholder="45+11111111"
