@@ -40,6 +40,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/UserProfiles
         [HttpGet]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<IEnumerable<UserProfile>>> GetUserProfiles()
         {
             return Ok(_mapper.Map<IEnumerable<UserProfileReadDto>>(await _service.GetAll()));
@@ -52,6 +53,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/UserProfiles/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<UserProfile>> GetUserProfile(int id)
         {
             try
@@ -76,6 +78,7 @@ namespace webapi.Controllers
         // Patch: api/UserProfiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> PutUserProfile(int id, UserProfileUpdateDto userProfileUpdateDto)
         {
             if (id != userProfileUpdateDto.Id)
@@ -107,6 +110,7 @@ namespace webapi.Controllers
         // POST: api/UserProfiles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<UserProfile>> PostUserProfile(UserProfileCreateDto userProfileCreateDto)
         {
             var userProfile = _mapper.Map<UserProfile>(userProfileCreateDto);
@@ -121,6 +125,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/UserProfiles/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteUserProfile(int id)
         {
             try
