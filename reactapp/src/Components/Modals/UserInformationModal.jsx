@@ -8,10 +8,10 @@ import keycloak from '../../keycloak';
 function UserInformationModal(props) {
 
     const [form, setForm] = useState({
-        firstName: props.onUserData.profileData.firstname || keycloak.tokenParsed?.firstName,
-        lastName: props.onUserData.profileData.lastName || keycloak.tokenParsed?.lastName,
-        email: props.onUserData.profileData.email || keycloak.tokenParsed?.email,
-        phoneNumber: props.onUserData.profileData.phone
+        firstName: props?.onUserData?.profileData?.firstname || keycloak.tokenParsed?.firstName,
+        lastName:  props?.onUserData?.profileData?.lastName || keycloak.tokenParsed?.lastName,
+        email:  props?.onUserData?.profileData?.email || keycloak.tokenParsed?.email,
+        phoneNumber:  props?.onUserData?.profileData?.phone
     });
 
     const [errors, setErrors] = useState({});
