@@ -19,6 +19,8 @@
     min-height: 50%;
   }
 
+
+
 /* Login */
 
 #loginMain{
@@ -45,14 +47,102 @@
 
 }
 
+/* Navbar */
+
+.navbar{
+    z-index: 1;
+    font-family: "Poiret One";
+    font-size: 20pt;
+    
+}
+
+.navbar-brand{
+    font-size: 20pt;
+
+}
+
 /* Dashboard */
 
 #Dashboard{
     position:relative;
+    font-size: 16pt;
+
 }
 
 .dashboard-item{
-    margin:10px;
     background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: "Poiret One";
+}
 
+.goalList label{
+    font-size: 20pt;
+}
+
+.goalList .btn:hover{
+    background-color: #d4d4d4;
+}
+
+.react-calendar{
+    font-size: 10pt;
+    border:0 !important;
+    height: 100%;
+    font-family: "Poiret One" !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.react-calendar{
+    color:white !important;
+    font-weight: 500;
+}
+
+.react-calendar__navigation__label{
+    color:white !important;
+    font-weight: bold;
+}
+
+.react-calendar__navigation__label:enabled{
+    color:White !important;
+    
+    font-weight: bold;
+}
+
+.react-calendar__navigation__label:disabled{
+    color:black !important;
+    
+    font-weight: bold;
+}
+
+.react-calendar__navigation__arrow{
+    color:white !important;
+    
+    font-weight: 500;
+}
+
+.react-calendar__tile{
+    color:white !important;
+    
+    font-weight: 500;
+}
+
+.react-calendar__month-view__days__day{
+    color:white !important;
+    font-weight: bold;
+
+
+}
+
+.react-calendar__tile--now{
+    color:black !important;
+}
+
+.react-calendar__month-view__days__day--weekend{
+    color: red !important;
+    font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth{
+    color: lightblue !important;
+    font-weight: bold;
+    
 }

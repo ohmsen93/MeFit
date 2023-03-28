@@ -43,23 +43,27 @@ const Dashboard = () => {
       <div id="Dashboard" className="d-flex flex-column align-items-center p-5">
         <div className="d-flex wpx-960 hpx-480">
 
-          <div className="d-flex flex-column align-items-center flex-fill border wp-50 hp-100">
+          <div className="d-flex flex-column align-items-center flex-fill wp-50 hp-100">
             
-            <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
+            <div className="dashboard-item d-flex flex-column align-items-center flex-fill m-2 mb-0 wp-100 hp-100">
+              <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
+            </div>
 
-            <div>
-              <Link to="/goals">
-                <button className="btn btn-outline-secondary">View all goals</button>
-              </Link>
-              <Link to="/goals/new">
-                <button className="btn btn-outline-secondary">Create new goal</button>
-              </Link>
+            <div className="dashboard-item d-flex m-2 flex-column align-items-center wp-100">
+              <div className="btn-group">
+                <Link to="/goals">
+                  <button className="btn btn-primary m-2">View all goals</button>
+                </Link>
+                <Link to="/goals/new">
+                  <button className="btn btn-secondary m-2">Create new goal</button>
+                </Link>
+              </div>
             </div>
           </div>
 
         {/* GoalProgress Component */}
         {/* <DashboardContext.Provider value={state.selectedGoal}> */}
-          <div className="d-flex flex-column align-items-center flex-fill border wp-50 p-2">
+          <div className="dashboard-item d-flex flex-column align-items-center flex-fill m-2 wp-50 p-2 hp-100">
             {/* <DashboardContext.Consumer> */}
               {/* {goal => (
                 <> */}
@@ -78,7 +82,7 @@ const Dashboard = () => {
           </div>
         {/* </DashboardContext.Provider> */}
 
-        <div className="d-flex flex-column align-items-center border">
+        <div className="dashboard-item d-flex flex-column align-items-center p-2 mt-2 mb-2 hp-100">
           <Calendar className={["wpx-240"]}/>
         </div>
 
