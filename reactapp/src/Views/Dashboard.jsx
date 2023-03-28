@@ -43,21 +43,19 @@ const Dashboard = () => {
       <div id="Dashboard" className="d-flex flex-column align-items-center p-5">
         <div className="d-flex wpx-960 hpx-480">
 
-          <div className="d-flex flex-column align-items-center flex-fill wp-50 hp-100">
+          <div className="d-flex flex-column align-items-center wp-50 hp-100">
             
-            <div className="dashboard-item d-flex flex-column align-items-center flex-fill m-2 mb-0 wp-100 hp-100">
+            <div className="dashboard-item flex-shrink-0 m-2 mb-0 wp-100 hp-100">
               <GoalSelectionList type="radio" goals={goals} goalSelected={goalSelected}/>
             </div>
 
-            <div className="dashboard-item d-flex m-2 flex-column align-items-center wp-100">
-              <div className="btn-group">
-                <Link to="/goals">
-                  <button className="btn btn-primary m-2">View all goals</button>
-                </Link>
-                <Link to="/goals/new">
-                  <button className="btn btn-secondary m-2">Create new goal</button>
-                </Link>
-              </div>
+            <div className="btn-group dashboard-item d-flex justify-content-center m-2 wp-100">
+              <Link to="/goals">
+                <button className="btn btn-primary m-2">View all goals</button>
+              </Link>
+              <Link to="/goals/new">
+                <button className="btn btn-secondary m-2">Create new goal</button>
+              </Link>
             </div>
           </div>
 

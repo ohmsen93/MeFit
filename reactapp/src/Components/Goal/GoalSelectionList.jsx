@@ -2,7 +2,7 @@
 const GoalSelectionList = props => {
 
     return (
-        <div className="d-flex flex-column flex-fill align-items-center wp-100 min-h-0 p-2">
+        <div className="d-flex flex-column flex-fill align-items-center wp-100 min-h-0 hp-100 p-2">
             <p>Goals:</p>
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
