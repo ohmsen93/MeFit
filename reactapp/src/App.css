@@ -6,7 +6,7 @@
     height: 200%;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Rajdhani&family=Poiret+One&display=swap');
 
 .bg img {
     position: absolute; 
@@ -33,7 +33,7 @@
 #loginMain h1{
     font-size: 50pt;
     color:white;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
 #loginForm{
@@ -43,7 +43,7 @@
 #loginForm button{
     padding:25px;
     font-size: 25pt;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 
 }
 
@@ -51,7 +51,7 @@
 
 .navbar{
     z-index: 1;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
     font-size: 20pt;
     
 }
@@ -65,14 +65,14 @@
 
 #Dashboard{
     position:relative;
-    font-size: 16pt;
+    font-size: 12pt;
 
 }
 
 .dashboard-item{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
-    font-family: "Poiret One";
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
 .goalList label{
@@ -87,7 +87,7 @@
     font-size: 10pt;
     border:0 !important;
     height: 100%;
-    font-family: "Poiret One" !important;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One" !important;
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
