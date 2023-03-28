@@ -40,6 +40,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Sets
         [HttpGet]
+        [Authorize(Roles = "Contributor")]
         public async Task<ActionResult<IEnumerable<Set>>> GetSets()
         {
             return Ok(_mapper.Map<ICollection<SetReadDto>>(await _service.GetAll()));
@@ -76,6 +77,7 @@ namespace webapi.Controllers
         // PATCH: api/Sets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> PutSet(int id, SetUpdateDto setUpdateDto)
         {
             if (id != setUpdateDto.Id)
@@ -108,6 +110,7 @@ namespace webapi.Controllers
         // POST: api/Sets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Contributor")]
         public async Task<ActionResult<Set>> PostSet(SetCreateDto setCreateDto)
         {
             var set = _mapper.Map<Set>(setCreateDto);
@@ -122,6 +125,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Sets/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Contributor")]
         public async Task<IActionResult> DeleteSet(int id)
         {
             try
