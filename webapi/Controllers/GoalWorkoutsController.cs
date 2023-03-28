@@ -41,6 +41,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/GoalWorkouts
         [HttpGet]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<GoalWorkouts>>> GetGoalWorkouts()
         {
             return Ok(_mapper.Map<ICollection<GoalWorkoutReadDto>>(await _service.GetAll()));
@@ -53,6 +54,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/GoalWorkouts/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<GoalWorkouts>> GetGoalWorkout(int id)
         {
             return Ok(_mapper.Map<GoalWorkoutReadDto>(await _service.GetById(id)));
@@ -67,6 +69,7 @@ namespace webapi.Controllers
         // PATCH: api/GoalWorkouts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchGoalWorkout(int id, GoalWorkoutUpdateDto goalWorkoutUpdateDto)
         {
             if (id != goalWorkoutUpdateDto.Id)
@@ -98,6 +101,7 @@ namespace webapi.Controllers
         // POST: api/GoalWorkouts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<GoalWorkouts>> PostGoalWorkout(GoalWorkoutCreateDto goalWorkoutCreateDto)
         {
             var goalWorkout = _mapper.Map<GoalWorkouts>(goalWorkoutCreateDto);
@@ -112,6 +116,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/GoalWorkouts/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> DeleteGoalWorkout(int id)
         {
             try

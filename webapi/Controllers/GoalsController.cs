@@ -42,7 +42,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Goals
         [HttpGet]
-        [Authorize(Roles="Regular")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoals()
         {           
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -55,6 +55,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Goals/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Goal>> GetGoal(int id)
         {
             try
@@ -79,7 +80,7 @@ namespace webapi.Controllers
         // PATCH: api/Goals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        [Authorize(Roles = "Regular")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchGoal(int id, GoalUpdateDto goalUpdateDto)
         {
             if (id != goalUpdateDto.Id)
@@ -112,7 +113,7 @@ namespace webapi.Controllers
         // POST: api/Goals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        //[Authorize(Roles = "Regular")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Goal>> PostGoal(GoalCreateDto goalCreateDto)
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
@@ -136,7 +137,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Goals/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Regular")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> DeleteGoal(int id)
         {
             try
@@ -161,6 +162,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("completed/user/{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Goal>>> GetCompletedGoals(string id)
         {
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetCompletedGoals(id)));
@@ -172,6 +174,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/workouts")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetGoalWorkouts(int id)
         {
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalWorkouts(id)));
@@ -183,6 +186,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/completedworkouts")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetGoalCompletedWorkouts(int id)
         {
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetGoalCompletedWorkouts(id)));

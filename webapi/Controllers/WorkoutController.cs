@@ -41,7 +41,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles ="Regular")]
+        [Authorize(Roles ="Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkouts()
         {
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -52,6 +52,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Workout>> GetWorkout(int id)
         {
             try
@@ -73,6 +74,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Workouts/ByTrainingProgramId/5
         [HttpGet("trainingprograms/{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkoutsByTrainingprogramId(int id)
         {
             try
@@ -96,6 +98,7 @@ namespace webapi.Controllers
         /// <param name="workoutUpdateDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchWorkout(int id, WorkoutUpdateDto workoutUpdateDto)
         {
 
@@ -127,6 +130,7 @@ namespace webapi.Controllers
         /// <param name="workoutCreateDto"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Workout>> PostWorkout(WorkoutCreateDto workoutCreateDto)
         {
             var workout = _mapper.Map<Workout>(workoutCreateDto);
@@ -146,6 +150,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
             try
@@ -170,6 +175,7 @@ namespace webapi.Controllers
         /// <param name="workoutUpdateExercisesDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}/exercises")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchWorkoutExercises(int id, WorkoutUpdateExercisesDto workoutUpdateExercisesDto)
         {           
             try
