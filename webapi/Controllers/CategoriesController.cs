@@ -6,6 +6,7 @@ using webapi.Exceptions;
 using webapi.Models;
 using webapi.Services.CategoryServices;
 using webapi.Models.DTO.CategoryDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace webapi.Controllers
 {
@@ -14,6 +15,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _service;

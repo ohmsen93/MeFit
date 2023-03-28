@@ -23,6 +23,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class WorkoutsController : ControllerBase
     {
         private readonly IWorkoutService _service;
