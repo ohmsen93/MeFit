@@ -159,3 +159,29 @@
     color:white;
     font-family: "Poiret One";
 }
+
+/* WorkoutsOverview */
+
+#Workouts{
+    position:relative;
+    font-size: 16pt;  
+}
+
+.workouts-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: "Poiret One";
+}
+
+/* ExercisesOverview */
+
+#Exercises{
+    position:relative;
+    font-size: 16pt;  
+}
+
+.exercises-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: "Poiret One";
+}
