@@ -2,7 +2,7 @@ import keycloak from "../keycloak"
 
 // FETCH
 export const fetchWorkouts = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/workouts")
+    // console.log(process.env.REACT_APP_API_URL + "/workouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/workouts", {
             headers: {
@@ -23,7 +23,7 @@ export const fetchWorkouts = async () => {
 
 // POST
 export const postWorkout = async (workout) => {
-    console.log(process.env.REACT_APP_API_URL + "/workouts")
+    // console.log(process.env.REACT_APP_API_URL + "/workouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/workouts", {
             method: 'POST',
@@ -46,7 +46,7 @@ export const postWorkout = async (workout) => {
 
 // PATCH
 export const patchWorkout = async (workoutId, newWorkout) => {
-    console.log(process.env.REACT_APP_API_URL + "/workouts")
+    // console.log(process.env.REACT_APP_API_URL + "/workouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/workouts/" + workoutId, {
             method: 'PATCH',
@@ -67,7 +67,7 @@ export const patchWorkout = async (workoutId, newWorkout) => {
     }
 }
 export const patchWorkoutExercises = async (workoutId, newExercises) => {
-    console.log(process.env.REACT_APP_API_URL + "/workouts")
+    // console.log(process.env.REACT_APP_API_URL + "/workouts")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/workouts/" + workoutId + "/exercises", {
             method: 'PATCH',

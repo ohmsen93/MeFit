@@ -9,10 +9,10 @@ function UserAddressCard(props) {
     
     useEffect(() => {
 
-        if (props.updateRequired != undefined){
+        if (props.updateRequired != undefined || props.updateRequired != null) {
             setUpdate(props.updateRequired)
         }
-        else {
+        else if (props.userData.adressData != null || props.userData.adressData != undefined) {
             setUpdate(props.userData.adressData)
         }
         

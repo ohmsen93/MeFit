@@ -6,7 +6,28 @@ import keycloak from '../../keycloak';
 
 function UserFitnessModal(props) {
 
+    const [form, setForm] = useState({
+        weight: props?.onUserData?.profileData?.weight,
+        height: props?.onUserData?.profileData?.height,
+        medicalCondition: props?.onUserData?.profileData?.medicalCondition,
+        disabilities: props?.onUserData?.profileData?.disabilities
+    });
 
+    const [errors, setErrors] = useState({});
+
+    const setField = (field, value) => {
+        setForm({
+            ...form,
+            [field]: value
+        })
+
+        if (!!errors[field]) {
+            setErrors({
+                ...errors,
+                [field]: null
+            })
+        }
+    }
     function defaultDataHandler() {
         // if it's the first time user is prompted to enter information available keycloak data will be used
         let modalData;
@@ -14,10 +35,10 @@ function UserFitnessModal(props) {
             modalData = {
                 key: UserFitnessModal.name,
                 card: "UserFitnessCard",
-                weight: props.onUserData.profileData.weight || 0.0,
-                height: props.onUserData.profileData.height || 0.0,
-                medicalCondition: props.onUserData.profileData.medicalCondition || "",
-                disabilities: props.onUserData.profileData.disabilities || ""
+                weight: props?.onUserData?.profileData?.weight || 0.0,
+                height: props?.onUserData?.profileData?.height || 0.0,
+                medicalCondition: props?.onUserData?.profileData?.medicalCondition || "",
+                disabilities: props?.onUserData?.profileData?.disabilities || ""
             }
             return modalData;
         }
@@ -50,14 +71,35 @@ function UserFitnessModal(props) {
         props.onModalClose();
     }
 
-    function handleSave() {
-        props.onSave(modalData);
-        handleClose();
+    function validateForm() {
+        const { weight, height, medicalCondition, disabilities } = form;
+        const newErrors = {};
+
+        if (!weight || weight === '') { newErrors.weight = "Please Enter Your Weight" }
+        if (!height || height === '') { newErrors.height = "Please Enter Your Height" }
+        if (!medicalCondition || medicalCondition === '') { newErrors.medicalCondition = "Write ? if no known issues exist" }
+        if (!disabilities || disabilities.length === '') { newErrors.disabilities = "Write ? if no known issues exist" }
+
+
+        return newErrors;
     }
+
+    function handleSave(event) {
+        event.preventDefault();
+
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+        } else {
+            props.onSave(modalData);
+            handleClose();
+        }
+    }
+
 
     return (
         <Modal show={show} aria-labelledby="contained-modal-title-vcenter">
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Personal Fitness Information</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -69,9 +111,13 @@ function UserFitnessModal(props) {
                             required
                             type="number"
                             defaultValue={modalData?.weight || ""}
-                            onChange={handleChange}
-                            placeholder="weight in kg">
+                            onChange={(e) => { handleChange(e); setField('weight', e.target.value); }}
+                            placeholder="weight in kg"
+                            isInvalid={!!errors.weight}>
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.weight}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Height</Form.Label>
@@ -80,9 +126,13 @@ function UserFitnessModal(props) {
                             required
                             type="number"
                             defaultValue={modalData?.height || ""}
-                            onChange={handleChange}
-                            placeholder="height in cm">
+                            onChange={(e) => { handleChange(e); setField('height', e.target.value); }}
+                            placeholder="height in cm"
+                            isInvalid={!!errors.height}>
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.height}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>MedicalCondition</Form.Label>
@@ -91,9 +141,13 @@ function UserFitnessModal(props) {
                             required
                             type="text"
                             defaultValue={modalData?.medicalCondition || ""}
-                            onChange={handleChange}
-                            placeholder="">
+                            onChange={(e) => { handleChange(e); setField('medicalCondition', e.target.value); }}
+                            placeholder=""
+                            isInvalid={!!errors.medicalCondition}>
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.medicalCondition}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Disabilities</Form.Label>
@@ -102,9 +156,13 @@ function UserFitnessModal(props) {
                             required
                             type="text"
                             defaultValue={modalData?.disabilities || ""}
-                            onChange={handleChange}
-                            placeholder="">
+                            onChange={(e) => { handleChange(e); setField('disabilities', e.target.value); }}
+                            placeholder=""
+                            isInvalid={!!errors.disabilities}>
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.disabilities}
+                        </Form.Control.Feedback>
                     </Form.Group>
                 </Form>
             </Modal.Body>
@@ -113,7 +171,7 @@ function UserFitnessModal(props) {
                     ? <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
                     : <>
                         <Button variant="primary" onClick={(e => handleClose())}> Close </Button>
-                        <Button variant="primary" onClick={(e => handleSave())}> Save Changes </Button>
+                        <Button variant="primary" onClick={(e => handleSave(e))}> Save Changes </Button>
                     </>
                 }
             </Modal.Footer>

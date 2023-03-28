@@ -165,7 +165,7 @@ export const patchAddressById = async (payload, data) => {
                 postalCode: parseInt(payload.postalCode),
             })
         }
-        console.log(payload);
+        
         await fetch(process.env.REACT_APP_API_URL + `/addresses/${data.profileData.fkAddressId}`, addressPatch);
 
 

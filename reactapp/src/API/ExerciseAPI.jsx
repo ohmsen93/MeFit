@@ -2,7 +2,7 @@ import keycloak from "../keycloak"
 
 // FETCH
 export const fetchExercises = async () => {
-    console.log(process.env.REACT_APP_API_URL + "/exercises")
+    // console.log(process.env.REACT_APP_API_URL + "/exercises")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises", {
             headers: {
@@ -23,7 +23,7 @@ export const fetchExercises = async () => {
 
 // POST
 export const postExercise = async (exercise) => {
-    console.log(process.env.REACT_APP_API_URL + "/exercises")
+    // console.log(process.env.REACT_APP_API_URL + "/exercises")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises", {
             method: 'POST',
@@ -46,7 +46,7 @@ export const postExercise = async (exercise) => {
 
 // PATCH
 export const patchExercise = async (exerciseId, newExercise) => {
-    console.log(process.env.REACT_APP_API_URL + "/exercises")
+    // console.log(process.env.REACT_APP_API_URL + "/exercises")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises/" + exerciseId, {
             method: 'PATCH',
@@ -67,7 +67,7 @@ export const patchExercise = async (exerciseId, newExercise) => {
     }
 }
 export const patchExerciseMusclegroups = async (exerciseId, newMusclegroups) => {
-    console.log(process.env.REACT_APP_API_URL + "/exercises")
+    // console.log(process.env.REACT_APP_API_URL + "/exercises")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises/" + exerciseId + "/musclegroups", {
             method: 'PATCH',
@@ -88,7 +88,7 @@ export const patchExerciseMusclegroups = async (exerciseId, newMusclegroups) => 
     }
 }
 export const patchExerciseSets = async (exerciseId, newSets) => {
-    console.log(process.env.REACT_APP_API_URL + "/exercises")
+    // console.log(process.env.REACT_APP_API_URL + "/exercises")
     try {
         const request = await fetch(process.env.REACT_APP_API_URL + "/exercises/" + exerciseId + "/sets", {
             method: 'PATCH',
