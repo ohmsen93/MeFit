@@ -23,7 +23,6 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    [Authorize]
     public class AddressesController : ControllerBase
     {
         private readonly IAddressService _service;
