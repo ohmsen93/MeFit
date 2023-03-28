@@ -11,7 +11,7 @@ const GoalSelectionList = props => {
                         props.goals.map(goal => 
                             <div className="d-flex flex-column" key={goal.id}>
                                 <input onChange={e => props.goalSelected(e, goal)} type={props.type} name="goal-list" id={`goal-${goal.id}`} className="btn-check"/>
-                                <label htmlFor={`goal-${goal.id}`} className="btn btn-outline-light">Goal {goal.id}</label>
+                                <label htmlFor={`goal-${goal.id}`} className="btn btn-secondary border">Goal {goal.id}</label>
                             </div>
                         )}
                         {/* <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>

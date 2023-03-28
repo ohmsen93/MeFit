@@ -74,9 +74,6 @@
     font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
 }
 
-.goalList label{
-    font-size: 20pt;
-}
 
 .goalList .btn:hover{
     background-color: #d4d4d4;
@@ -189,4 +186,9 @@
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
 
+}
+
+#Goals{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
 }
