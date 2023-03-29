@@ -14,3 +14,6 @@ Is a fitness web application that help users to keep track of their weekly baise
 3. Use Visual Studio to open the project
 4. Choose reactapp project and run npm install in the terminal
 5. Choose webapi project and run update-database from Ng Package Manage Console
+
+
+Website url : https://me-fit-hostilelogout.vercel.app/
