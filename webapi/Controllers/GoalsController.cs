@@ -112,7 +112,7 @@ namespace webapi.Controllers
         // POST: api/Goals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = "Admin,Contributor,Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<ActionResult<Goal>> PostGoal(GoalCreateDto goalCreateDto)
         {
             var goal = _mapper.Map<Goal>(goalCreateDto);
