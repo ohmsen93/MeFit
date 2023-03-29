@@ -1,29 +1,27 @@
 
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-let update;
+function UserProfileCard(props) {
 
-function UserProfileCard (props) {
-    
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate(); console.log(props.updateRequired);}
+    const [update, setUpdate] = useState();
 
-    function handleOpenModal (){
+    useEffect(() => {
+
+        if (props.updateRequired != undefined || props.updateRequired != null) {
+            setUpdate(props.updateRequired)
+        }
+        else if (props.userData.profileData != null || props.userData.profileData != undefined) {
+            setUpdate(props.userData.profileData)
+        }
+
+    }, [props.updateRequired, props.userData.profileData])
+
+    function handleOpenModal() {
         props.onModalOpen("UserInformationModal");
     }
-
-    function handleUpdate() {
-        console.log("UserProfileCard");
-        update = props.updateRequired;
-        handleAfterUpdate();
-        
-    }
-
-    function handleAfterUpdate() {
-        props.afterUpdate();
-    }
-
 
     return (
         <Card>
@@ -35,7 +33,7 @@ function UserProfileCard (props) {
                         <Form.Control
                             readOnly
                             name="firstName"
-                            defaultValue={update?.firstName || ""}
+                            defaultValue={update?.firstName || update?.firstname}
                             type="text"
                             placeholder="first name">
                         </Form.Control>
@@ -46,7 +44,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="lastName"
                             type="text"
-                            defaultValue={update?.lastName || ""}
+                            defaultValue={update?.lastName || update?.lastname}
                             placeholder="last name">
                         </Form.Control>
                     </Form.Group>
@@ -56,7 +54,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="email"
                             type="email"
-                            defaultValue={update?.email || ""}
+                            defaultValue={update?.email}
                             placeholder="example@gmail.com">
                         </Form.Control>
                     </Form.Group>
@@ -66,7 +64,7 @@ function UserProfileCard (props) {
                             readOnly
                             name="phoneNumber"
                             type="tel"
-                            defaultValue={update?.phoneNumber || ""}
+                            defaultValue={update?.phoneNumber || update?.phone}
                             placeholder="45+11111111">
                         </Form.Control>
                     </Form.Group>
@@ -75,7 +73,7 @@ function UserProfileCard (props) {
                         <Form.Control
                             readOnly
                             name="profilePicture"
-                            defaultValue={update?.profilePicture || ""}
+                            defaultValue={update?.profilePicture || update?.picture}
                             type="file">
                         </Form.Control>
                     </Form.Group>

@@ -7,7 +7,30 @@ import keycloak from '../../keycloak';
 
 function UserInformationModal(props) {
 
-    function defaultDataHandler ()  {
+    const [form, setForm] = useState({
+        firstName: props?.onUserData?.profileData?.firstname || keycloak.tokenParsed?.firstName,
+        lastName:  props?.onUserData?.profileData?.lastName || keycloak.tokenParsed?.lastName,
+        email:  props?.onUserData?.profileData?.email || keycloak.tokenParsed?.email,
+        phoneNumber:  props?.onUserData?.profileData?.phone
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const setField = (field, value) => {
+        setForm({
+            ...form,
+            [field]: value
+        })
+
+        if (!!errors[field]) {
+            setErrors({
+                ...errors,
+                [field]: null
+            })
+        }
+    }
+
+    function defaultDataHandler() {
         // if it's the first time user is prompted to enter information available keycloak data will be used
         let modalData;
         if (props.onFirstLogin) {
@@ -17,26 +40,37 @@ function UserInformationModal(props) {
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
                 email: keycloak.tokenParsed?.email || "",
-                phoneNumber: "",
-                profilePicture: ""
+                phoneNumber: props?.onUserData?.profileData?.phone || 0,
+                profilePicture: props?.onUserData?.profileData?.picture || ""
             }
             return modalData;
         }
-        else{
+        else {
             // check database for data to populate the modal
+            modalData = {
+                key: UserInformationModal.name,
+                id: props?.onUserData?.userData?.id || "",
+                card: "UserProfileCard",
+                firstName: props.onUserData.profileData.firstname || "",
+                lastName: props.onUserData.profileData.lastname || "",
+                email: props.onUserData.profileData.email || "",
+                phoneNumber: props.onUserData.profileData.phone || 0,
+                profilePicture: props.onUserData.profileData.picture || ""
+            }
+            return modalData
         }
+
     }
 
     const [show, setShow] = useState(props.requestOpen)
 
-    const [modalData, setModalData] = useState(defaultDataHandler())
-
-    
+    const [modalData, setModalData] = useState(defaultDataHandler());
 
     function handleChange(event) {
         const key = event.target.name;
         const value = event.target.value;
         setModalData({ ...modalData, [key]: value })
+        console.log(form);
     }
 
     function handleClose() {
@@ -45,71 +79,117 @@ function UserInformationModal(props) {
     }
 
     function handleNext(event) {
-        props.onHandleNext(event, modalData, modalData.key);
+        event.preventDefault();
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+        } else {
+            props.onHandleNext(event, modalData, modalData.key);
+        }
+        
+    }
+   
+    function validateForm() {
+        const { firstName, lastName, email, phoneNumber } = form;
+        const newErrors = {};
+
+        if (!firstName || firstName === '') { newErrors.firstName = "Please Enter Your First Name" }
+        if (!lastName || lastName === '') { newErrors.lastName = "Please Enter Your Last Name" }
+        if (!email || email === '') { newErrors.email = "Please Enter Your Email" }
+        if (!phoneNumber || phoneNumber.length === 0) { newErrors.phoneNumber = "Please Enter Your Phone Number" }
+        else if (!phoneNumber || phoneNumber.length < 8) { newErrors.phoneNumber = "Please Enter A 8 Digit Phone Number" }
+        
+        return newErrors;
     }
 
     function handleSave(event) {
-        props.onSave(event, modalData);
-        handleClose();
+        event.preventDefault();
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+        } else {
+            props.onSave(modalData);
+            handleClose();
+        }
     }
 
     return (
         <Modal show={show} aria-labelledby="contained-modal-title-vcenter">
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Personal Information</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Group className="mb-3" controlId="">
+                    <Form.Group className="mb-3">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control
                             name="firstName"
+                            defaultValue={modalData?.firstName || ""}
                             required
-                            defaultValue={modalData.firstName || ""}
                             type="text"
-                            onChange={handleChange}
-                            placeholder="first name">
+                            onChange={(e) => { handleChange(e); setField('firstName', e.target.value); }}
+                            placeholder="first name"
+                            isInvalid={!!errors.firstName}
+                        >
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.firstName}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control
                             name="lastName"
                             required
-                            defaultValue={modalData.lastName || ""}
+                            defaultValue={modalData?.lastName || ""}
                             type="text"
-                            onChange={handleChange}
-                            placeholder="last name">
+                            onChange={(e) => { handleChange(e); setField('lastName', e.target.value); }}
+                            placeholder="last name"
+                            isInvalid={!!errors.lastName}
+                        >
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.lastName}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             name="email"
                             required
-                            defaultValue={modalData.email || ""}
+                            defaultValue={modalData?.email || ""}
                             type="email"
-                            onChange={handleChange}
-                            placeholder="example@gmail.com">
+                            onChange={(e) => { handleChange(e); setField('email', e.target.value); }}
+                            placeholder="example@gmail.com"
+                            isInvalid={!!errors.email}
+                        >
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.email}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                             name="phoneNumber"
                             required
-                            type="tel"
-                            defaultValue={modalData.phoneNumber || ""}
-                            onChange={handleChange}
-                            placeholder="45+11111111">
+                            type="number"
+                            defaultValue={modalData?.phoneNumber || ""}
+                            onChange={(e) => { handleChange(e); setField('phoneNumber', e.target.value); }}
+                            placeholder="45+11111111"
+                            isInvalid={!!errors.phoneNumber}
+                        >
                         </Form.Control>
+                        <Form.Control.Feedback type='invalid'>
+                            {errors.phoneNumber}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Profile picture</Form.Label>
                         <Form.Control
                             name="profilePicture"
                             required
-                            defaultValue={modalData.profilePicture || ""}
+                            defaultValue={modalData?.profilePicture || ""}
                             onChange={handleChange}
                             type="file">
                         </Form.Control>

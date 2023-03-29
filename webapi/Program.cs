@@ -45,6 +45,7 @@ namespace webapi
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
             builder.Services.AddTransient<IGoalService, GoalService>();
             builder.Services.AddTransient<ICategoryService, CategoryService>();
+            builder.Services.AddCors();
 
             // Add middleware
 
@@ -52,11 +53,12 @@ namespace webapi
             builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             // Add controllers and database context to the container
-            //builder.Services.AddControllers().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            //});
-
+            /*
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+            */
             builder.Services.AddControllers();
 
 
@@ -80,7 +82,7 @@ namespace webapi
                     Description = "This API provides access to information about the MeFit application.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Emil Bo Solgaard Utsen, Farhang Younis, Mads Ohmsen, Simon Løvschal",
+                        Name = "Emil Bo Solgaard Utsen, Farhang Younis, Mads Ohmsen, Simon LÃ¸vschal",
                         Url = new Uri("https://github.com/hostilelogout/MeFit/tree/main/webapi")
                     },
                     License = new OpenApiLicense

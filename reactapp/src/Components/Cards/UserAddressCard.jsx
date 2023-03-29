@@ -1,29 +1,29 @@
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-let update;
-
 function UserAddressCard(props) {
 
-    if (props.updateRequired != null || props.updateRequired != undefined) { handleUpdate()}
+    const [update,setUpdate] = useState();
+    
+    useEffect(() => {
 
+        if (props.updateRequired != undefined || props.updateRequired != null) {
+            setUpdate(props.updateRequired)
+        }
+        else if (props.userData.adressData != null || props.userData.adressData != undefined) {
+            setUpdate(props.userData.adressData)
+        }
+        
+    },[props.updateRequired,props.userData.adressData])
+    
     function handleOpenModal() {
         props.onModalOpen("UserAddressModal");
     }
 
-    function handleUpdate() {
-        console.log("UserAddressCard");
-        update = props.updateRequired;
-        handleAfterUpdate();
-    }
-
-    function handleAfterUpdate() {
-        props.afterUpdate();
-    }
-
     return (
-        <Card>
+        <Card className='mt-5'>
             <Card.Header as="h5">Address Information</Card.Header>
             <Card.Body>
                 <Form>
@@ -31,8 +31,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                             readOnly
-                            name="address"
-                            defaultValue={update?.address || ""}
+                            name="addressLine1"
+                            defaultValue={update?.addressLine1}
                             type="text"
                             placeholder="required">
                         </Form.Control>
@@ -41,8 +41,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address 1</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressSecond"
-                            defaultValue={update?.addressSecond || ""}
+                            name="addressLine2"
+                            defaultValue={update?.addressLine2}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -51,8 +51,8 @@ function UserAddressCard(props) {
                         <Form.Label>Address 2</Form.Label>
                         <Form.Control
                             readOnly
-                            name="addressThird"
-                            defaultValue={update?.addressThird || ""}
+                            name="addressLine3"
+                            defaultValue={update?.addressLine3}
                             type="text"
                             placeholder="">
                         </Form.Control>
@@ -62,7 +62,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="postalCode"
-                            defaultValue={update?.postalCode || ""}
+                            defaultValue={update?.postalCode}
                             required
                             type="number"
                             placeholder="Example : 8260 would be Viby j">
@@ -73,7 +73,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="city"
-                            defaultValue={update?.city || ""}
+                            defaultValue={update?.city}
                             required
                             type="text"
                             placeholder="Example Viby j">
@@ -84,7 +84,7 @@ function UserAddressCard(props) {
                         <Form.Control
                             readOnly
                             name="country"
-                            defaultValue={update?.country || ""}
+                            defaultValue={update?.country}
                             required
                             type="text"
                             placeholder="Example Denmark">
