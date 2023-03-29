@@ -133,12 +133,15 @@ namespace webapi.Controllers
         [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Workout>> PostWorkout(WorkoutCreateDto workoutCreateDto)
         {
+            var userProfile = await _service.GetUserProfile(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             var workout = _mapper.Map<Workout>(workoutCreateDto);
-            await _service.Create(workout,workoutCreateDto.ExerciseIds);
+            //await _service.Create(workout,workoutCreateDto.ExerciseIds);
+            await _service.Create(workout, workoutCreateDto.ExerciseIds, userProfile.Id);
 
             //var workoutUpdateExercisesDto = new WorkoutUpdateExercisesDto { ExerciseIds = workoutCreateDto.ExerciseIds };
             //await _service.UpdateWorkoutExercises(workout.Id, workoutUpdateExercisesDto.ExerciseIds);
-            
+
             var WorkoutReadDto = _mapper.Map<WorkoutReadDto>(workout);
             return CreatedAtAction(nameof(GetWorkout), new { id = workout.Id }, WorkoutReadDto);
         }
