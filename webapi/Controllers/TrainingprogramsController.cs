@@ -40,7 +40,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Admin,Contributor")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Trainingprogram>>> GetTrainingprograms()
         {
             return Ok(_mapper.Map<ICollection<TrainingprogramReadDto>>(await _service.GetAll()));
@@ -52,7 +52,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Contributor")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Trainingprogram>> GetTrainingprogram(int id)
         {
             try
