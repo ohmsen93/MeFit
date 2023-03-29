@@ -23,7 +23,7 @@ const GoalCreation = () => {
     useEffect(() => {
         const getPrograms = async () => {
             const ps = await fetchPrograms()
-            console.log(ps)
+            // console.log(ps)
             setPrograms(ps)
         }
         getPrograms()
@@ -31,7 +31,7 @@ const GoalCreation = () => {
     useEffect(() => {
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
-            console.log(ws)
+            // console.log(ws)
             setWorkouts(ws.reverse())
         }
         getWorkouts()
@@ -39,28 +39,28 @@ const GoalCreation = () => {
     useEffect(() => {
         const getExercises = async () => {
             const es = await fetchExercises()
-            console.log(es)
+            // console.log(es)
             setExercises(es)
         }
         getExercises()
     }, [])
 
     const changeTab = tab => {
-        console.log(tab)
+        // console.log(tab)
         setState({...state, tab, selectedProgram: null, selectedWorkouts: []})
     }
     const programSelected = (event, program) => {
-        console.log(program)
+        // console.log(program)
         if (event.target.checked) setState({...state, selectedProgram: program})
         else setState({...state, selectedProgram: null})
     }
     const workoutSelected = (event, workout) => {
-        console.log(workout)
+        // console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkouts: [...state.selectedWorkouts, workout]})
         else setState({...state, selectedWorkouts: state.selectedWorkouts.filter(w => w.id !== workout.id)})
     }
     const exerciseSelected = (event, exercise) => {
-        console.log(exercise)
+        // console.log(exercise)
         if (event.target.checked) setState({...state, selectedExercises: [...state.selectedExercises, exercise]})
         else setState({...state, selectedExercises: [state.selectedExercises.filter(e => e.id !== exercise.id)]})
     }
@@ -75,7 +75,7 @@ const GoalCreation = () => {
             }
             const w = await postWorkout(workout)
             setWorkouts([w, ...workouts])
-            console.log(w)
+            // console.log(w)
             
             changeTab("workout")
         }
@@ -90,14 +90,9 @@ const GoalCreation = () => {
             <div id="GoalCreationForm" className="d-flex flex-column align-items-center hpx-720 mt-5 p-5 contentBox">
                 <div className="d-flex flex-fill wp-100 min-h-0">
                     <div className="d-flex flex-column text-center wp-50 p-2">
-
-                        {/* GoalCreationForm */}
-                        {/* <GoalCreationContext.Provider value={{program: state.selectedProgram, workouts: state.selectedWorkouts}}> */}
-                            <GoalCreationForm program={state.selectedProgram} workouts={state.selectedWorkouts}/>
-                        {/* </GoalCreationContext.Provider> */}
-
+                        <GoalCreationForm program={state.selectedProgram} workouts={state.selectedWorkouts}/>
                     </div>
-                    <div className="d-flex flex-column wp-100 overflow-y-scroll">
+                    <div className="d-flex flex-column wp-100">
                         
                         {/* Tabs */}
                         <div  >
@@ -110,22 +105,16 @@ const GoalCreation = () => {
                         </div>
 
                         {state.tab === "program" && 
-                            // <GoalCreationContext.Provider value={programSelected}>
-                                <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected} k={1}/>
-                            // </GoalCreationContext.Provider>
+                            <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected} k={1}/>
                         }
 
                         {state.tab === "workout" && 
-                            // <GoalCreationContext.Provider value={workoutSelected}>
-                                <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected} k={1}/>
-                            // </GoalCreationContext.Provider>
+                            <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected} k={1}/>
                         }
 
                         {state.tab === "exercise" && 
                             <>
-                            {/* <GoalCreationContext.Provider value={{workoutSelected, changeTab}}> */}
-                                <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected} k={1}/>
-                            {/* </GoalCreationContext.Provider> */}
+                            <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected} k={1}/>
                             
                             <form onSubmit={submitWorkout} className="text-center input-group p-2">
                                 <input className="form-control" type="text" placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>

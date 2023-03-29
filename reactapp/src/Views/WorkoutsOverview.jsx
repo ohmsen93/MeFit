@@ -20,7 +20,7 @@ const WorkoutsOverview = props => {
         // setWorkouts("loading")
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
-            console.log(ws)
+            // console.log(ws)
             setWorkouts(ws.reverse())
         }
         getWorkouts()
@@ -29,14 +29,14 @@ const WorkoutsOverview = props => {
         // setExercises("loading")
         const getExercises = async () => {
             const es = await fetchExercises()
-            console.log(es)
+            // console.log(es)
             setExercises(es.reverse())
         }
         getExercises()
     }, [])
 
     const workoutSelected = (event, workout) => {
-        console.log(workout)
+        // console.log(workout)
         if (event.target.checked) {
             setState({...state, selectedWorkout: workout})
             setWExercises(exercises?.filter(e => workout.exercises?.includes(e.id)) || [])
@@ -44,12 +44,12 @@ const WorkoutsOverview = props => {
         else setState({...state, selectedWorkout: null})
     }
     const exerciseSelected = (event, exercise) => {
-        console.log(exercise)
+        // console.log(exercise)
         if (event.target.checked) setState({...state, selectedExercise: exercise})
         else setState({...state, selectedExercise: null})
     }
     const wExerciseSelected = (event, exercise) => {
-        console.log(exercise)
+        // console.log(exercise)
         if (event.target.checked) setState({...state, selectedWExercise: exercise})
         else setState({...state, selectedWExercise: null})
     }
@@ -108,21 +108,6 @@ const WorkoutsOverview = props => {
                         workouts[index] = nw
                         setState({...state, selectedWorkout: nw})
                     }
-                    // const w = {
-                    //     id: state.selectedWorkout.id,
-                    //     name: event.target[0].value,
-                    //     type: event.target[1].value,
-                    //     exerciseIds: wExercises.map(e => e.id)
-                    // }
-                    // console.log(w)
-                    // patchWorkout(state.selectedWorkout.id, w)
-                    //     .then(r => {
-                    //         const index = workouts.indexOf(state.selectedWorkout)
-                    //         if (index > -1) {
-                    //             workouts[index] = r
-                    //             setState({...state, selectedWorkout: r})
-                    //         }
-                    //     })
                 }
                 else alert("Must select a workout to save")
             }
@@ -135,7 +120,7 @@ const WorkoutsOverview = props => {
                 console.log(w)
                 postWorkout(w)
                     .then(r => {
-                        console.log(r)
+                        // console.log(r)
                         setWorkouts([r, ...workouts])
                     })
             }
