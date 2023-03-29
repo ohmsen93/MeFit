@@ -23,7 +23,7 @@ function UserAddressCard(props) {
     }
 
     return (
-        <Card>
+        <Card className='mt-5'>
             <Card.Header as="h5">Address Information</Card.Header>
             <Card.Body>
                 <Form>

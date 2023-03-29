@@ -24,7 +24,7 @@ function Navbar() {
 
   const { auth, role, setAuth } = useAuth();
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-4">
       <a className="navbar-brand" >MeFit</a>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>

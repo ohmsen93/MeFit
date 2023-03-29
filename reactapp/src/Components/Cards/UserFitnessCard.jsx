@@ -23,7 +23,7 @@ function UserFitnessCard(props) {
     }
 
     return (
-        <Card>
+        <Card className='mt-5 mb-5'>
             <Card.Header as="h5">Fitness Information</Card.Header>
             <Card.Body>
                 <Form>

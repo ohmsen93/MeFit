@@ -6,6 +6,8 @@ import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import GoalCreationForm from "../Components/Goal/GoalCreationForm";
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList";
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList";
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
+
 
 const GoalCreation = () => {
     const [state, setState] = useState({
@@ -81,56 +83,61 @@ const GoalCreation = () => {
     }
 
     return (
-        <div className="d-flex flex-column align-items-center hpx-720 p-5">
-            <div className="d-flex flex-fill border wp-100 min-h-0">
-                <div className="d-flex flex-column text-center wp-50 p-2">
+        <>
+            <div class="bg">
+                <img src={Background} alt=""/>
+            </div>
+            <div id="GoalCreationForm" className="d-flex flex-column align-items-center hpx-720 mt-5 p-5 contentBox">
+                <div className="d-flex flex-fill wp-100 min-h-0">
+                    <div className="d-flex flex-column text-center wp-50 p-2">
 
-                    {/* GoalCreationForm */}
-                    {/* <GoalCreationContext.Provider value={{program: state.selectedProgram, workouts: state.selectedWorkouts}}> */}
-                        <GoalCreationForm program={state.selectedProgram} workouts={state.selectedWorkouts}/>
-                    {/* </GoalCreationContext.Provider> */}
-
-                </div>
-                <div className="d-flex flex-column wp-100">
-                    
-                    {/* Tabs */}
-                    <div>
-                        <input onChange={() => changeTab("program")} type="radio" name="tab-radio" id="program-tab" checked={state.tab === "program"} className="btn-check"/>
-                        <label htmlFor="program-tab" className="btn btn-outline-secondary">Programs</label>
-                        <input onChange={() => changeTab("workout")} type="radio" name="tab-radio" id="workout-tab" checked={state.tab === "workout"} className="btn-check"/>
-                        <label htmlFor="workout-tab" className="btn btn-outline-secondary">Workouts</label>
-                        <input onChange={() => changeTab("exercise")} type="radio" name="tab-radio" id="exercise-tab" checked={state.tab === "exercise"} className="btn-check"/>
-                        <label htmlFor="exercise-tab" className="btn btn-outline-secondary">Create Workout</label>
-                    </div>
-
-                    {state.tab === "program" && 
-                        // <GoalCreationContext.Provider value={programSelected}>
-                            <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected} k={1}/>
-                        // </GoalCreationContext.Provider>
-                    }
-
-                    {state.tab === "workout" && 
-                        // <GoalCreationContext.Provider value={workoutSelected}>
-                            <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected} k={1}/>
-                        // </GoalCreationContext.Provider>
-                    }
-
-                    {state.tab === "exercise" && 
-                        <>
-                        {/* <GoalCreationContext.Provider value={{workoutSelected, changeTab}}> */}
-                            <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected} k={1}/>
+                        {/* GoalCreationForm */}
+                        {/* <GoalCreationContext.Provider value={{program: state.selectedProgram, workouts: state.selectedWorkouts}}> */}
+                            <GoalCreationForm program={state.selectedProgram} workouts={state.selectedWorkouts}/>
                         {/* </GoalCreationContext.Provider> */}
+
+                    </div>
+                    <div className="d-flex flex-column wp-100 overflow-y-scroll">
                         
-                        <form onSubmit={submitWorkout} className="text-center">
-                            <input type="text" placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
-                            <button type="submit" className="btn btn-outline-secondary">Save workout</button>
-                        </form>
-                        </>
-                    }
-                
+                        {/* Tabs */}
+                        <div  >
+                            <input onChange={() => changeTab("program")} type="radio" name="tab-radio" id="program-tab" checked={state.tab === "program"} className="btn-check"/>
+                            <label htmlFor="program-tab" className="btn btn-secondary border">Programs</label>
+                            <input onChange={() => changeTab("workout")} type="radio" name="tab-radio" id="workout-tab" checked={state.tab === "workout"} className="btn-check"/>
+                            <label htmlFor="workout-tab" className="btn btn-secondary border">Workouts</label>
+                            <input onChange={() => changeTab("exercise")} type="radio" name="tab-radio" id="exercise-tab" checked={state.tab === "exercise"} className="btn-check"/>
+                            <label htmlFor="exercise-tab" className="btn btn-secondary border">Create Workout</label>
+                        </div>
+
+                        {state.tab === "program" && 
+                            // <GoalCreationContext.Provider value={programSelected}>
+                                <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected} k={1}/>
+                            // </GoalCreationContext.Provider>
+                        }
+
+                        {state.tab === "workout" && 
+                            // <GoalCreationContext.Provider value={workoutSelected}>
+                                <WorkoutSelectionList type="checkbox" workouts={workouts} workoutSelected={workoutSelected} k={1}/>
+                            // </GoalCreationContext.Provider>
+                        }
+
+                        {state.tab === "exercise" && 
+                            <>
+                            {/* <GoalCreationContext.Provider value={{workoutSelected, changeTab}}> */}
+                                <ExerciseSelectionList type="checkbox" exercises={exercises} exerciseSelected={exerciseSelected} k={1}/>
+                            {/* </GoalCreationContext.Provider> */}
+                            
+                            <form onSubmit={submitWorkout} className="text-center input-group p-2">
+                                <input className="form-control" type="text" placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
+                                <button type="submit" className="btn btn-secondary border">Save workout</button>
+                            </form>
+                            </>
+                        }
+                    
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -72,7 +72,7 @@ const GoalCreationForm = props => {
                 <input onChange={e => setState({...state, endDate: e.target.value})} type="date" min={state.startDate} id="start-date" required/>
             </div>
             <div>
-                <button type="submit" className="btn btn-outline-secondary">Save goal</button>
+                <button type="submit" className="btn btn-secondary border">Save goal</button>
             </div>
         </form>
         </>
