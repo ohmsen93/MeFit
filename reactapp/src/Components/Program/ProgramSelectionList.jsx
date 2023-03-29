@@ -2,7 +2,7 @@
 const ProgramSelectionList = props => {
 
     return (
-        <div className="d-flex flex-column flex-fill align-items-center border wp-100 min-h-0 p-2">
+        <div className="d-flex flex-column flex-fill align-items-center wp-100 min-h-0 p-2">
             <p>Programs:</p>
             {/* <GoalCreationContext.Consumer>
                 {(programSelected) => ( */}
@@ -11,7 +11,7 @@ const ProgramSelectionList = props => {
                         props.programs.map(program => 
                             <div className="d-flex flex-column" key={program.id}>
                                 <input onChange={e => props.programSelected(e, program)} type={props.type} name="program-list-radio" id={`program-${program.id}`} className="btn-check"/>
-                                <label htmlFor={`program-${program.id}`} className="btn btn-outline-secondary">{program.name}</label>
+                                <label htmlFor={`program-${program.id}`} className="btn btn-secondary border">{program.name}</label>
                             </div>
                         )}
                         {/* <input onChange={e => programSelected(e, {id: 1, name: "Program A"})} type="radio" name="program-list-radio" id="program-radio-1" className="btn-check"/>

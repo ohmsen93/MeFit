@@ -21,12 +21,12 @@ namespace webapi.Services.WorkoutServices
             return entity;
         }
 
-        public async Task<Workout> Create(Workout entity,List<int> exercises)
+        public async Task<Workout> Create(Workout entity,List<int> exercises, int userProfileId )
         {
             if (entity.Type.ToLower() == "custom")
             {
                 //find profile id then assign to the workout
-                entity.FkUserProfileId = 3;
+                entity.FkUserProfileId = userProfileId;
             }
             else
             {
@@ -182,6 +182,15 @@ namespace webapi.Services.WorkoutServices
             await _context.SaveChangesAsync();
         }
 
+        public async Task<UserProfile> GetUserProfile(string id)
+        {
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.FkUserId == id);
 
+            if (userProfile == null)
+            {
+                throw new EntityNotFoundException(id, nameof(UserProfile));
+            }
+            return userProfile;
+        }
     }
 }

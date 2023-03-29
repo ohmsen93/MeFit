@@ -4,6 +4,7 @@ import { fetchWorkouts, patchWorkout, postWorkout, patchWorkoutExercises } from 
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { typeCompare } from "../Util/SortHelper"
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
 
 const WorkoutsOverview = props => {
     const [state, setState] = useState({
@@ -144,25 +145,32 @@ const WorkoutsOverview = props => {
 
     return (
         <>
-        <div className="d-flex flex-column align-items-center hpx-720 p-5">
-            <div className="d-flex flex-fill border wp-100 min-h-0">
-                <div className="d-flex flex-column text-center wp-100">
-                    Sort by: <button onClick={workoutsSort} className="btn btn-outline-secondary">Type</button>
-                    <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
+        <div className="bg">
+            <img src={Background} alt=""/>
+        </div>
+        <div id="Workouts" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
+            <div className="d-flex flex-fill wp-100 min-h-0">
+                <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
+                        Sort by: <button onClick={workoutsSort} className="btn btn-secondary border mt-2">Type</button>
+                        <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
+                    </div>
                 </div>
-                <div className="d-flex flex-column text-center wp-100">
+                <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0 overflow-y-scroll">
                     <ExerciseSelectionList type="radio" exercises={wExercises} exerciseSelected={wExerciseSelected} k={1}/>
                     {props.contributor && 
+                        // <div class="overflow-y-scroll">
                         <>
-                        <div className="d-flex">
-                            <button onClick={removeWExercise} className="btn btn-outline-secondary wp-100">↓</button>
-                            <button onClick={addWExercise} className="btn btn-outline-secondary wp-100">↑</button>
-                        </div>
-                        <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected} k={2}/>
+                            <div className="d-flex p-2">
+                                <button onClick={removeWExercise} className="btn btn-secondary border wp-100">↓</button>
+                                <button onClick={addWExercise} className="btn btn-secondary border wp-100">↑</button>
+                            </div>
+                            <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected} k={2}/>
                         </>
+                        // </div>
                     }                
                 </div>
-                <div className="d-flex flex-column text-center wp-100">
+                <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0 pt-2">
                     <h3>Details</h3>
                     <div className="d-flex flex-column justify-content-center hp-100">
                         {state.selectedWorkout !== null &&
@@ -191,13 +199,13 @@ const WorkoutsOverview = props => {
                         }
                     </div>
                     {props.contributor &&
-                        <form onSubmit={saveWorkout} key="WOForm-1" className="d-flex flex-column">
+                        <form onSubmit={saveWorkout} key="WOForm-1" className="d-flex flex-column p-2">
                             <input type="text" defaultValue={state.selectedWorkout?.name} placeholder="Workout name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
                             <input type="text" defaultValue={state.selectedWorkout?.type} placeholder="Workout type" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
                             <input type="submit" name="save" id="save-button-1" className="d-none"/>
-                            <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite workout</label>
+                            <label htmlFor={"save-button-1"} className="btn btn-secondary border wp-100">Overwrite workout</label>
                             <input type="submit" name="create" id="create-button-1" className="d-none"/>
-                            <label htmlFor={"create-button-1"} className="btn btn-outline-secondary wp-100">Save as new workout</label>
+                            <label htmlFor={"create-button-1"} className="btn btn-secondary border wp-100">Save as new workout</label>
                         </form>
                     }
                 </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { fetchExercises, patchExercise, patchExerciseMusclegroups, patchExerciseSets, postExercise } from "../API/ExerciseAPI"
 import ExerciseSelectionList from "../Components/Exercise/ExerciseSelectionList"
 import { musclegroupCompare } from "../Util/SortHelper"
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
 
 const ExercisesOverview = props => {
     const [state, setState] = useState({
@@ -96,13 +97,18 @@ const ExercisesOverview = props => {
 
     return (
         <>
-        <div className="d-flex flex-column align-items-center hpx-720 p-5">
-            <div className="d-flex flex-fill border wp-100 min-h-0">
-                <div className="d-flex flex-column text-center wp-100">
-                    Sort by: <button onClick={exercisesSort} className="btn btn-outline-secondary">Musclegroup</button>
-                    <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
+        <div className="bg">
+            <img src={Background} alt=""/>
+        </div>
+        <div id="Exercises" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
+            <div className="d-flex flex-fill wp-100 min-h-0">
+                <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
+                        Sort by: <button onClick={exercisesSort} className="btn btn-secondary border">Musclegroup</button>
+                        <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
+                    </div>
                 </div>
-                <div className="d-flex flex-column text-center wp-100">
+                <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0 pt-2">
                     <h3>Details</h3>
                     <div className="d-flex flex-column justify-content-center hp-100">
                         {state.selectedExercise !== null &&
@@ -123,13 +129,13 @@ const ExercisesOverview = props => {
                         }
                     </div>
                     {props.contributor &&
-                        <form onSubmit={saveExercise} key="EOForm-1" className="d-flex flex-column">
+                        <form onSubmit={saveExercise} key="EOForm-1" className="d-flex flex-column p-2">
                             <input type="text" defaultValue={state.selectedExercise?.name} placeholder="Exercise name" title="Letters and spaces only (between 2-20)" pattern="[A-Za-z\s]{2,20}" required/>
                             <input type="text" defaultValue={state.selectedExercise?.description} placeholder="Exercise description" title="Letters and spaces only (between 2-50)" pattern="[A-Za-z\s]{2,50}" required/>
                             <input type="submit" name="save" id="save-button-1" className="d-none"/>
-                            <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite exercise</label>
+                            <label htmlFor={"save-button-1"} className="btn btn-secondary border wp-100">Overwrite exercise</label>
                             <input type="submit" name="create" id="create-button-1" className="d-none"/>
-                            <label htmlFor={"create-button-1"} className="btn btn-outline-secondary wp-100">Save as new exercise</label>
+                            <label htmlFor={"create-button-1"} className="btn btn-secondary border wp-100">Save as new exercise</label>
                         </form>
                     }
                 </div>
