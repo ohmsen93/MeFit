@@ -35,7 +35,7 @@ function UserInformationModal(props) {
         let modalData;
         if (props.onFirstLogin) {
             modalData = {
-                key: UserInformationModal.name,
+                key: 'UserInformationModal',
                 card: "UserProfileCard",
                 firstName: keycloak.tokenParsed?.firstName || "",
                 lastName: keycloak.tokenParsed?.lastName || "",
@@ -48,7 +48,7 @@ function UserInformationModal(props) {
         else {
             // check database for data to populate the modal
             modalData = {
-                key: UserInformationModal.name,
+                key: 'UserInformationModal',
                 id: props?.onUserData?.userData?.id || "",
                 card: "UserProfileCard",
                 firstName: props.onUserData.profileData.firstname || "",
