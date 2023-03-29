@@ -42,6 +42,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Addresses
         [HttpGet]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
         {
             //Method 1
@@ -58,6 +59,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Addresses/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
             try
@@ -82,6 +84,7 @@ namespace webapi.Controllers
         // PATCH: api/Addresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PutAddress(int id, AddressUpdateDto addressUpdateDto)
         {
             if (id != addressUpdateDto.Id)
@@ -114,6 +117,7 @@ namespace webapi.Controllers
         // POST: api/Addresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Address>> PostAddress(AddressCreateDto addressCreateDto)
         {
             var address = _mapper.Map<Address>(addressCreateDto);
@@ -128,6 +132,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Addresses/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
             try

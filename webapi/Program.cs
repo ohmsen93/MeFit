@@ -23,7 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using webapi.Services.GoalWorkoutServices;
-
+using webapi.Services.CategoryServices;
 
 namespace webapi
 {
@@ -44,7 +44,7 @@ namespace webapi
             builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
             builder.Services.AddTransient<IGoalService, GoalService>();
-            builder.Services.AddCors();
+            builder.Services.AddTransient<ICategoryService, CategoryService>();
 
             // Add middleware
 

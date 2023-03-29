@@ -23,6 +23,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class WorkoutsController : ControllerBase
     {
         private readonly IWorkoutService _service;
@@ -40,7 +41,7 @@ namespace webapi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles ="Regular")]
+        [Authorize(Roles ="Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkouts()
         {
             return Ok(_mapper.Map<ICollection<WorkoutReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -51,6 +52,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Workout>> GetWorkout(int id)
         {
             try
@@ -72,6 +74,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Workouts/ByTrainingProgramId/5
         [HttpGet("trainingprograms/{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<IEnumerable<Workout>>> GetWorkoutsByTrainingprogramId(int id)
         {
             try
@@ -95,6 +98,7 @@ namespace webapi.Controllers
         /// <param name="workoutUpdateDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchWorkout(int id, WorkoutUpdateDto workoutUpdateDto)
         {
 
@@ -126,14 +130,18 @@ namespace webapi.Controllers
         /// <param name="workoutCreateDto"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<ActionResult<Workout>> PostWorkout(WorkoutCreateDto workoutCreateDto)
         {
+            var userProfile = await _service.GetUserProfile(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             var workout = _mapper.Map<Workout>(workoutCreateDto);
-            await _service.Create(workout,workoutCreateDto.ExerciseIds);
+            //await _service.Create(workout,workoutCreateDto.ExerciseIds);
+            await _service.Create(workout, workoutCreateDto.ExerciseIds, userProfile.Id);
 
             //var workoutUpdateExercisesDto = new WorkoutUpdateExercisesDto { ExerciseIds = workoutCreateDto.ExerciseIds };
             //await _service.UpdateWorkoutExercises(workout.Id, workoutUpdateExercisesDto.ExerciseIds);
-            
+
             var WorkoutReadDto = _mapper.Map<WorkoutReadDto>(workout);
             return CreatedAtAction(nameof(GetWorkout), new { id = workout.Id }, WorkoutReadDto);
         }
@@ -145,6 +153,7 @@ namespace webapi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
             try
@@ -169,6 +178,7 @@ namespace webapi.Controllers
         /// <param name="workoutUpdateExercisesDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}/exercises")]
+        [Authorize(Roles = "Admin,Contributor,Regular")]
         public async Task<IActionResult> PatchWorkoutExercises(int id, WorkoutUpdateExercisesDto workoutUpdateExercisesDto)
         {           
             try

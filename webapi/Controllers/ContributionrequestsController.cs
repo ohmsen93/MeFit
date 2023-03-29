@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class ContributionrequestsController : ControllerBase
     {
         private readonly IContributionrequestService _service;
@@ -38,6 +40,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Contributionrequests
         [HttpGet]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<IEnumerable<Contributionrequest>>> GetContributionrequests()
         {
             return Ok(_mapper.Map<ICollection<ContributionrequestReadDto>>(await _service.GetAll()));
@@ -50,6 +53,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Contributionrequests/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<Contributionrequest>> GetContributionrequest(int id)
         {
             try
@@ -74,6 +78,7 @@ namespace webapi.Controllers
         // PATCH: api/Contributionrequests/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> PutContributionrequest(int id, ContributionrequestUpdateDto contributionrequestUpdateDto)
         {
             if (id != contributionrequestUpdateDto.Id)
@@ -106,6 +111,7 @@ namespace webapi.Controllers
         // POST: api/Contributionrequests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Regular")]
         public async Task<ActionResult<Contributionrequest>> PostContributionrequest(ContributionrequestCreateDto contributionrequestCreateDto)
         {
             var contributionrequest = _mapper.Map<Contributionrequest>(contributionrequestCreateDto);
@@ -120,6 +126,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Contributionrequests/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteContributionrequest(int id)
         {
             try

@@ -5,6 +5,7 @@ using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _service;
@@ -41,6 +43,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Users
         [HttpGet]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return Ok(_mapper.Map<ICollection<UserReadDto>>(await _service.GetAll()));
@@ -53,6 +56,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
             try
@@ -77,6 +81,7 @@ namespace webapi.Controllers
         // PATCH: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> PutUser(string id, UserUpdateDto userUpdateDto)
         {
             if (id != userUpdateDto.Id)
@@ -109,6 +114,7 @@ namespace webapi.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<ActionResult<User>> PostUser(UserCreateDto userCreateDto)
         {
             var subjectFoo = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -125,6 +131,7 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             try
