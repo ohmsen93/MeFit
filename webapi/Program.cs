@@ -23,7 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using webapi.Services.GoalWorkoutServices;
-
+using webapi.Services.CategoryServices;
 
 namespace webapi
 {
@@ -44,6 +44,7 @@ namespace webapi
             builder.Services.AddTransient<ITrainingprogramService, TrainingprogramService>();
             builder.Services.AddTransient<IContributionrequestService, ContributionrequestService>();
             builder.Services.AddTransient<IGoalService, GoalService>();
+            builder.Services.AddTransient<ICategoryService, CategoryService>();
             builder.Services.AddCors();
 
             // Add middleware
@@ -81,7 +82,7 @@ namespace webapi
                     Description = "This API provides access to information about the MeFit application.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Emil Bo Solgaard Utsen, Farhang Younis, Mads Ohmsen, Simon Løvschal",
+                        Name = "Emil Bo Solgaard Utsen, Farhang Younis, Mads Ohmsen, Simon LÃ¸vschal",
                         Url = new Uri("https://github.com/hostilelogout/MeFit/tree/main/webapi")
                     },
                     License = new OpenApiLicense
