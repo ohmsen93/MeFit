@@ -18,7 +18,7 @@ function Login() {
 
   return (
     <>
-      <div class="bg">
+      <div className="bg">
         <img src={Background} alt=""/>
       </div>
       <div id="loginMain" className="p-5 col-12">
