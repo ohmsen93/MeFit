@@ -35,7 +35,7 @@ function UserAddressModal(props) {
 
         if (props.onFirstLogin) {
             modalData = {
-                key: UserAddressModal.name,
+                key: 'UserAddressModal',
                 card: "UserAddressCard",
                 addressLine1: props?.onUserData?.adressData?.addressLine1 || "",
                 addressLine2: props?.onUserData?.adressData?.addressLine2 || "",
@@ -49,7 +49,7 @@ function UserAddressModal(props) {
         else {
             // check database for data to populate the modal
             modalData = {
-                key: UserAddressModal.name,
+                key: 'UserAddressModal',
                 card: "UserAddressCard",
                 addressLine1: props.onUserData.adressData.addressLine1 || "",
                 addressLine2: props.onUserData.adressData.addressLine2 || "",
