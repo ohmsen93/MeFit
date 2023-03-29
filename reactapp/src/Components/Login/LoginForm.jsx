@@ -7,11 +7,9 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div className="actions">
-                <button onClick={() => keycloak.login(navigate("dashboard"))}>Login</button>
-            </div>
-        </div>
+        
+                <button className="col-6 btn btn-lg btn-primary" onClick={() => keycloak.login(navigate("dashboard"))}>Login</button>
+        
     );
 }
 

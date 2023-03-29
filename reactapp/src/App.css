@@ -1,0 +1,194 @@
+.bg{
+    position: fixed; 
+    top: -50%; 
+    left: -50%; 
+    width: 200%; 
+    height: 200%;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Rajdhani&family=Poiret+One&display=swap');
+
+.bg img {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    margin: auto; 
+    min-width: 50%;
+    min-height: 50%;
+  }
+
+
+
+/* Login */
+
+#loginMain{
+    position:relative;
+    margin-top:100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#loginMain h1{
+    font-size: 50pt;
+    color:white;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+}
+
+#loginForm{
+    margin-top:60px;
+}
+
+#loginForm button{
+    padding:25px;
+    font-size: 25pt;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+
+}
+
+/* Navbar */
+
+.navbar{
+    z-index: 1;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+    font-size: 20pt;
+    
+}
+
+.navbar-brand{
+    font-size: 20pt;
+
+}
+
+/* Dashboard */
+
+#Dashboard{
+    position:relative;
+    font-size: 12pt;
+}
+
+.dashboard-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+}
+
+
+.goalList .btn:hover{
+    background-color: #d4d4d4;
+}
+
+.react-calendar{
+    font-size: 10pt;
+    border:0 !important;
+    height: 100%;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One" !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.react-calendar{
+    color:white !important;
+    font-weight: 500;
+}
+
+.react-calendar__navigation__label{
+    color:white !important;
+    font-weight: bold;
+}
+
+.react-calendar__navigation__label:enabled{
+    color:White !important;
+    
+    font-weight: bold;
+}
+
+.react-calendar__navigation__label:disabled{
+    color:black !important;
+    
+    font-weight: bold;
+}
+
+.react-calendar__navigation__arrow{
+    color:white !important;
+    
+    font-weight: 500;
+}
+
+.react-calendar__tile{
+    color:white !important;
+    
+    font-weight: 500;
+}
+
+.react-calendar__month-view__days__day{
+    color:white !important;
+    font-weight: bold;
+
+
+}
+
+.react-calendar__tile--now{
+    color:black !important;
+}
+
+.react-calendar__month-view__days__day--weekend{
+    color: red !important;
+    font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth{
+    color: lightblue !important;
+    font-weight: bold;
+    
+}
+
+
+/* Content */
+.contentBox{
+    position:relative;
+    font-size: 16pt;  
+}
+
+/* ProgramsOverview */
+
+
+
+.programs-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+}
+
+/* WorkoutsOverview */
+
+
+
+.workouts-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+}
+
+/* ExercisesOverview */
+
+
+
+.exercises-item{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-family: 'Chakra Petch', 'Rajdhani', "Poiret One";
+}
+
+/* Goal */
+
+#GoalCreationForm{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+
+}
+
+#Goals{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+}

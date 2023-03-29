@@ -23,7 +23,6 @@ namespace webapi.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    [Authorize]
     public class GoalsController : ControllerBase
     {
         private readonly IGoalService _service;
@@ -42,7 +41,6 @@ namespace webapi.Controllers
         /// <returns></returns>
         // GET: api/Goals
         [HttpGet]
-        [Authorize(Roles="Regular")]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoals()
         {           
             return Ok(_mapper.Map<ICollection<GoalReadDto>>(await _service.GetAll(User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -79,7 +77,6 @@ namespace webapi.Controllers
         // PATCH: api/Goals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
-        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> PatchGoal(int id, GoalUpdateDto goalUpdateDto)
         {
             if (id != goalUpdateDto.Id)
@@ -136,7 +133,6 @@ namespace webapi.Controllers
         /// <returns></returns>
         // DELETE: api/Goals/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteGoal(int id)
         {
             try

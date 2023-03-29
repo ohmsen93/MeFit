@@ -4,6 +4,8 @@ import { fetchWorkouts } from "../API/WorkoutAPI"
 import ProgramSelectionList from "../Components/Program/ProgramSelectionList"
 import WorkoutSelectionList from "../Components/Workout/WorkoutSelectionList"
 import { categoryCompare } from "../Util/SortHelper"
+import Background from "../Images/backgrounds/hd-squad-color.jpeg";
+
 
 const ProgramsOverview = props => {
     const [state, setState] = useState({
@@ -139,26 +141,33 @@ const ProgramsOverview = props => {
 
     return (
         <>
-        <div className="d-flex flex-column align-items-center hpx-720 p-5">
-            <div className="d-flex flex-fill border wp-100 min-h-0">
-                <div className="d-flex flex-column text-center wp-100">
-                    Sort by: <button onClick={programsSort} className="btn btn-outline-secondary">Category</button>
-                    <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
+        <div class="bg">
+            <img src={Background} alt=""/>
+        </div>
+        <div id="Programs" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
+            <div className="d-flex flex-fill wp-100 min-h-0">
+                <div className="d-flex flex-column text-center wp-100 programs-item m-2 mb-0">
+                    <div className="d-flex flex-column p-2 overflow-hidden">
+                        Sort by: <button onClick={programsSort} className="btn btn-secondary border mt-2">Category</button>
+                        <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
+                    </div>
                 </div>
-                <div className="d-flex flex-column text-center wp-100">
+                <div className="d-flex flex-column text-center wp-100 programs-item mt-2 mb-0 pt-2">
                     <WorkoutSelectionList type="radio" workouts={pWorkouts} workoutSelected={pWorkoutSelected} k={1}/>
                     {props.contributor && 
+                        // <div class="overflow-y-scroll">
                         <>
-                        <div className="d-flex">
-                            <button onClick={removePWorkout} className="btn btn-outline-secondary wp-100">↓</button>
-                            <button onClick={addPWorkout} className="btn btn-outline-secondary wp-100">↑</button>
-                        </div>
-                        <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected} k={2}/>
+                            <div className="d-flex p-2">
+                                <button onClick={removePWorkout} className="btn btn-secondary border wp-100">↓</button>
+                                <button onClick={addPWorkout} className="btn btn-secondary border wp-100">↑</button>
+                            </div>
+                            <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected} k={2}/>
                         </>
+                        // </div>
                     }
                 </div>
 
-                <div className="d-flex flex-column text-center wp-100">
+                <div className="d-flex flex-column text-center wp-100 programs-item m-2 mb-0 pt-2">
                     <h3>Details</h3>
                     <div className="d-flex flex-column justify-content-center hp-100">
                         {state.selectedProgram !== null &&
@@ -186,12 +195,12 @@ const ProgramsOverview = props => {
                         }
                     </div>
                     {props.contributor &&
-                        <form onSubmit={saveProgram} key="POForm-1" className="d-flex flex-column">
+                        <form onSubmit={saveProgram} key="POForm-1" className="d-flex flex-column p-2">
                             <input type="text" defaultValue={state.selectedProgram?.name} placeholder="Program name" title="Letters and spaces only (between 2-40)" pattern="[A-Za-z\s]{2,40}" required/>
                             <input type="submit" name="save" id="save-button-1" className="d-none"/>
-                            <label htmlFor={"save-button-1"} className="btn btn-outline-secondary wp-100">Overwrite program</label>
+                            <label htmlFor={"save-button-1"} className="btn btn-secondary border wp-100">Overwrite program</label>
                             <input type="submit" name="create" id="create-button-1" className="d-none"/>
-                            <label htmlFor={"create-button-1"} className="btn btn-outline-secondary wp-100">Save as new program</label>
+                            <label htmlFor={"create-button-1"} className="btn btn-secondary border wp-100">Save as new program</label>
                         </form>
                     }
                 </div>
