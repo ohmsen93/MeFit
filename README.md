@@ -8,7 +8,7 @@ Is a fitness web application that help users to keep track of their weekly baise
 * Farhang Younis
 
 ## Installation guid
-1. A Keycloa instans must be satup on a server 
+1. A Keycloak instance must be satup on a server 
 2. Microsoft SQL Server must be installed
 2. Clone the main repository
 3. Use Visual Studio to open the project
