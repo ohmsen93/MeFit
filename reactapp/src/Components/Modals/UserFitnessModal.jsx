@@ -33,7 +33,7 @@ function UserFitnessModal(props) {
         let modalData;
         if (props.onFirstLogin) {
             modalData = {
-                key: UserFitnessModal.name,
+                key: 'UserFitnessModal',
                 card: "UserFitnessCard",
                 weight: props?.onUserData?.profileData?.weight || 0.0,
                 height: props?.onUserData?.profileData?.height || 0.0,
@@ -45,7 +45,7 @@ function UserFitnessModal(props) {
         else {
             // check database for data to populate the modal
             modalData = {
-                key: UserFitnessModal.name,
+                key: 'UserFitnessModal',
                 card: "UserFitnessCard",
                 weight: props.onUserData.profileData.weight || 0.0,
                 height: props.onUserData.profileData.height || 0.0,
