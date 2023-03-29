@@ -14,14 +14,14 @@ const ExercisesOverview = props => {
         // setExercises("loading")
         const getExercises = async () => {
             const es = await fetchExercises()
-            console.log(es)
+            // console.log(es)
             setExercises(es.reverse())
         }
         getExercises()
     }, [])
 
     const exerciseSelected = (event, exercise) => {
-        console.log(exercise)
+        // console.log(exercise)
         if (event.target.checked) setState({...state, selectedExercise: exercise})
         else setState({...state, selectedExercise: null})
     }
@@ -62,22 +62,6 @@ const ExercisesOverview = props => {
                     exercises[index] = ne
                     setState({...state, selectedExercise: ne})
                 }
-                // const e = {
-                //     id: state.selectedExercise.id,
-                //     name: event.target[0].value,
-                //     description: event.target[1].value,
-                //     setIds: [],
-                //     musclegroupIds: []
-                // }
-                // console.log(e)
-                // patchExercise(state.selectedExercise.id, e)
-                //     .then(r => {
-                //         const index = exercises.indexOf(state.selectedExercise)
-                //         if (index > -1) {
-                //             exercises[index] = r
-                //             setState({...state, selectedExercise: r})
-                //         }
-                //     })
             }
             else alert("Must select an exercise to save")
         }
@@ -103,10 +87,10 @@ const ExercisesOverview = props => {
         <div id="Exercises" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0">
-                    <div className="d-flex flex-column p-2 overflow-hidden">
+                    {/* <div className="d-flex flex-column p-2 overflow-hidden"> */}
                         Sort by: <button onClick={exercisesSort} className="btn btn-secondary border">Musclegroup</button>
                         <ExerciseSelectionList type="radio" exercises={exercises} exerciseSelected={exerciseSelected}/>
-                    </div>
+                    {/* </div> */}
                 </div>
                 <div className="d-flex flex-column text-center wp-100 exercises-item m-2 mb-0 pt-2">
                     <h3>Details</h3>

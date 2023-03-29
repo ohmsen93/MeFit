@@ -21,7 +21,7 @@ const ProgramsOverview = props => {
         // setPrograms("loading")
         const getPrograms = async () => {
             const ps = await fetchPrograms()
-            console.log(ps)
+            // console.log(ps)
             setPrograms(ps.reverse())
         }
         getPrograms()
@@ -30,14 +30,14 @@ const ProgramsOverview = props => {
         // setWorkouts("loading")
         const getWorkouts = async () => {
             const ws = await fetchWorkouts()
-            console.log(ws)
+            // console.log(ws)
             setWorkouts(ws.reverse())
         }
         getWorkouts()
     }, [])
 
     const programSelected = (event, program) => {
-        console.log(program)
+        // console.log(program)
         if (event.target.checked) {
             setState({...state, selectedProgram: program, selectedPWorkout: null})
             setPWorkouts(workouts?.filter(w => program.workouts?.includes(w.id)) || [])
@@ -45,12 +45,12 @@ const ProgramsOverview = props => {
         else setState({...state, selectedProgram: null})
     }
     const workoutSelected = (event, workout) => {
-        console.log(workout)
+        // console.log(workout)
         if (event.target.checked) setState({...state, selectedWorkout: workout})
         else setState({...state, selectedWorkout: null})
     }
     const pWorkoutSelected = (event, workout) => {
-        console.log(workout)
+        // console.log(workout)
         if (event.target.checked) setState({...state, selectedPWorkout: workout})
         else setState({...state, selectedPWorkout: null})
     }
@@ -112,14 +112,6 @@ const ProgramsOverview = props => {
                         programs[index] = np
                         setState({...state, selectedProgram: np})
                     }
-                    //patchProgram(state.selectedProgram.id, p)
-                        // .then(r => {
-                        //     const index = programs.indexOf(state.selectedProgram)
-                        //     if (index > -1) {
-                        //         programs[index] = r
-                        //         setState({...state, selectedProgram: r})
-                        //     }
-                        // })
                 }
                 else alert("Must select a program to save")
             }
@@ -131,7 +123,7 @@ const ProgramsOverview = props => {
                 }
                 postProgram(p)
                     .then(r => {
-                        console.log(r)
+                        // console.log(r)
                         setPrograms([r, ...programs])
                     })
             }
@@ -147,10 +139,10 @@ const ProgramsOverview = props => {
         <div id="Programs" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">
             <div className="d-flex flex-fill wp-100 min-h-0">
                 <div className="d-flex flex-column text-center wp-100 programs-item m-2 mb-0">
-                    <div className="d-flex flex-column p-2 overflow-hidden">
+                    {/* <div className="d-flex flex-column p-2 overflow-hidden"> */}
                         Sort by: <button onClick={programsSort} className="btn btn-secondary border mt-2">Category</button>
                         <ProgramSelectionList type="radio" programs={programs} programSelected={programSelected}/>
-                    </div>
+                    {/* </div> */}
                 </div>
                 <div className="d-flex flex-column text-center wp-100 programs-item mt-2 mb-0 pt-2">
                     <WorkoutSelectionList type="radio" workouts={pWorkouts} workoutSelected={pWorkoutSelected} k={1}/>
