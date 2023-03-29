@@ -259,7 +259,7 @@ function UserProfileForm() {
             {loading
                 ?
                 <>
-                    <h1>Test</h1>
+                    <h1>Loading...</h1>
                 </>
                 :
                 <>
