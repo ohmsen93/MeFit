@@ -141,7 +141,7 @@ const WorkoutsOverview = props => {
                         <WorkoutSelectionList type="radio" workouts={workouts} workoutSelected={workoutSelected}/>
                     </div>
                 </div>
-                <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0 overflow-y-scroll">
+                <div className="d-flex flex-column text-center wp-100 workouts-item m-2 mb-0">
                     <ExerciseSelectionList type="radio" exercises={wExercises} exerciseSelected={wExerciseSelected} k={1}/>
                     {props.contributor && 
                         // <div class="overflow-y-scroll">
