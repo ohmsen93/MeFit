@@ -141,7 +141,7 @@ const ProgramsOverview = props => {
 
     return (
         <>
-        <div class="bg">
+        <div className="bg">
             <img src={Background} alt=""/>
         </div>
         <div id="Programs" className="d-flex flex-column align-items-center hpx-720 p-5 contentBox">

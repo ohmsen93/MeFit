@@ -78,7 +78,7 @@ const GoalsOverview = () => {
 
     return (
         <>
-            <div class="bg">
+            <div className="bg">
                 <img src={Background} alt=""/>
             </div>
             <div id="Goals" className="d-flex flex-column align-items-center hpx-720 p-5 mt-5 contentBox">
